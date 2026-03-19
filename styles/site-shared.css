@@ -1,4 +1,73 @@
 ﻿/* Shared UI layer for all LANDCROS pages */
+/* Responsive layout for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        width: 100% !important;
+        padding: 0.5rem !important;
+        box-sizing: border-box !important;
+    }
+    .page-toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 0.5rem !important;
+    }
+    .toolbar-links {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        justify-content: center !important;
+    }
+    .toolbar-link {
+        font-size: 1rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+    .brand-header {
+        padding: 0.7rem !important;
+    }
+    .brand-wrap {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .brand-divider {
+        width: 140px !important;
+        height: 2px !important;
+        margin: 0.5rem 0 !important;
+    }
+    .content {
+        padding: 0.5rem !important;
+    }
+    .panel {
+        padding: 0.7rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .summary-grid, .spec-grid, .check-grid {
+        display: block !important;
+    }
+    .summary-item, .spec-item, .check-card {
+        margin-bottom: 0.7rem !important;
+    }
+    .chips {
+        flex-wrap: wrap !important;
+        gap: 0.4rem !important;
+    }
+    .chip {
+        font-size: 0.95rem !important;
+        padding: 0.3rem 0.7rem !important;
+    }
+    .footer {
+        font-size: 0.9rem !important;
+        padding: 0.5rem !important;
+    }
+    .title-main {
+        font-size: 1.25rem !important;
+    }
+    .title-sub {
+        font-size: 1rem !important;
+    }
+    .action-btn {
+        font-size: 0.95rem !important;
+        padding: 0.3rem 0.7rem !important;
+    }
+}
 
 .custom-theme .page-toolbar {
     background: var(--ts-surface) !important;
