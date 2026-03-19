@@ -100,53 +100,65 @@
                 <h2 class="section-title-zero">How Gear Oil Protects Gears</h2>
                 <div class="gear-demo-grid">
                     <div class="gear-demo-figure">
-                        <svg class="gear-demo-svg" viewBox="0 0 760 360" role="img" aria-label="Gear oil illustration showing a sprocket running inside a ring gear with an oil film in the load zone">
-                            <path d="M58 56 H694 V282 H518 Q484 282 466 300 Q448 318 422 318 H336 Q310 318 292 300 Q274 282 240 282 H58 Z" class="gear-housing"></path>
-                            <path d="M88 78 H664 V246 H520 Q484 246 464 266 Q446 284 420 284 H338 Q312 284 294 266 Q274 246 238 246 H88 Z" class="gear-housing-face"></path>
-                            <circle cx="104" cy="94" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="644" cy="94" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="104" cy="228" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="644" cy="228" r="8" class="gear-housing-bolt"></circle>
-                            <path d="M428 62 L446 88 L478 84 L484 114 L514 128 L504 158 L524 184 L500 206 L506 238 L474 244 L456 270 L428 256 L400 270 L382 244 L350 238 L356 206 L332 184 L352 158 L342 128 L372 114 L378 84 L410 88 Z" class="gear-ring-fill"></path>
-                            <circle cx="428" cy="176" r="84" class="gear-ring-inner"></circle>
-                            <path d="M246 144 L262 158 L282 152 L292 170 L314 174 L312 196 L328 210 L314 226 L320 248 L298 252 L286 270 L266 262 L248 276 L232 260 L210 264 L206 242 L188 230 L198 210 L186 192 L202 176 L196 154 L218 148 L230 130 Z" class="gear-sprocket-fill"></path>
-                            <circle cx="258" cy="202" r="32" class="gear-core"></circle>
-                            <path d="M318 178 C350 160, 386 150, 426 148 C454 148, 482 154, 510 166" class="gear-film"></path>
-                            <path d="M314 214 C348 230, 386 238, 426 238 C456 238, 486 232, 516 216" class="gear-film"></path>
-                            <path d="M126 250 C174 228, 224 214, 262 210" class="gear-flow"></path>
-                            <path d="M520 126 C578 108, 628 106, 676 118" class="gear-flow"></path>
-                            <ellipse cx="380" cy="194" rx="74" ry="42" class="gear-load-zone"></ellipse>
-                            <rect x="74" y="18" width="144" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="100" y="40" class="gear-label">Oil Flow</text>
-                            <path d="M146 52 L130 122 L128 236" class="gear-callout"></path>
-                            <rect x="530" y="18" width="154" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="552" y="40" class="gear-label">Ring Gear</text>
-                            <path d="M606 52 L572 94 L514 126" class="gear-callout"></path>
-                            <rect x="82" y="304" width="164" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="106" y="326" class="gear-label">Drive Sprocket</text>
-                            <path d="M198 302 L228 262 L244 236" class="gear-callout"></path>
-                            <rect x="304" y="304" width="152" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="332" y="326" class="gear-label">Load Zone</text>
-                            <path d="M382 302 L384 236" class="gear-callout"></path>
-                            <rect x="308" y="68" width="150" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="336" y="90" class="gear-label">Oil Film</text>
-                            <path d="M382 102 L386 148" class="gear-callout"></path>
+                        <svg width="320" height="220" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Animated gears with oil film">
+                            <style>
+                                .ring-gear {
+                                    stroke: #fb923c;
+                                    stroke-width: 8;
+                                    fill: #ffd8b4;
+                                }
+                                .ring-teeth {
+                                    fill: #ff6600;
+                                    transform-origin: 160px 110px;
+                                    animation: ring-spin 4s linear infinite;
+                                }
+                                @keyframes ring-spin {
+                                    100% { transform: rotate(360deg); }
+                                }
+                                .sprocket {
+                                    stroke: #fdba74;
+                                    stroke-width: 6;
+                                    fill: #fff3e8;
+                                }
+                                .sprocket-teeth {
+                                    fill: #ff6600;
+                                    transform-origin: 80px 110px;
+                                    animation: sprocket-spin 2s linear infinite;
+                                }
+                                @keyframes sprocket-spin {
+                                    100% { transform: rotate(360deg); }
+                                }
+                                .oil-film {
+                                    fill: #ffe8cc;
+                                    stroke: #ff6600;
+                                    stroke-width: 2;
+                                    opacity: 1;
+                                    animation: oil-pulse 2s ease-in-out infinite;
+                                }
+                                @keyframes oil-pulse {
+                                    0% { rx: 16; opacity: 1; }
+                                    50% { rx: 24; opacity: 0.7; }
+                                    100% { rx: 16; opacity: 1; }
+                                }
+                            </style>
+                            <circle class="ring-gear" cx="160" cy="110" r="80" />
+                            <g class="ring-teeth">
+                                <rect x="160" y="22" width="8" height="24" rx="4" />
+                                <rect x="160" y="174" width="8" height="24" rx="4" />
+                            </g>
+                            <circle class="sprocket" cx="80" cy="110" r="32" />
+                            <g class="sprocket-teeth">
+                                <rect x="80" y="70" width="6" height="16" rx="3" />
+                                <rect x="80" y="134" width="6" height="16" rx="3" />
+                            </g>
+                            <ellipse class="oil-film" cx="120" cy="110" rx="16" ry="8" />
+                            <path d="M60 110 Q90 90 120 110" stroke="#ff6600" stroke-width="2" fill="none" />
+                            <path d="M120 110 Q150 130 180 110" stroke="#ff6600" stroke-width="2" fill="none" />
+                            <text x="60" y="40" font-size="14" fill="#ff6600">Drive Sprocket</text>
+                            <text x="220" y="40" font-size="14" fill="#fb923c">Ring Gear</text>
+                            <text x="110" y="130" font-size="13" fill="#ff6600">Oil Film</text>
                         </svg>
-                        <div class="gear-caption">Gear oil forms a protective film where the drive sprocket and ring gear carry load, helping separate metal surfaces while reducing wear, heat, and surface damage.</div>
-                    </div>
-                    <div class="gear-demo-side">
-                        <div class="gear-demo-note">
-                            <div class="gear-demo-note-title">1. Oil Reaches The Contact Area</div>
-                            <p>As the driveline rotates, oil is carried into the sprocket and ring gear mesh from the housing.</p>
-                        </div>
-                        <div class="gear-demo-note">
-                            <div class="gear-demo-note-title">2. Film Cushions The Teeth</div>
-                            <p>The oil film helps cushion the loaded tooth surfaces and reduce direct metal-to-metal contact.</p>
-                        </div>
-                        <div class="gear-demo-note">
-                            <div class="gear-demo-note-title">3. Heavy-Load Protection</div>
-                            <p>The oil helps protect against scoring, rust, wear, and heat in the loaded gear mesh.</p>
-                        </div>
+                        <div class="gear-caption">Animated demo: The drive sprocket rotates, engaging the ring gear. The oil film forms in the contact zone, lubricating and protecting the gears.</div>
                     </div>
                 </div>
             </div>
