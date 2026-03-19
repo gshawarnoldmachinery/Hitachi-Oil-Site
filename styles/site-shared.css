@@ -1,6 +1,17 @@
 ﻿/* Shared UI layer for all LANDCROS pages */
 /* Responsive layout for mobile devices */
 @media (max-width: 768px) {
+    .family-tooltip .tooltip-content {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        min-width: 220px !important;
+        max-width: 95vw !important;
+        width: auto !important;
+        text-align: center !important;
+        padding: 12px !important;
+    }
+}
     .container {
         width: 100% !important;
         padding: 0.5rem !important;
