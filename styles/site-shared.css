@@ -81,37 +81,37 @@
 }
 
 .custom-theme .page-toolbar {
-    background: var(--ts-surface) !important;
-    border-bottom: 1px solid var(--ts-border) !important;
-}
-
-.custom-theme .toolbar-link {
-    border-radius: 6px !important;
-}
+    margin: 0 !important;
+    font-family: Arial, sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px !important;
+    color: #000 !important;
+    font-size: clamp(1.2rem, 3vw, 2.2rem) !important;
+    line-height: 1 !important;
 
 .custom-theme .brand-header {
     background: #e6e6e6 !important;
-    border-bottom: 4px solid #ff6600 !important;
-}
-
-/* Lock logo/header to one exact standard across all pages */
-.custom-theme .brand-header {
-    padding: 1.5rem !important;
-}
+    margin: 0 !important;
+    font-family: Arial, sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px !important;
+    color: #f26a21 !important;
+    font-size: clamp(1.2rem, 3vw, 2.2rem) !important;
+    line-height: 1 !important;
 
 .custom-theme .brand-wrap {
     display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 2.8rem !important;
-    flex-wrap: wrap !important;
-}
-
-.custom-theme .brand-left {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    margin-top: 1.3rem !important;
+    display: inline-block !important;
+    background: #f26a21 !important;
+    color: #fff !important;
+    padding: 0.18rem 1.2rem !important;
+    min-width: 120px !important;
     text-align: center !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(1rem, 1vw, 1.2rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.02 !important;
 }
 
 .custom-theme .brand-hitachi {
