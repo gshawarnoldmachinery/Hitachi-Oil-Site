@@ -100,37 +100,97 @@
                 <h2 class="section-title-zero">How Gear Oil Protects Gears</h2>
                 <div class="gear-demo-grid">
                     <div class="gear-demo-figure">
-                        <svg class="gear-demo-svg" viewBox="0 0 760 360" role="img" aria-label="Gear oil illustration showing a sprocket running inside a ring gear with an oil film in the load zone">
-                            <path d="M58 56 H694 V282 H518 Q484 282 466 300 Q448 318 422 318 H336 Q310 318 292 300 Q274 282 240 282 H58 Z" class="gear-housing"></path>
-                            <path d="M88 78 H664 V246 H520 Q484 246 464 266 Q446 284 420 284 H338 Q312 284 294 266 Q274 246 238 246 H88 Z" class="gear-housing-face"></path>
-                            <circle cx="104" cy="94" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="644" cy="94" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="104" cy="228" r="8" class="gear-housing-bolt"></circle>
-                            <circle cx="644" cy="228" r="8" class="gear-housing-bolt"></circle>
-                            <path d="M428 62 L446 88 L478 84 L484 114 L514 128 L504 158 L524 184 L500 206 L506 238 L474 244 L456 270 L428 256 L400 270 L382 244 L350 238 L356 206 L332 184 L352 158 L342 128 L372 114 L378 84 L410 88 Z" class="gear-ring-fill"></path>
-                            <circle cx="428" cy="176" r="84" class="gear-ring-inner"></circle>
-                            <path d="M246 144 L262 158 L282 152 L292 170 L314 174 L312 196 L328 210 L314 226 L320 248 L298 252 L286 270 L266 262 L248 276 L232 260 L210 264 L206 242 L188 230 L198 210 L186 192 L202 176 L196 154 L218 148 L230 130 Z" class="gear-sprocket-fill"></path>
-                            <circle cx="258" cy="202" r="32" class="gear-core"></circle>
-                            <path d="M318 178 C350 160, 386 150, 426 148 C454 148, 482 154, 510 166" class="gear-film"></path>
-                            <path d="M314 214 C348 230, 386 238, 426 238 C456 238, 486 232, 516 216" class="gear-film"></path>
-                            <path d="M126 250 C174 228, 224 214, 262 210" class="gear-flow"></path>
-                            <path d="M520 126 C578 108, 628 106, 676 118" class="gear-flow"></path>
-                            <ellipse cx="380" cy="194" rx="74" ry="42" class="gear-load-zone"></ellipse>
-                            <rect x="74" y="18" width="144" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="100" y="40" class="gear-label">Oil Flow</text>
-                            <path d="M146 52 L130 122 L128 236" class="gear-callout"></path>
-                            <rect x="530" y="18" width="154" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="552" y="40" class="gear-label">Ring Gear</text>
-                            <path d="M606 52 L572 94 L514 126" class="gear-callout"></path>
-                            <rect x="82" y="304" width="164" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="106" y="326" class="gear-label">Drive Sprocket</text>
-                            <path d="M198 302 L228 262 L244 236" class="gear-callout"></path>
-                            <rect x="304" y="304" width="152" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="332" y="326" class="gear-label">Load Zone</text>
-                            <path d="M382 302 L384 236" class="gear-callout"></path>
-                            <rect x="308" y="68" width="150" height="34" rx="17" class="gear-label-box"></rect>
-                            <text x="336" y="90" class="gear-label">Oil Film</text>
-                            <path d="M382 102 L386 148" class="gear-callout"></path>
+                        <svg class="gear-demo-svg" viewBox="0 0 760 360" role="img" aria-label="Planetary gear set with visible oil bath, ring gear, sun gear, planet gears, and carrier">
+                            <defs>
+                                <radialGradient id="pgMetal" cx="35%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#f6f7f9"></stop>
+                                    <stop offset="55%" stop-color="#d1d5db"></stop>
+                                    <stop offset="100%" stop-color="#9ca3af"></stop>
+                                </radialGradient>
+                                <linearGradient id="pgOilGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#f59e0b"></stop>
+                                    <stop offset="50%" stop-color="#fbbf24"></stop>
+                                    <stop offset="100%" stop-color="#fde68a"></stop>
+                                </linearGradient>
+                                <clipPath id="pgOilClip">
+                                    <circle cx="510" cy="184" r="126"></circle>
+                                </clipPath>
+                                <marker id="pgArrowHead" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 z" class="pg-arrow-head"></path>
+                                </marker>
+                            </defs>
+
+                            <g class="pg-labels">
+                                <text x="34" y="84" class="pg-label-text">INTERNAL RING GEAR</text>
+                                <line x1="248" y1="80" x2="404" y2="98" class="pg-leader"></line>
+
+                                <text x="170" y="124" class="pg-label-text">SUN GEAR</text>
+                                <line x1="282" y1="120" x2="494" y2="184" class="pg-leader"></line>
+
+                                <text x="118" y="206" class="pg-label-text">PLANET GEAR</text>
+                                <line x1="252" y1="202" x2="430" y2="226" class="pg-leader"></line>
+
+                                <text x="304" y="28" class="pg-label-text">CARRIER</text>
+                                <line x1="392" y1="34" x2="508" y2="100" class="pg-leader"></line>
+
+                                <text x="150" y="304" class="pg-label-text">OIL BATH</text>
+                                <line x1="244" y1="300" x2="430" y2="278" class="pg-leader"></line>
+                            </g>
+
+                            <circle cx="510" cy="184" r="156" class="pg-ring-outer"></circle>
+                            <circle cx="510" cy="184" r="140" class="pg-ring-inner-shell"></circle>
+                            <circle cx="510" cy="184" r="130" class="pg-ring-inner"></circle>
+                            <circle cx="510" cy="184" r="144" class="pg-ring-teeth"></circle>
+
+                            <g clip-path="url(#pgOilClip)">
+                                <circle cx="510" cy="184" r="126" class="pg-oil-field"></circle>
+                                <path d="M380 258 C414 246 444 272 476 260 C504 250 534 278 564 264 C594 250 624 272 640 262 L640 318 L380 318 Z" class="pg-oil-bath"></path>
+                                <path d="M386 260 C416 248 446 272 476 260 C504 250 534 276 564 262 C592 250 620 270 636 260" class="pg-oil-ripple"></path>
+                                <path d="M440 256 C456 232 470 214 486 206" class="pg-oil-flow"></path>
+                                <path d="M506 258 C506 232 506 214 506 202" class="pg-oil-flow"></path>
+                                <path d="M578 254 C562 230 548 212 534 206" class="pg-oil-flow"></path>
+                                <circle cx="468" cy="250" r="4" class="pg-oil-bubble"></circle>
+                                <circle cx="520" cy="246" r="3.5" class="pg-oil-bubble pg-oil-bubble-delay"></circle>
+                                <circle cx="560" cy="252" r="4.5" class="pg-oil-bubble pg-oil-bubble-slow"></circle>
+                            </g>
+
+                            <g class="pg-carrier-group">
+                                <line x1="510" y1="184" x2="510" y2="104" class="pg-carrier-arm"></line>
+                                <line x1="510" y1="184" x2="440" y2="226" class="pg-carrier-arm"></line>
+                                <line x1="510" y1="184" x2="580" y2="226" class="pg-carrier-arm"></line>
+                                <circle cx="510" cy="184" r="62" class="pg-carrier"></circle>
+                                <circle cx="510" cy="104" r="12" class="pg-carrier-pin"></circle>
+                                <circle cx="440" cy="226" r="12" class="pg-carrier-pin"></circle>
+                                <circle cx="580" cy="226" r="12" class="pg-carrier-pin"></circle>
+                            </g>
+
+                            <g transform="translate(510 104)">
+                                <circle r="36" class="pg-gear-body"></circle>
+                                <circle r="31" class="pg-gear-teeth"></circle>
+                                <circle r="11" class="pg-gear-core"></circle>
+                            </g>
+                            <g transform="translate(440 226)">
+                                <circle r="36" class="pg-gear-body"></circle>
+                                <circle r="31" class="pg-gear-teeth"></circle>
+                                <circle r="11" class="pg-gear-core"></circle>
+                            </g>
+                            <g transform="translate(580 226)">
+                                <circle r="36" class="pg-gear-body"></circle>
+                                <circle r="31" class="pg-gear-teeth"></circle>
+                                <circle r="11" class="pg-gear-core"></circle>
+                            </g>
+
+                            <g transform="translate(510 184)">
+                                <circle r="30" class="pg-sun-body"></circle>
+                                <circle r="25" class="pg-gear-teeth"></circle>
+                                <circle r="10" class="pg-gear-core"></circle>
+                                <circle r="46" class="pg-sun-oil-film"></circle>
+                            </g>
+
+                            <path d="M490 76 C520 76 532 92 526 118" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
+                            <path d="M472 176 C462 198 474 214 496 218" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
+                            <path d="M418 204 C404 228 414 248 438 254" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
+                            <path d="M392 128 C368 164 366 216 396 254" class="pg-ring-arrow" marker-end="url(#pgArrowHead)"></path>
                         </svg>
                         <div class="gear-caption">Gear oil forms a protective film where the drive sprocket and ring gear carry load, helping separate metal surfaces while reducing wear, heat, and surface damage.</div>
                     </div>

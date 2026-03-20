@@ -1542,17 +1542,22 @@
             opacity: 0.96;
         }
 
-        .custom-theme.brightness-bold .grease-label {
-            fill: #ffffff;
-        }
+.custom-theme.brightness-bold .grease-label {
+    fill: #1f2937;
+}
 
-        .custom-theme .grease-label-copy {
-            fill: #1f2937;
-        }
+.custom-theme .grease-label-copy {
+    fill: #1f2937;
+}
 
-        .custom-theme.brightness-bold .grease-label-copy {
-            fill: #e5e7eb;
-        }
+.custom-theme.brightness-bold .grease-label-copy {
+    fill: #e5e7eb;
+}
+
+.custom-theme.brightness-bold .grease-label-box {
+    fill: #ffffff;
+    opacity: 0.96;
+}
 
         .custom-theme .grease-metal {
             fill: #7b8794;
@@ -2804,9 +2809,66 @@
 }
 
 .gear-load-zone {
-    fill: rgba(255, 122, 26, 0.18);
+    fill: url(#gearLoadGradient);
     stroke: rgba(255, 122, 26, 0.65);
     stroke-width: 2;
+}
+
+.gear-cfd-cool {
+    fill: rgba(30, 64, 175, 0.26);
+    animation: gearContourShift 5.8s ease-in-out infinite;
+}
+
+.gear-cfd-mid {
+    fill: rgba(14, 165, 233, 0.2);
+    animation: gearContourShift 5.8s ease-in-out infinite reverse;
+}
+
+.gear-cfd-warm {
+    fill: rgba(250, 204, 21, 0.18);
+    animation: gearContourShift 4.6s ease-in-out infinite;
+}
+
+.gear-stream-main {
+    fill: none;
+    stroke: url(#gearFlowGradientMain);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 20 14;
+    animation: gearFlowMove 2.2s linear infinite;
+}
+
+.gear-stream-cool {
+    fill: none;
+    stroke: rgba(56, 189, 248, 0.72);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 12 12;
+    animation: gearFlowMove 3.1s linear infinite;
+}
+
+.gear-stream-hot {
+    fill: none;
+    stroke: rgba(248, 113, 113, 0.82);
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    stroke-dasharray: 14 10;
+    animation: gearFlowMove 2.6s linear infinite reverse;
+}
+
+.gear-vortex {
+    fill: none;
+    stroke: rgba(251, 191, 36, 0.66);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-dasharray: 10 8;
+    animation: gearFlowMove 1.8s linear infinite;
+}
+
+.gear-particle {
+    fill: #fde047;
+    opacity: 0.8;
+    animation: gearParticleDrift 2.4s ease-in-out infinite;
 }
 
 .gear-callout {
@@ -2826,6 +2888,166 @@
     fill: #1f2937;
     font-size: 18px;
     font-weight: 800;
+}
+
+.pg-label-text {
+    fill: #374151;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.pg-leader {
+    stroke: #9ca3af;
+    stroke-width: 1.8;
+}
+
+.pg-ring-outer {
+    fill: #b9bec7;
+    stroke: #6b7280;
+    stroke-width: 2;
+}
+
+.pg-ring-inner-shell {
+    fill: #d1d5db;
+    stroke: #6b7280;
+    stroke-width: 1.5;
+}
+
+.pg-ring-inner {
+    fill: #73d1bc;
+    stroke: #4b5563;
+    stroke-width: 2;
+}
+
+.pg-ring-teeth {
+    fill: none;
+    stroke: #6b7280;
+    stroke-width: 20;
+    stroke-linecap: round;
+    stroke-dasharray: 2 8;
+}
+
+.pg-carrier {
+    fill: rgba(255, 255, 255, 0.08);
+    stroke: #7c8592;
+    stroke-width: 4;
+}
+
+.pg-carrier-arm {
+    stroke: #7c8592;
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.pg-carrier-pin {
+    fill: #e5e7eb;
+    stroke: #9ca3af;
+    stroke-width: 2;
+}
+
+.pg-gear-body,
+.pg-sun-body {
+    fill: url(#pgMetal);
+    stroke: #6b7280;
+    stroke-width: 2;
+}
+
+.pg-gear-teeth {
+    fill: none;
+    stroke: #6b7280;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 1.8 6.4;
+}
+
+.pg-gear-core {
+    fill: #d1d5db;
+    stroke: #6b7280;
+    stroke-width: 1.5;
+}
+
+.pg-oil-field {
+    fill: rgba(115, 209, 188, 0.18);
+}
+
+.pg-oil-bath {
+    fill: rgba(245, 158, 11, 0.3);
+}
+
+.pg-oil-ripple {
+    fill: none;
+    stroke: url(#pgOilGradient);
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: pgOilWave 4.8s ease-in-out infinite;
+}
+
+.pg-oil-flow {
+    fill: none;
+    stroke: url(#pgOilGradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 12 10;
+    animation: gearFlowMove 2.4s linear infinite;
+}
+
+.pg-oil-bubble {
+    fill: #fde68a;
+    opacity: 0.75;
+    animation: pgOilBubble 3.8s ease-in-out infinite;
+}
+
+.pg-oil-bubble-delay {
+    animation-delay: 1.2s;
+}
+
+.pg-oil-bubble-slow {
+    animation-duration: 5.2s;
+}
+
+.pg-sun-oil-film {
+    fill: none;
+    stroke: rgba(245, 158, 11, 0.72);
+    stroke-width: 5;
+    stroke-dasharray: 10 8;
+    animation: gearFilmPulse 2.8s ease-in-out infinite;
+}
+
+.pg-arrow {
+    fill: none;
+    stroke: #111827;
+    stroke-width: 2;
+}
+
+.pg-ring-arrow {
+    fill: none;
+    stroke: #111827;
+    stroke-width: 2.4;
+}
+
+.pg-arrow-head {
+    fill: #111827;
+}
+
+.custom-theme.brightness-bold .pg-label-text {
+    fill: #e5e7eb;
+}
+
+.custom-theme.brightness-bold .pg-leader {
+    stroke: #d1d5db;
+}
+
+.custom-theme.brightness-bold .pg-arrow {
+    stroke: #f3f4f6;
+}
+
+.custom-theme.brightness-bold .pg-ring-arrow {
+    stroke: #f3f4f6;
+}
+
+.custom-theme.brightness-bold .pg-arrow-head {
+    fill: #f3f4f6;
 }
 
 .gear-caption {
@@ -2890,6 +3112,26 @@
 @keyframes gearFilmPulse {
     0%, 100% { opacity: 0.7; }
     50% { opacity: 1; }
+}
+
+@keyframes gearContourShift {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes gearParticleDrift {
+    0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+    50% { transform: translate(6px, -4px); opacity: 1; }
+}
+
+@keyframes pgOilWave {
+    0%, 100% { opacity: 0.75; }
+    50% { opacity: 1; }
+}
+
+@keyframes pgOilBubble {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50% { transform: translateY(-8px); opacity: 0.95; }
 }
 
 @media (max-width: 900px) {
