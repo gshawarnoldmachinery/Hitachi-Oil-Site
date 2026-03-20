@@ -3065,4 +3065,26 @@
     }
 }
 
+/* Global contrast guardrails for readable text in Light and Dark modes */
+.custom-theme.brightness-subtle,
+.custom-theme.brightness-medium {
+    --ts-muted: #374151 !important;
+}
+
+.custom-theme .do-title {
+    color: #166534 !important;
+}
+
+.custom-theme .dont-title {
+    color: #991b1b !important;
+}
+
+.custom-theme.brightness-bold .do-title {
+    color: #86efac !important;
+}
+
+.custom-theme.brightness-bold .dont-title {
+    color: #fca5a5 !important;
+}
+
 

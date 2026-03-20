@@ -178,7 +178,7 @@
             const tips = Array.from(document.querySelectorAll('.family-tooltip'));
             const mobile = window.matchMedia('(max-width: 768px)');
             const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
-            const BRIGHTNESS_KEY = 'hitachiEngineOilBrightness';
+            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
 
             function applyBrightness(level) {
                 const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
@@ -193,7 +193,7 @@
             applyBrightness(storedBrightness);
             brightnessButtons.forEach((btn) => {
                 btn.addEventListener('click', function () {
-                    const level = btn.dataset.brightness || 'medium';
+                    const level = btn.dataset.brightness || 'subtle';
                     applyBrightness(level);
                     localStorage.setItem(BRIGHTNESS_KEY, level);
                 });
@@ -234,6 +234,7 @@
     </script>
 </body>
 </html>
+
 
 
 

@@ -473,7 +473,7 @@
         (function () {
             const tooltips = Array.from(document.querySelectorAll('.family-tooltip'));
             const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
-            const BRIGHTNESS_KEY = 'hitachiGreaseBrightness';
+            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
 
             function applyBrightness(level) {
                 const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
@@ -489,7 +489,7 @@
 
             brightnessButtons.forEach((btn) => {
                 btn.addEventListener('click', function () {
-                    const level = btn.dataset.brightness || 'medium';
+                    const level = btn.dataset.brightness || 'subtle';
                     applyBrightness(level);
                     localStorage.setItem(BRIGHTNESS_KEY, level);
                 });
@@ -607,6 +607,7 @@
     </script>
 </body>
 </html>
+
 
 
 
