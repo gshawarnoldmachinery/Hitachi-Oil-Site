@@ -2742,6 +2742,13 @@
     display: block;
 }
 
+.gear-demo-canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 760 / 360;
+    display: block;
+}
+
 .gear-housing {
     fill: #ff7a1a;
     opacity: 0.2;

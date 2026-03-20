@@ -100,98 +100,9 @@
                 <h2 class="section-title-zero">How Gear Oil Protects Gears</h2>
                 <div class="gear-demo-grid">
                     <div class="gear-demo-figure">
-                        <svg class="gear-demo-svg" viewBox="0 0 760 360" role="img" aria-label="Planetary gear set with visible oil bath, ring gear, sun gear, planet gears, and carrier">
-                            <defs>
-                                <radialGradient id="pgMetal" cx="35%" cy="30%" r="70%">
-                                    <stop offset="0%" stop-color="#f6f7f9"></stop>
-                                    <stop offset="55%" stop-color="#d1d5db"></stop>
-                                    <stop offset="100%" stop-color="#9ca3af"></stop>
-                                </radialGradient>
-                                <linearGradient id="pgOilGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#f59e0b"></stop>
-                                    <stop offset="50%" stop-color="#fbbf24"></stop>
-                                    <stop offset="100%" stop-color="#fde68a"></stop>
-                                </linearGradient>
-                                <clipPath id="pgOilClip">
-                                    <circle cx="510" cy="184" r="126"></circle>
-                                </clipPath>
-                                <marker id="pgArrowHead" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
-                                    <path d="M0 0 L10 5 L0 10 z" class="pg-arrow-head"></path>
-                                </marker>
-                            </defs>
-
-                            <g class="pg-labels">
-                                <text x="34" y="84" class="pg-label-text">INTERNAL RING GEAR</text>
-                                <line x1="248" y1="80" x2="404" y2="98" class="pg-leader"></line>
-
-                                <text x="170" y="124" class="pg-label-text">SUN GEAR</text>
-                                <line x1="282" y1="120" x2="494" y2="184" class="pg-leader"></line>
-
-                                <text x="118" y="206" class="pg-label-text">PLANET GEAR</text>
-                                <line x1="252" y1="202" x2="430" y2="226" class="pg-leader"></line>
-
-                                <text x="304" y="28" class="pg-label-text">CARRIER</text>
-                                <line x1="392" y1="34" x2="508" y2="100" class="pg-leader"></line>
-
-                                <text x="150" y="304" class="pg-label-text">OIL BATH</text>
-                                <line x1="244" y1="300" x2="430" y2="278" class="pg-leader"></line>
-                            </g>
-
-                            <circle cx="510" cy="184" r="156" class="pg-ring-outer"></circle>
-                            <circle cx="510" cy="184" r="140" class="pg-ring-inner-shell"></circle>
-                            <circle cx="510" cy="184" r="130" class="pg-ring-inner"></circle>
-                            <circle cx="510" cy="184" r="144" class="pg-ring-teeth"></circle>
-
-                            <g clip-path="url(#pgOilClip)">
-                                <circle cx="510" cy="184" r="126" class="pg-oil-field"></circle>
-                                <path d="M380 258 C414 246 444 272 476 260 C504 250 534 278 564 264 C594 250 624 272 640 262 L640 318 L380 318 Z" class="pg-oil-bath"></path>
-                                <path d="M386 260 C416 248 446 272 476 260 C504 250 534 276 564 262 C592 250 620 270 636 260" class="pg-oil-ripple"></path>
-                                <path d="M440 256 C456 232 470 214 486 206" class="pg-oil-flow"></path>
-                                <path d="M506 258 C506 232 506 214 506 202" class="pg-oil-flow"></path>
-                                <path d="M578 254 C562 230 548 212 534 206" class="pg-oil-flow"></path>
-                                <circle cx="468" cy="250" r="4" class="pg-oil-bubble"></circle>
-                                <circle cx="520" cy="246" r="3.5" class="pg-oil-bubble pg-oil-bubble-delay"></circle>
-                                <circle cx="560" cy="252" r="4.5" class="pg-oil-bubble pg-oil-bubble-slow"></circle>
-                            </g>
-
-                            <g class="pg-carrier-group">
-                                <line x1="510" y1="184" x2="510" y2="104" class="pg-carrier-arm"></line>
-                                <line x1="510" y1="184" x2="440" y2="226" class="pg-carrier-arm"></line>
-                                <line x1="510" y1="184" x2="580" y2="226" class="pg-carrier-arm"></line>
-                                <circle cx="510" cy="184" r="62" class="pg-carrier"></circle>
-                                <circle cx="510" cy="104" r="12" class="pg-carrier-pin"></circle>
-                                <circle cx="440" cy="226" r="12" class="pg-carrier-pin"></circle>
-                                <circle cx="580" cy="226" r="12" class="pg-carrier-pin"></circle>
-                            </g>
-
-                            <g transform="translate(510 104)">
-                                <circle r="36" class="pg-gear-body"></circle>
-                                <circle r="31" class="pg-gear-teeth"></circle>
-                                <circle r="11" class="pg-gear-core"></circle>
-                            </g>
-                            <g transform="translate(440 226)">
-                                <circle r="36" class="pg-gear-body"></circle>
-                                <circle r="31" class="pg-gear-teeth"></circle>
-                                <circle r="11" class="pg-gear-core"></circle>
-                            </g>
-                            <g transform="translate(580 226)">
-                                <circle r="36" class="pg-gear-body"></circle>
-                                <circle r="31" class="pg-gear-teeth"></circle>
-                                <circle r="11" class="pg-gear-core"></circle>
-                            </g>
-
-                            <g transform="translate(510 184)">
-                                <circle r="30" class="pg-sun-body"></circle>
-                                <circle r="25" class="pg-gear-teeth"></circle>
-                                <circle r="10" class="pg-gear-core"></circle>
-                                <circle r="46" class="pg-sun-oil-film"></circle>
-                            </g>
-
-                            <path d="M490 76 C520 76 532 92 526 118" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
-                            <path d="M472 176 C462 198 474 214 496 218" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
-                            <path d="M418 204 C404 228 414 248 438 254" class="pg-arrow" marker-end="url(#pgArrowHead)"></path>
-                            <path d="M392 128 C368 164 366 216 396 254" class="pg-ring-arrow" marker-end="url(#pgArrowHead)"></path>
-                        </svg>
+                        <canvas id="gearPlanetaryCanvas" class="gear-demo-canvas" width="760" height="360" role="img" aria-label="Planetary gear set with oil bath and labeled components">
+                            Planetary gear set diagram showing ring gear, sun gear, planet gears, carrier, and oil bath.
+                        </canvas>
                         <div class="gear-caption">Gear oil forms a protective film where the drive sprocket and ring gear carry load, helping separate metal surfaces while reducing wear, heat, and surface damage.</div>
                     </div>
                     <div class="gear-demo-side">
@@ -344,6 +255,322 @@
                     }
                 });
             }
+
+            function initGearCanvas() {
+                const canvas = document.getElementById('gearPlanetaryCanvas');
+                if (!canvas || !canvas.getContext) return;
+
+                const ctx = canvas.getContext('2d');
+                const base = { w: 760, h: 360 };
+                const center = { x: 510, y: 184 };
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+                const bubbles = [
+                    { x: 468, y: 250, r: 4, amp: 6, speed: 1.2, phase: 0 },
+                    { x: 520, y: 246, r: 3.5, amp: 5, speed: 1.6, phase: 1.1 },
+                    { x: 560, y: 252, r: 4.5, amp: 7, speed: 0.9, phase: 2.2 }
+                ];
+
+                let cssSize = { w: base.w, h: base.h };
+                let rafId = null;
+
+                function resizeCanvas() {
+                    const ratio = window.devicePixelRatio || 1;
+                    const rect = canvas.getBoundingClientRect();
+                    const cssW = rect.width || base.w;
+                    const cssH = cssW * (base.h / base.w);
+                    canvas.style.height = cssH + 'px';
+                    canvas.width = Math.round(cssW * ratio);
+                    canvas.height = Math.round(cssH * ratio);
+                    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+                    cssSize = { w: cssW, h: cssH };
+                }
+
+                function drawLine(x1, y1, x2, y2, color, width) {
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = width;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+
+                function drawArcArrow(cx, cy, r, start, end, color) {
+                    ctx.save();
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, r, start, end);
+                    ctx.stroke();
+                    const angle = end;
+                    const hx = cx + r * Math.cos(angle);
+                    const hy = cy + r * Math.sin(angle);
+                    const size = 6;
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(hx, hy);
+                    ctx.lineTo(hx - size * Math.cos(angle - Math.PI / 6), hy - size * Math.sin(angle - Math.PI / 6));
+                    ctx.lineTo(hx - size * Math.cos(angle + Math.PI / 6), hy - size * Math.sin(angle + Math.PI / 6));
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                function drawGear(cx, cy, bodyR, teethR, coreR, metalGradient) {
+                    ctx.fillStyle = metalGradient(cx, cy, bodyR);
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, bodyR, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.save();
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 8;
+                    ctx.setLineDash([1.8, 6.4]);
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, teethR, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    ctx.fillStyle = '#d1d5db';
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                function metalGradient(cx, cy, r) {
+                    const grad = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.2, cx, cy, r);
+                    grad.addColorStop(0, '#f6f7f9');
+                    grad.addColorStop(0.55, '#d1d5db');
+                    grad.addColorStop(1, '#9ca3af');
+                    return grad;
+                }
+
+                function drawScene(time) {
+                    const t = time || 0;
+                    const scaleX = cssSize.w / base.w;
+                    const scaleY = cssSize.h / base.h;
+                    const isDark = document.body.classList.contains('brightness-bold');
+                    const labelColor = isDark ? '#e5e7eb' : '#374151';
+                    const lineColor = isDark ? '#d1d5db' : '#9ca3af';
+                    const arrowColor = isDark ? '#f3f4f6' : '#111827';
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.save();
+                    ctx.scale(scaleX, scaleY);
+
+                    ctx.fillStyle = labelColor;
+                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('INTERNAL RING GEAR', 34, 84);
+                    drawLine(248, 80, 404, 98, lineColor, 1.8);
+                    ctx.fillText('SUN GEAR', 170, 124);
+                    drawLine(282, 120, 494, 184, lineColor, 1.8);
+                    ctx.fillText('PLANET GEAR', 118, 206);
+                    drawLine(252, 202, 430, 226, lineColor, 1.8);
+                    ctx.fillText('CARRIER', 304, 28);
+                    drawLine(392, 34, 508, 100, lineColor, 1.8);
+                    ctx.fillText('OIL BATH', 150, 304);
+                    drawLine(244, 300, 430, 278, lineColor, 1.8);
+
+                    ctx.fillStyle = '#b9bec7';
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 156, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#d1d5db';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 140, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#73d1bc';
+                    ctx.strokeStyle = '#4b5563';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 130, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.save();
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 20;
+                    ctx.setLineDash([2, 8]);
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 144, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 126, 0, Math.PI * 2);
+                    ctx.clip();
+                    ctx.fillStyle = 'rgba(115, 209, 188, 0.18)';
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 126, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    const waveBase = 258;
+                    const waveAmp = 4;
+                    const wavePhase = prefersReducedMotion.matches ? 0 : t * 1.1;
+                    const oilGradient = ctx.createLinearGradient(380, 0, 640, 0);
+                    oilGradient.addColorStop(0, '#f59e0b');
+                    oilGradient.addColorStop(0.5, '#fbbf24');
+                    oilGradient.addColorStop(1, '#fde68a');
+
+                    ctx.beginPath();
+                    ctx.moveTo(380, waveBase);
+                    for (let x = 380; x <= 640; x += 20) {
+                        const y = waveBase + Math.sin((x - 380) / 40 + wavePhase) * waveAmp;
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.lineTo(640, 318);
+                    ctx.lineTo(380, 318);
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(245, 158, 11, 0.3)';
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.moveTo(386, waveBase + Math.sin((386 - 380) / 40 + wavePhase) * waveAmp);
+                    for (let x = 386; x <= 636; x += 20) {
+                        const y = waveBase + Math.sin((x - 380) / 40 + wavePhase) * waveAmp;
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = oilGradient;
+                    ctx.lineWidth = 4;
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+
+                    ctx.save();
+                    ctx.strokeStyle = oilGradient;
+                    ctx.lineWidth = 6;
+                    ctx.lineCap = 'round';
+                    ctx.setLineDash([12, 10]);
+                    ctx.lineDashOffset = prefersReducedMotion.matches ? 0 : -t * 20;
+
+                    ctx.beginPath();
+                    ctx.moveTo(440, 256);
+                    ctx.quadraticCurveTo(456, 232, 486, 206);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(506, 258);
+                    ctx.quadraticCurveTo(506, 232, 506, 202);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(578, 254);
+                    ctx.quadraticCurveTo(562, 230, 534, 206);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    bubbles.forEach((b) => {
+                        const offset = prefersReducedMotion.matches ? 0 : Math.sin(t * b.speed + b.phase) * b.amp;
+                        ctx.fillStyle = '#fde68a';
+                        ctx.globalAlpha = 0.75;
+                        ctx.beginPath();
+                        ctx.arc(b.x, b.y - offset, b.r, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    ctx.globalAlpha = 1;
+                    ctx.restore();
+
+                    ctx.strokeStyle = '#7c8592';
+                    ctx.lineWidth = 5;
+                    ctx.lineCap = 'round';
+                    drawLine(center.x, center.y, 510, 104, '#7c8592', 5);
+                    drawLine(center.x, center.y, 440, 226, '#7c8592', 5);
+                    drawLine(center.x, center.y, 580, 226, '#7c8592', 5);
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.strokeStyle = '#7c8592';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 62, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#e5e7eb';
+                    ctx.strokeStyle = '#9ca3af';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(510, 104, 12, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(440, 226, 12, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(580, 226, 12, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    drawGear(510, 104, 36, 31, 11, metalGradient);
+                    drawGear(440, 226, 36, 31, 11, metalGradient);
+                    drawGear(580, 226, 36, 31, 11, metalGradient);
+                    drawGear(510, 184, 30, 25, 10, metalGradient);
+
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(245, 158, 11, 0.72)';
+                    ctx.lineWidth = 5;
+                    ctx.setLineDash([10, 8]);
+                    ctx.lineDashOffset = prefersReducedMotion.matches ? 0 : -t * 10;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 46, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    drawArcArrow(510, 184, 26, Math.PI * 0.1, Math.PI * 1.35, arrowColor);
+                    drawArcArrow(510, 104, 18, Math.PI * 0.6, Math.PI * 1.8, arrowColor);
+                    drawArcArrow(440, 226, 18, Math.PI * 1.3, Math.PI * 2.5, arrowColor);
+                    drawArcArrow(580, 226, 18, Math.PI * 1.9, Math.PI * 3.1, arrowColor);
+                    drawArcArrow(510, 184, 120, Math.PI * 1.15, Math.PI * 1.55, arrowColor);
+
+                    ctx.restore();
+                }
+
+                function renderFrame(ts) {
+                    const time = prefersReducedMotion.matches ? 0 : (ts || 0) / 1000;
+                    drawScene(time);
+                    if (!prefersReducedMotion.matches) {
+                        rafId = requestAnimationFrame(renderFrame);
+                    }
+                }
+
+                resizeCanvas();
+                drawScene(0);
+                if (!prefersReducedMotion.matches) {
+                    rafId = requestAnimationFrame(renderFrame);
+                }
+
+                window.addEventListener('resize', function () {
+                    resizeCanvas();
+                    drawScene(0);
+                });
+
+                prefersReducedMotion.addEventListener('change', function () {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    drawScene(0);
+                    if (!prefersReducedMotion.matches) {
+                        rafId = requestAnimationFrame(renderFrame);
+                    }
+                });
+
+                brightnessButtons.forEach((btn) => {
+                    btn.addEventListener('click', function () {
+                        drawScene(0);
+                    });
+                });
+            }
+
+            initGearCanvas();
         })();
     </script>
 </body>
