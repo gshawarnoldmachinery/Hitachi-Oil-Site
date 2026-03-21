@@ -563,7 +563,7 @@
                     ctx.fillText('PLANET GEARS', planetLabelX, planetLabelY);
                     ctx.beginPath();
                     ctx.moveTo(planetLabelX + 105, planetLabelY);
-                    ctx.lineTo(center.x - planetCalloutR, center.y);
+                    ctx.lineTo(center.x - planetCalloutR * 0.35, center.y + planetCalloutR * 0.85);
                     ctx.stroke();
                     ctx.restore();
 
