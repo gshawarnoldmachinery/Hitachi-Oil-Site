@@ -553,6 +553,25 @@
                     ctx.stroke();
                     ctx.restore();
 
+                    ctx.save();
+                    ctx.strokeStyle = lineColor;
+                    ctx.lineWidth = 2;
+                    const planetCalloutR = planetOffset + planetBodyR + 4;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, planetCalloutR, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.fillStyle = labelColor;
+                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
+                    ctx.textBaseline = 'middle';
+                    const planetLabelX = 520;
+                    const planetLabelY = 92;
+                    ctx.fillText('PLANET GEARS', planetLabelX, planetLabelY);
+                    ctx.beginPath();
+                    ctx.moveTo(planetLabelX - 10, planetLabelY);
+                    ctx.lineTo(center.x + Math.cos(-Math.PI / 3) * planetCalloutR, center.y + Math.sin(-Math.PI / 3) * planetCalloutR);
+                    ctx.stroke();
+                    ctx.restore();
+
 
                     ctx.restore();
                 }
