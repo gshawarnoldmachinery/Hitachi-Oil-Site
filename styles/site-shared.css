@@ -1360,6 +1360,8 @@
             border: 1px solid rgba(255, 122, 26, var(--panel-border));
             box-shadow: 0 16px 46px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 122, 26, var(--panel-glow)), inset 0 0 0 1px rgba(255, 122, 26, var(--panel-inset));
             backdrop-filter: blur(1px);
+            position: relative;
+            overflow: visible;
         }
 
         .brightness-toggle {
@@ -2432,6 +2434,8 @@
             border-radius: 1.5rem;
             padding: 1.5rem;
             backdrop-filter: blur(1px);
+            position: relative;
+            overflow: visible;
         }
 
         @media (min-width: 640px) {
