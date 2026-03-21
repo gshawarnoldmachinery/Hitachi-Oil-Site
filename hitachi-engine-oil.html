@@ -9,6 +9,7 @@
 </head>
 <body class="custom-theme min-h-screen brightness-subtle">
     <div class="container">
+        <!-- Toolbar navigation -->
         <div class="page-toolbar">
             <div class="toolbar-links" role="navigation" aria-label="Page navigation">
                 <a class="toolbar-link" href="./hitachi-grease.html">Grease</a>
@@ -44,6 +45,7 @@
             </div>
         </div>
 
+        <!-- Brand header -->
         <div class="brand-header">
             <div class="brand-wrap">
                 <div class="brand-left">
@@ -57,6 +59,7 @@
             </div>
         </div>
 
+        <!-- Main content -->
         <div class="content">
             <div class="title-wrap">
                 <div class="title-pill">
@@ -181,7 +184,8 @@
                 </div>
             </div>
 
-            <div class="footer">
+        <!-- Footer -->
+        <div class="footer">
                 <div class="footer-title">Engine Oil Visual Reference</div>
                 <div class="footer-meta">Hitachi Construction Machinery colors (#FF6600 / Black)</div>
                 <div id="versionLine" class="footer-meta footer-meta-small">Version 1.2.0 • Last updated: --</div>
@@ -189,97 +193,20 @@
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="./scripts/site-shared.js"></script>
     <script>
         (function () {
-            const tips = Array.from(document.querySelectorAll('.family-tooltip'));
-            const mobile = window.matchMedia('(max-width: 768px)');
-            const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
-            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
-
-            function applyBrightness(level) {
-                const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
-                document.body.classList.remove('brightness-subtle', 'brightness-medium', 'brightness-bold');
-                document.body.classList.add('brightness-' + valid);
-                brightnessButtons.forEach((btn) => {
-                    btn.classList.toggle('active', btn.dataset.brightness === valid);
-                });
-            }
-
-            const storedBrightness = localStorage.getItem(BRIGHTNESS_KEY) || 'subtle';
-            applyBrightness(storedBrightness);
-            brightnessButtons.forEach((btn) => {
-                btn.addEventListener('click', function () {
-                    const level = btn.dataset.brightness || 'subtle';
-                    applyBrightness(level);
-                    localStorage.setItem(BRIGHTNESS_KEY, level);
-                });
-            });
-
-            const menuButton = document.querySelector('.toolbar-menu-btn');
-            const menu = document.getElementById('toolbarMenu');
-            if (menuButton && menu) {
-                const closeMenu = () => {
-                    menu.classList.remove('is-open');
-                    menuButton.setAttribute('aria-expanded', 'false');
-                };
-                menuButton.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    const open = menu.classList.toggle('is-open');
-                    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-                });
-                document.addEventListener('click', function (event) {
-                    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-                        closeMenu();
-                    }
-                });
-                document.addEventListener('keydown', function (event) {
-                    if (event.key === 'Escape') closeMenu();
-                });
-            }
-
-            function closeAll() {
-                tips.forEach(t => t.classList.remove('is-open'));
-                document.body.classList.remove('tip-open');
-            }
-
-            document.addEventListener('click', function (e) {
-                if (!mobile.matches) return;
-                const target = e.target.closest('.family-tooltip');
-                if (!target) { closeAll(); return; }
-                const open = target.classList.contains('is-open');
-                closeAll();
-                if (!open) {
-                    target.classList.add('is-open');
-                    document.body.classList.add('tip-open');
-                }
-            });
-
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') closeAll();
-            });
-
-            const printBtn = document.getElementById('printBtn');
-            if (printBtn) {
-                printBtn.addEventListener('click', function () {
-                    if (typeof window.print === 'function') {
-                        window.print();
-                    } else {
-                        alert('Print is not supported in this app. Please open this file in a web browser and print from there.');
-                    }
-                });
-            }
-
-            const versionLine = document.getElementById('versionLine');
             const PAGE_VERSION = '1.2.0';
-            if (versionLine) {
-                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
-                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit'
-                });
-                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
+            // Shared UI setup (theme, menu, print, version, tooltips).
+            if (window.SiteShared) {
+                SiteShared.initThemeToggle();
+                SiteShared.initToolbarMenu();
+                SiteShared.initPrintButton();
+                SiteShared.initVersionLine(PAGE_VERSION);
+                SiteShared.initSimpleTooltips();
             }
+
         })();
     </script>
 </body>

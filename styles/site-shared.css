@@ -1048,6 +1048,7 @@
             position: relative;
         }
 
+        /* Toolbar menu (burger button + dropdown panel). */
         .toolbar-menu-btn {
             display: inline-flex;
             align-items: center;

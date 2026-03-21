@@ -9,6 +9,7 @@
 </head>
 <body class="custom-theme min-h-screen brightness-subtle">
     <div class="container">
+        <!-- Toolbar navigation -->
         <div class="page-toolbar">
             <div class="toolbar-links" role="navigation" aria-label="Page navigation">
                 <a class="toolbar-link active" href="./hitachi-grease.html">Grease</a>
@@ -44,7 +45,7 @@
             </div>
         </div>
 
-        <!-- Logo header -->
+        <!-- Brand header -->
         <div class="brand-header">
             <div class="brand-wrap">
                 <div class="brand-left">
@@ -60,6 +61,7 @@
             </div>
         </div>
 
+        <!-- Main content -->
         <div class="content">
             <!-- Main Title -->
             <div class="title-wrap">
@@ -448,52 +450,18 @@
         <div class="mobile-tooltip-backdrop" data-close-tooltip="true"></div>
         <div id="mobileTooltipCard" class="mobile-tooltip-card" role="dialog" aria-modal="true"></div>
     </div>
+    <!-- Scripts -->
+    <script src="./scripts/site-shared.js"></script>
     <script>
         (function () {
             const tooltips = Array.from(document.querySelectorAll('.family-tooltip'));
-            const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
-            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
-
-            function applyBrightness(level) {
-                const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
-                document.body.classList.remove('brightness-subtle', 'brightness-medium', 'brightness-bold');
-                document.body.classList.add('brightness-' + valid);
-                brightnessButtons.forEach((btn) => {
-                    btn.classList.toggle('active', btn.dataset.brightness === valid);
-                });
-            }
-
-            const storedBrightness = localStorage.getItem(BRIGHTNESS_KEY) || 'subtle';
-            applyBrightness(storedBrightness);
-
-            brightnessButtons.forEach((btn) => {
-                btn.addEventListener('click', function () {
-                    const level = btn.dataset.brightness || 'subtle';
-                    applyBrightness(level);
-                    localStorage.setItem(BRIGHTNESS_KEY, level);
-                });
-            });
-
-            const menuButton = document.querySelector('.toolbar-menu-btn');
-            const menu = document.getElementById('toolbarMenu');
-            if (menuButton && menu) {
-                const closeMenu = () => {
-                    menu.classList.remove('is-open');
-                    menuButton.setAttribute('aria-expanded', 'false');
-                };
-                menuButton.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    const open = menu.classList.toggle('is-open');
-                    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-                });
-                document.addEventListener('click', function (event) {
-                    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-                        closeMenu();
-                    }
-                });
-                document.addEventListener('keydown', function (event) {
-                    if (event.key === 'Escape') closeMenu();
-                });
+            const PAGE_VERSION = '1.1.0';
+            // Shared UI setup (theme, menu, version).
+            const sharedTheme = window.SiteShared ? SiteShared.initThemeToggle() : { buttons: [] };
+            const brightnessButtons = sharedTheme.buttons || [];
+            if (window.SiteShared) {
+                SiteShared.initToolbarMenu();
+                SiteShared.initVersionLine(PAGE_VERSION);
             }
 
             if (!tooltips.length) return;
@@ -501,8 +469,6 @@
             const mobileQuery = window.matchMedia('(max-width: 768px)');
             const overlay = document.getElementById('mobileTooltipOverlay');
             const overlayCard = document.getElementById('mobileTooltipCard');
-            const versionLine = document.getElementById('versionLine');
-            const PAGE_VERSION = '1.1.0';
             const printDetailsGrid = document.getElementById('printDetailsGrid');
 
             function buildPrintDetails() {
@@ -595,16 +561,7 @@
             window.addEventListener('beforeprint', buildPrintDetails);
             buildPrintDetails();
 
-            if (versionLine) {
-                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
-                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit'
-                });
-                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
-            }
-
+            // Grease illustration canvas setup.
             function initGreaseCanvas() {
                 const canvas = document.getElementById('greaseCanvas');
                 if (!canvas || !canvas.getContext) return;

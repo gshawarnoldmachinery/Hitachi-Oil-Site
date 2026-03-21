@@ -9,6 +9,7 @@
 </head>
 <body class="custom-theme min-h-screen brightness-subtle">
     <div class="container">
+        <!-- Toolbar navigation -->
         <div class="page-toolbar">
             <div class="toolbar-links" role="navigation" aria-label="Page navigation">
                 <a class="toolbar-link" href="./hitachi-grease.html">Grease</a>
@@ -45,6 +46,7 @@
             </div>
         </div>
 
+        <!-- Brand header -->
         <div class="brand-header">
             <div class="brand-wrap">
                 <div class="brand-left">
@@ -58,6 +60,7 @@
             </div>
         </div>
 
+        <!-- Main content -->
         <div class="content">
             <div class="title-wrap">
                 <div class="title-pill">
@@ -88,6 +91,7 @@
                 </div>
             </div>
 
+            <!-- Footer -->
             <div class="footer">
                 <div class="footer-title">Illustration Sandbox</div>
                 <div class="footer-meta">Hitachi Construction Machinery colors (#FF6600 / Black)</div>
@@ -96,62 +100,16 @@
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="./scripts/site-shared.js"></script>
     <script>
         (function () {
-            const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
-            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
-
-            function applyBrightness(level) {
-                const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
-                document.body.classList.remove('brightness-subtle', 'brightness-medium', 'brightness-bold');
-                document.body.classList.add('brightness-' + valid);
-                brightnessButtons.forEach((btn) => {
-                    btn.classList.toggle('active', btn.dataset.brightness === valid);
-                });
-            }
-
-            const storedBrightness = localStorage.getItem(BRIGHTNESS_KEY) || 'subtle';
-            applyBrightness(storedBrightness);
-            brightnessButtons.forEach((btn) => {
-                btn.addEventListener('click', function () {
-                    const level = btn.dataset.brightness || 'subtle';
-                    applyBrightness(level);
-                    localStorage.setItem(BRIGHTNESS_KEY, level);
-                });
-            });
-
-            const menuButton = document.querySelector('.toolbar-menu-btn');
-            const menu = document.getElementById('toolbarMenu');
-            if (menuButton && menu) {
-                const closeMenu = () => {
-                    menu.classList.remove('is-open');
-                    menuButton.setAttribute('aria-expanded', 'false');
-                };
-                menuButton.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    const open = menu.classList.toggle('is-open');
-                    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-                });
-                document.addEventListener('click', function (event) {
-                    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
-                        closeMenu();
-                    }
-                });
-                document.addEventListener('keydown', function (event) {
-                    if (event.key === 'Escape') closeMenu();
-                });
-            }
-
-            const versionLine = document.getElementById('versionLine');
             const PAGE_VERSION = '0.1.0';
-            if (versionLine) {
-                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
-                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit'
-                });
-                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
+            // Shared UI setup (theme, menu, version).
+            if (window.SiteShared) {
+                SiteShared.initThemeToggle();
+                SiteShared.initToolbarMenu();
+                SiteShared.initVersionLine(PAGE_VERSION);
             }
 
             const canvas = document.getElementById('testCanvas');
