@@ -342,6 +342,35 @@
                     ctx.stroke();
                 }
 
+                function drawSprocket(cx, cy, baseR, toothLength, toothWidth, toothCount, rotation) {
+                    const spin = rotation || 0;
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(spin);
+                    ctx.fillStyle = metalGradient(0, 0, baseR + toothLength);
+                    ctx.strokeStyle = '#6b7280';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, baseR, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#b9bfc7';
+                    ctx.strokeStyle = '#7b8694';
+                    ctx.lineWidth = 1.2;
+                    ctx.lineJoin = 'round';
+                    for (let i = 0; i < toothCount; i += 1) {
+                        ctx.save();
+                        ctx.rotate((Math.PI * 2 * i) / toothCount);
+                        ctx.beginPath();
+                        ctx.rect(baseR, -toothWidth / 2, toothLength, toothWidth);
+                        ctx.fill();
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                    ctx.restore();
+                }
+
                 function metalGradient(cx, cy, r) {
                     const grad = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.2, cx, cy, r);
                     grad.addColorStop(0, '#f6f7f9');
@@ -369,6 +398,10 @@
                     const sunBodyR = 26;
                     const sunCoreR = 10;
                     const sunToothCount = 16;
+                    const sprocketBaseR = ringOuterR + 8;
+                    const sprocketToothCount = 21;
+                    const sprocketToothLength = 10;
+                    const sprocketToothWidth = 10;
                     const planetTeethR = 45;
                     const planetBodyR = 41;
                     const planetCoreR = 14;
@@ -417,6 +450,8 @@
                     ctx.arc(center.x, center.y, ringInnerR + 6, 0, Math.PI * 2);
                     ctx.stroke();
                     ctx.restore();
+
+                    drawSprocket(center.x, center.y, sprocketBaseR, sprocketToothLength, sprocketToothWidth, sprocketToothCount, 0);
 
                     ctx.save();
                     ctx.beginPath();
