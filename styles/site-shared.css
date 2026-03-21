@@ -2484,10 +2484,17 @@
         .arrow { color: var(--orange); font-size: 1.8rem; }
 
         .family-tooltip { position: relative; cursor: help; outline: none; }
+        .family-tooltip.box {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .family-tooltip.box:hover,
+        .family-tooltip.box:focus-within {
+            transform: translateY(-2px);
+        }
         .family-tooltip .tip {
             visibility: hidden;
             opacity: 0;
-            transition: opacity .2s, visibility .2s;
+            transition: opacity .2s, visibility .2s, transform .2s;
             position: absolute;
             top: 106%;
             left: 50%;
