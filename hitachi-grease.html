@@ -611,11 +611,8 @@
                     const scaleY = cssSize.h / base.h;
                     const isDark = document.body.classList.contains('brightness-bold');
 
-                    const armFill = '#f26a21';
-                    const armOutline = isDark ? '#374151' : '#374151';
-                    const weldStroke = '#8f3d07';
-                    const boreFace = isDark ? '#e5e7eb' : '#e5e7eb';
-                    const boreShadow = isDark ? '#94a3b8' : '#94a3b8';
+                    const armOutline = isDark ? '#2f343c' : '#2f343c';
+                    const weldStroke = '#2b2f36';
                     const bushingFill = isDark ? '#475569' : '#374151';
                     const pinFill = isDark ? '#9aa5b1' : '#9ca3af';
                     const pinCore = isDark ? '#e5e7eb' : '#d1d5db';
@@ -634,7 +631,11 @@
                     ctx.scale(scaleX, scaleY);
 
                     const armPath = new Path2D('M176 18 L584 18 L584 118 Q584 146 568 164 L520 216 Q500 238 492 270 Q486 300 470 320 Q448 350 380 356 Q312 350 290 320 Q274 300 268 270 Q260 238 240 216 L192 164 Q176 146 176 118 Z');
-                    ctx.fillStyle = armFill;
+                    const armGrad = ctx.createLinearGradient(176, 18, 584, 356);
+                    armGrad.addColorStop(0, '#2b3138');
+                    armGrad.addColorStop(0.4, '#3b4149');
+                    armGrad.addColorStop(1, '#1f232a');
+                    ctx.fillStyle = armGrad;
                     ctx.fill(armPath);
                     ctx.strokeStyle = armOutline;
                     ctx.lineWidth = 5;
@@ -643,7 +644,7 @@
                     ctx.strokeStyle = weldStroke;
                     ctx.lineWidth = 10;
                     ctx.lineCap = 'round';
-                    ctx.globalAlpha = 0.7;
+                    ctx.globalAlpha = 0.55;
                     ctx.beginPath();
                     ctx.moveTo(220, 90);
                     ctx.lineTo(540, 90);
@@ -654,16 +655,31 @@
                     ctx.stroke();
                     ctx.globalAlpha = 1;
 
-                    ctx.fillStyle = boreFace;
+                    const boreGrad = ctx.createRadialGradient(center.x - 28, center.y - 30, 24, center.x, center.y, 118);
+                    boreGrad.addColorStop(0, '#f5f7fa');
+                    boreGrad.addColorStop(0.55, '#d1d5db');
+                    boreGrad.addColorStop(1, '#9aa2ac');
+                    ctx.fillStyle = boreGrad;
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, 118, 0, Math.PI * 2);
                     ctx.fill();
-                    ctx.fillStyle = boreShadow;
+                    ctx.fillStyle = '#6b7280';
                     ctx.globalAlpha = 0.55;
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, 108, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.globalAlpha = 1;
+
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 128, Math.PI * 1.05, Math.PI * 1.75);
+                    ctx.stroke();
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.35)';
+                    ctx.lineWidth = 6;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 126, Math.PI * 0.05, Math.PI * 0.65);
+                    ctx.stroke();
                     ctx.fillStyle = bushingFill;
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, 96, 0, Math.PI * 2);
