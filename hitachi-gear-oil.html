@@ -363,7 +363,7 @@
                         x: center.x + planetOffset * Math.cos(angle + carrierSpin),
                         y: center.y + planetOffset * Math.sin(angle + carrierSpin)
                     }));
-                    const sunSpin = prefersReducedMotion.matches ? 0 : -t * 0.25;
+                    const sunSpin = prefersReducedMotion.matches ? 0 : t * 0.25;
                     const planetSpin = prefersReducedMotion.matches ? 0 : -t * 0.45;
                     const hubRingR = sunBodyR + 14;
 
