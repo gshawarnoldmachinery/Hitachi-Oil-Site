@@ -297,58 +297,8 @@
                     cssSize = { w: cssW, h: cssH };
                 }
 
-                function drawLine(x1, y1, x2, y2, color, width) {
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = width;
-                    ctx.beginPath();
-                    ctx.moveTo(x1, y1);
-                    ctx.lineTo(x2, y2);
-                    ctx.stroke();
-                }
-
-                function drawLeader(points, color, width, dotRadius) {
-                    if (!points || points.length < 2) return;
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = width;
-                    ctx.lineJoin = 'round';
-                    ctx.lineCap = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(points[0][0], points[0][1]);
-                    for (let i = 1; i < points.length; i += 1) {
-                        ctx.lineTo(points[i][0], points[i][1]);
-                    }
-                    ctx.stroke();
-                    if (dotRadius) {
-                        const last = points[points.length - 1];
-                        ctx.fillStyle = color;
-                        ctx.beginPath();
-                        ctx.arc(last[0], last[1], dotRadius, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-
-                function drawArcArrow(cx, cy, r, start, end, color) {
-                    ctx.save();
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(cx, cy, r, start, end);
-                    ctx.stroke();
-                    const angle = end;
-                    const hx = cx + r * Math.cos(angle);
-                    const hy = cy + r * Math.sin(angle);
-                    const size = 6;
-                    ctx.fillStyle = color;
-                    ctx.beginPath();
-                    ctx.moveTo(hx, hy);
-                    ctx.lineTo(hx - size * Math.cos(angle - Math.PI / 6), hy - size * Math.sin(angle - Math.PI / 6));
-                    ctx.lineTo(hx - size * Math.cos(angle + Math.PI / 6), hy - size * Math.sin(angle + Math.PI / 6));
-                    ctx.closePath();
-                    ctx.fill();
-                    ctx.restore();
-                }
-
-                function drawGear(cx, cy, bodyR, teethR, coreR, metalGradient) {
+                function drawGear(cx, cy, bodyR, teethR, coreR, metalGradient, rotation) {
+                    const spin = rotation || 0;
                     ctx.fillStyle = metalGradient(cx, cy, bodyR);
                     ctx.strokeStyle = '#6b7280';
                     ctx.lineWidth = 2;
@@ -358,11 +308,20 @@
                     ctx.stroke();
 
                     ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(spin);
                     ctx.strokeStyle = '#6b7280';
                     ctx.lineWidth = 8;
                     ctx.setLineDash([1.8, 6.4]);
                     ctx.beginPath();
-                    ctx.arc(cx, cy, teethR, 0, Math.PI * 2);
+                    ctx.arc(0, 0, teethR, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.strokeStyle = '#9ca3af';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(0, -bodyR + 6);
+                    ctx.lineTo(0, -bodyR + 16);
                     ctx.stroke();
                     ctx.restore();
 
@@ -387,24 +346,42 @@
                     const t = time || 0;
                     const scaleX = cssSize.w / base.w;
                     const scaleY = cssSize.h / base.h;
-                    const isDark = document.body.classList.contains('brightness-bold');
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
                     ctx.scale(scaleX, scaleY);
 
+                    const ringOuterR = 150;
+                    const ringMidR = 135;
+                    const ringInnerR = 120;
+                    const sunTeethR = 30;
+                    const sunBodyR = 26;
+                    const sunCoreR = 10;
+                    const planetTeethR = 45;
+                    const planetBodyR = 41;
+                    const planetCoreR = 14;
+                    const planetOffset = sunTeethR + planetTeethR;
+                    const planetAngles = [-90, 30, 150].map((deg) => deg * Math.PI / 180);
+                    const planets = planetAngles.map((angle) => ({
+                        x: center.x + planetOffset * Math.cos(angle),
+                        y: center.y + planetOffset * Math.sin(angle)
+                    }));
+                    const sunSpin = prefersReducedMotion.matches ? 0 : t * 0.35;
+                    const planetSpin = prefersReducedMotion.matches ? 0 : -t * 0.55;
+                    const hubRingR = sunBodyR + 14;
+
                     ctx.fillStyle = '#b9bec7';
                     ctx.strokeStyle = '#6b7280';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 156, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringOuterR, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
 
                     ctx.fillStyle = '#d1d5db';
                     ctx.lineWidth = 1.5;
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 140, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringMidR, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
 
@@ -412,26 +389,26 @@
                     ctx.strokeStyle = '#4b5563';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 130, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringInnerR, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
 
                     ctx.save();
                     ctx.strokeStyle = '#6b7280';
-                    ctx.lineWidth = 20;
+                    ctx.lineWidth = 18;
                     ctx.setLineDash([2, 8]);
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 144, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringInnerR + 6, 0, Math.PI * 2);
                     ctx.stroke();
                     ctx.restore();
 
                     ctx.save();
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 126, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringInnerR - 6, 0, Math.PI * 2);
                     ctx.clip();
                     ctx.fillStyle = 'rgba(115, 209, 188, 0.18)';
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 126, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, ringInnerR - 6, 0, Math.PI * 2);
                     ctx.fill();
 
                     const waveBase = 258;
@@ -501,30 +478,24 @@
                     ctx.strokeStyle = '#7c8592';
                     ctx.lineWidth = 4;
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 62, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, hubRingR, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
 
                     ctx.fillStyle = '#e5e7eb';
                     ctx.strokeStyle = '#9ca3af';
                     ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(510, 104, 12, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(440, 226, 12, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(580, 226, 12, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
+                    planets.forEach((planet) => {
+                        ctx.beginPath();
+                        ctx.arc(planet.x, planet.y, 12, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.stroke();
+                    });
 
-                    drawGear(510, 104, 36, 31, 11, metalGradient);
-                    drawGear(440, 226, 36, 31, 11, metalGradient);
-                    drawGear(580, 226, 36, 31, 11, metalGradient);
-                    drawGear(510, 184, 30, 25, 10, metalGradient);
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + 0.8);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + 1.6);
+                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin);
 
                     ctx.save();
                     ctx.strokeStyle = 'rgba(245, 158, 11, 0.72)';
