@@ -51,13 +51,13 @@
             </div>
 
             <div class="panel">
-                <h2 class="section-title-zero">Canvas Test Area</h2>
+                <h2 class="section-title-zero">Grease Illustration Prototype</h2>
                 <div class="gear-demo-grid">
                     <div class="gear-demo-figure">
                         <canvas id="testCanvas" class="gear-demo-canvas" width="760" height="360" role="img" aria-label="Illustration sandbox canvas">
                             Illustration sandbox.
                         </canvas>
-                        <div class="gear-caption">Use this canvas to build and refine new illustrations.</div>
+                        <div class="gear-caption">Lower stick pin and bushing cutaway inspired by the reference photo.</div>
                     </div>
                     <div class="gear-demo-side">
                         <div class="gear-demo-note">
@@ -132,27 +132,125 @@
                 ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
-            function drawPlaceholder() {
+            function drawGreaseIllustration() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.save();
-                ctx.fillStyle = 'rgba(255, 122, 26, 0.08)';
-                ctx.fillRect(60, 60, 640, 240);
-                ctx.strokeStyle = 'rgba(255, 122, 26, 0.45)';
+                const isDark = document.body.classList.contains('brightness-bold');
+                const outline = isDark ? '#1f2937' : '#2f343c';
+                const orangeTop = '#ff7a1a';
+                const orangeMid = '#e35f0b';
+                const orangeDeep = '#c24b00';
+                const metalLight = '#f5f7fa';
+                const metalMid = '#d1d5db';
+                const metalDark = '#9aa2ac';
+                const metalInner = '#6b7280';
+
+                function roundRect(x, y, w, h, r) {
+                    const radius = Math.min(r, w / 2, h / 2);
+                    ctx.beginPath();
+                    ctx.moveTo(x + radius, y);
+                    ctx.lineTo(x + w - radius, y);
+                    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+                    ctx.lineTo(x + w, y + h - radius);
+                    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+                    ctx.lineTo(x + radius, y + h);
+                    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+                    ctx.lineTo(x, y + radius);
+                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                    ctx.closePath();
+                }
+
+                const center = { x: 380, y: 210 };
+                const armGrad = ctx.createLinearGradient(220, 20, 560, 320);
+                armGrad.addColorStop(0, orangeTop);
+                armGrad.addColorStop(0.55, orangeMid);
+                armGrad.addColorStop(1, orangeDeep);
+
+                ctx.fillStyle = armGrad;
+                roundRect(210, 20, 340, 150, 28);
+                ctx.fill();
+                roundRect(230, 150, 300, 90, 34);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 138, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = outline;
+                ctx.lineWidth = 4;
+                roundRect(210, 20, 340, 150, 28);
+                ctx.stroke();
+                roundRect(230, 150, 300, 90, 34);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 138, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 132, Math.PI * 0.05, Math.PI * 0.65);
+                ctx.stroke();
+
+                const boreGrad = ctx.createRadialGradient(center.x - 26, center.y - 30, 24, center.x, center.y, 118);
+                boreGrad.addColorStop(0, metalLight);
+                boreGrad.addColorStop(0.55, metalMid);
+                boreGrad.addColorStop(1, metalDark);
+                ctx.fillStyle = boreGrad;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 118, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = metalInner;
+                ctx.globalAlpha = 0.55;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 108, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                ctx.fillStyle = '#374151';
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 90, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff7a1a';
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 74, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#9aa5b1';
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 56, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#e5e7eb';
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 32, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 130, Math.PI * 1.1, Math.PI * 1.85);
+                ctx.stroke();
+
+                ctx.fillStyle = '#9aa5b1';
+                ctx.strokeStyle = '#374151';
                 ctx.lineWidth = 2;
-                ctx.strokeRect(60, 60, 640, 240);
-                ctx.fillStyle = '#9ca3af';
-                ctx.font = '700 18px "Segoe UI", Arial, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('Illustration Sandbox', 380, 180);
+                roundRect(580, 186, 26, 24, 6);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(612, 196, 8, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
                 ctx.restore();
             }
 
             resizeCanvas();
-            drawPlaceholder();
+            drawGreaseIllustration();
             window.addEventListener('resize', function () {
                 resizeCanvas();
-                drawPlaceholder();
+                drawGreaseIllustration();
             });
         })();
     </script>
