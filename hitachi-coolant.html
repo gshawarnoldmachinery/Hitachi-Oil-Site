@@ -164,8 +164,8 @@
 
             <div class="footer">
                 <div class="footer-title">Coolant Visual Reference</div>
-                <div class="footer-meta">Hitachi Construction Machinery colors (#FF6600 / Black)</div>
-                <div class="footer-meta footer-meta-small">Version 1.0.0</div>
+                <div class="footer-meta">Based on Hitachi Construction Machinery service specifications • Hitachi Construction Machinery colors (#FF6600 / Black)</div>
+                <div id="versionLine" class="footer-meta footer-meta-small">Version 1.0.0 • Last updated: --</div>
             </div>
         </div>
     </div>
@@ -226,6 +226,18 @@
                         alert('Print is not supported in this app. Please open this file in a web browser and print from there.');
                     }
                 });
+            }
+
+            const versionLine = document.getElementById('versionLine');
+            const PAGE_VERSION = '1.0.0';
+            if (versionLine) {
+                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
+                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit'
+                });
+                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
             }
         })();
     </script>

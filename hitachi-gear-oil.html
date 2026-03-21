@@ -192,8 +192,8 @@
 
             <div class="footer">
                 <div class="footer-title">Gear Oil Visual Reference</div>
-                <div class="footer-meta">Hitachi Construction Machinery colors (#FF6600 / Black)</div>
-                <div class="footer-meta footer-meta-small">Version 1.0.0</div>
+                <div class="footer-meta">Based on Hitachi Construction Machinery service specifications • Hitachi Construction Machinery colors (#FF6600 / Black)</div>
+                <div id="versionLine" class="footer-meta footer-meta-small">Version 1.0.0 • Last updated: --</div>
             </div>
         </div>
     </div>
@@ -256,6 +256,18 @@
                 });
             }
 
+            const versionLine = document.getElementById('versionLine');
+            const PAGE_VERSION = '1.0.0';
+            if (versionLine) {
+                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
+                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit'
+                });
+                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
+            }
+
             function initGearCanvas() {
                 const canvas = document.getElementById('gearPlanetaryCanvas');
                 if (!canvas || !canvas.getContext) return;
@@ -292,6 +304,27 @@
                     ctx.moveTo(x1, y1);
                     ctx.lineTo(x2, y2);
                     ctx.stroke();
+                }
+
+                function drawLeader(points, color, width, dotRadius) {
+                    if (!points || points.length < 2) return;
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = width;
+                    ctx.lineJoin = 'round';
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(points[0][0], points[0][1]);
+                    for (let i = 1; i < points.length; i += 1) {
+                        ctx.lineTo(points[i][0], points[i][1]);
+                    }
+                    ctx.stroke();
+                    if (dotRadius) {
+                        const last = points[points.length - 1];
+                        ctx.fillStyle = color;
+                        ctx.beginPath();
+                        ctx.arc(last[0], last[1], dotRadius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
                 }
 
                 function drawArcArrow(cx, cy, r, start, end, color) {
@@ -356,7 +389,7 @@
                     const scaleY = cssSize.h / base.h;
                     const isDark = document.body.classList.contains('brightness-bold');
                     const labelColor = isDark ? '#e5e7eb' : '#374151';
-                    const lineColor = isDark ? '#d1d5db' : '#9ca3af';
+                    const lineColor = isDark ? '#e5e7eb' : '#4b5563';
                     const arrowColor = isDark ? '#f3f4f6' : '#111827';
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -366,16 +399,16 @@
                     ctx.fillStyle = labelColor;
                     ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText('INTERNAL RING GEAR', 34, 84);
-                    drawLine(248, 80, 404, 98, lineColor, 1.8);
-                    ctx.fillText('SUN GEAR', 170, 124);
-                    drawLine(282, 120, 494, 184, lineColor, 1.8);
-                    ctx.fillText('PLANET GEAR', 118, 206);
-                    drawLine(252, 202, 430, 226, lineColor, 1.8);
-                    ctx.fillText('CARRIER', 304, 28);
-                    drawLine(392, 34, 508, 100, lineColor, 1.8);
-                    ctx.fillText('OIL BATH', 150, 304);
-                    drawLine(244, 300, 430, 278, lineColor, 1.8);
+                    ctx.fillText('INTERNAL RING GEAR', 28, 78);
+                    drawLeader([[236, 78], [306, 78], [374, 142]], lineColor, 2.2, 2.4);
+                    ctx.fillText('SUN GEAR', 152, 124);
+                    drawLeader([[252, 124], [332, 124], [487, 184]], lineColor, 2.2, 2.4);
+                    ctx.fillText('PLANET GEAR', 98, 214);
+                    drawLeader([[228, 214], [310, 214], [404, 226]], lineColor, 2.2, 2.4);
+                    ctx.fillText('CARRIER', 304, 26);
+                    drawLeader([[388, 30], [424, 30], [470, 130]], lineColor, 2.2, 2.4);
+                    ctx.fillText('OIL BATH', 120, 304);
+                    drawLeader([[214, 304], [292, 304], [438, 274]], lineColor, 2.2, 2.4);
 
                     ctx.fillStyle = '#b9bec7';
                     ctx.strokeStyle = '#6b7280';
