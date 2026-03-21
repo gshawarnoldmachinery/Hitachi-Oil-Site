@@ -605,9 +605,12 @@
                 function drawGreaseIllustration(phase) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
-                    const offsetY = canvas.clientWidth < 520 ? 28 : 16;
-                    ctx.translate(0, offsetY);
                     const isDark = document.body.classList.contains('brightness-bold');
+                    const scale = Math.min(canvas.clientWidth / base.w, canvas.clientHeight / base.h);
+                    const offsetX = (canvas.clientWidth / scale - base.w) / 2;
+                    const offsetY = (canvas.clientHeight / scale - base.h) / 2 + (canvas.clientWidth < 520 ? 12 : 0);
+                    ctx.scale(scale, scale);
+                    ctx.translate(offsetX, offsetY);
                     const orangeTop = '#ff7a1a';
                     const orangeMid = '#e35f0b';
                     const orangeDeep = '#c24b00';
