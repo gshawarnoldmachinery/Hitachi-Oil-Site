@@ -1042,32 +1042,43 @@
         }
 
         .toolbar-dropdown {
-            display: none;
+            display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         .toolbar-dropdown-label {
             font-size: 0.75rem;
             font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             color: #f3f4f6;
         }
 
         .toolbar-select {
             appearance: none;
             border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             color: #f3f4f6;
-            border-radius: 8px;
+            border-radius: 999px;
             font-size: 0.85rem;
             font-weight: 700;
-            padding: 0.45rem 2.2rem 0.45rem 0.9rem;
+            padding: 0.5rem 2.6rem 0.5rem 1.1rem;
             line-height: 1.1;
-            min-width: 12rem;
-            background-image: linear-gradient(45deg, transparent 50%, #f3f4f6 50%), linear-gradient(135deg, #f3f4f6 50%, transparent 50%);
-            background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
-            background-size: 6px 6px, 6px 6px;
+            min-width: 13rem;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+            background-image: linear-gradient(45deg, transparent 50%, #f3f4f6 50%), linear-gradient(135deg, #f3f4f6 50%, transparent 50%), radial-gradient(circle at 90% 50%, rgba(255, 122, 26, 0.25), transparent 55%);
+            background-position: calc(100% - 22px) calc(50% - 4px), calc(100% - 16px) calc(50% - 4px), 100% 50%;
+            background-size: 7px 7px, 7px 7px, 2.6rem 2.6rem;
             background-repeat: no-repeat;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .toolbar-select:focus {
+            outline: none;
+            border-color: rgba(255, 122, 26, 0.85);
+            box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25), 0 8px 18px rgba(0, 0, 0, 0.25);
+            transform: translateY(-1px);
         }
 
         .toolbar-theme {
@@ -1625,7 +1636,8 @@ body.custom-theme.brightness-medium {
     background: var(--ts-surface-2);
     color: var(--ts-text);
     border-color: var(--ts-border);
-    background-image: linear-gradient(45deg, transparent 50%, var(--ts-text) 50%), linear-gradient(135deg, var(--ts-text) 50%, transparent 50%);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
+    background-image: linear-gradient(45deg, transparent 50%, var(--ts-text) 50%), linear-gradient(135deg, var(--ts-text) 50%, transparent 50%), radial-gradient(circle at 90% 50%, rgba(255, 122, 26, 0.18), transparent 60%);
 }
 
 .custom-theme.brightness-bold .toolbar-dropdown-label {
@@ -1636,7 +1648,8 @@ body.custom-theme.brightness-medium {
     background: rgba(17, 24, 39, 0.85);
     color: #f9fafb;
     border-color: rgba(255, 255, 255, 0.18);
-    background-image: linear-gradient(45deg, transparent 50%, #f9fafb 50%), linear-gradient(135deg, #f9fafb 50%, transparent 50%);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    background-image: linear-gradient(45deg, transparent 50%, #f9fafb 50%), linear-gradient(135deg, #f9fafb 50%, transparent 50%), radial-gradient(circle at 90% 50%, rgba(255, 122, 26, 0.22), transparent 60%);
 }
 
 .custom-theme .grease-label-copy {
