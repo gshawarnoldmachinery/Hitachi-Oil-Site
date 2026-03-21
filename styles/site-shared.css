@@ -1364,6 +1364,11 @@
             overflow: visible;
         }
 
+        .connect-panel:hover,
+        .connect-panel:focus-within {
+            z-index: 30;
+        }
+
         .brightness-toggle {
             display: inline-flex;
             align-items: center;
@@ -2436,6 +2441,11 @@
             backdrop-filter: blur(1px);
             position: relative;
             overflow: visible;
+        }
+
+        .panel:hover,
+        .panel:focus-within {
+            z-index: 20;
         }
 
         @media (min-width: 640px) {
