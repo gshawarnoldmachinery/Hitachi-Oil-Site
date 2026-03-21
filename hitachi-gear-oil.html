@@ -297,7 +297,7 @@
                     cssSize = { w: cssW, h: cssH };
                 }
 
-                function drawGear(cx, cy, bodyR, teethR, coreR, metalGradient, rotation) {
+                function drawGear(cx, cy, bodyR, teethR, coreR, metalGradient, rotation, toothCount) {
                     const spin = rotation || 0;
                     ctx.fillStyle = metalGradient(cx, cy, bodyR);
                     ctx.strokeStyle = '#6b7280';
@@ -310,15 +310,23 @@
                     ctx.save();
                     ctx.translate(cx, cy);
                     ctx.rotate(spin);
-                    ctx.strokeStyle = '#8b949e';
-                    ctx.lineWidth = 6;
-                    ctx.lineCap = 'round';
-                    ctx.setLineDash([5, 10]);
-                    ctx.beginPath();
-                    ctx.arc(0, 0, teethR, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                    ctx.lineCap = 'butt';
+                    const count = toothCount || Math.max(14, Math.round(teethR * 0.55));
+                    const pitch = (Math.PI * 2 * teethR) / count;
+                    const toothWidth = pitch * 0.42;
+                    const toothDepth = Math.max(6, bodyR * 0.18);
+                    ctx.fillStyle = '#b9bfc7';
+                    ctx.strokeStyle = '#7b8694';
+                    ctx.lineWidth = 1.2;
+                    ctx.lineJoin = 'round';
+                    for (let i = 0; i < count; i += 1) {
+                        ctx.save();
+                        ctx.rotate((Math.PI * 2 * i) / count);
+                        ctx.beginPath();
+                        ctx.rect(teethR - toothDepth, -toothWidth / 2, toothDepth, toothWidth);
+                        ctx.fill();
+                        ctx.stroke();
+                        ctx.restore();
+                    }
                     ctx.restore();
 
                     ctx.fillStyle = '#d1d5db';
@@ -489,10 +497,10 @@
                         ctx.stroke();
                     });
 
-                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin);
-                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8);
-                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6);
-                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin);
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, 24);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, 24);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, 24);
+                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, 16);
 
                     ctx.save();
                     ctx.strokeStyle = 'rgba(245, 158, 11, 0.72)';
