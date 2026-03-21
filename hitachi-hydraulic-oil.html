@@ -306,63 +306,83 @@
                     const scaleX = cssSize.w / base.w;
                     const scaleY = cssSize.h / base.h;
                     const isDark = document.body.classList.contains('brightness-bold');
-                    const housingFill = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.92)';
-                    const housingStroke = isDark ? '#374151' : '#9aa4b2';
-                    const blockFill = isDark ? '#1f2937' : '#e5e7eb';
+                    const housingFill = isDark ? '#1f232a' : '#d1d5db';
+                    const housingStroke = isDark ? '#9ca3af' : '#6b7280';
+                    const cutawayFill = isDark ? '#2a2f38' : '#eef0f3';
+                    const blockFill = isDark ? '#1f2937' : '#b7bcc4';
                     const blockStroke = isDark ? '#9ca3af' : '#6b7280';
-                    const pistonFill = isDark ? '#d1d5db' : '#f8fafc';
-                    const swashFill = isDark ? '#111827' : '#e2e8f0';
-                    const oilColor = isDark ? 'rgba(245, 158, 11, 0.55)' : 'rgba(245, 158, 11, 0.35)';
-                    const labelColor = isDark ? '#e5e7eb' : '#374151';
+                    const pistonFill = isDark ? '#e5e7eb' : '#f8fafc';
+                    const swashFill = isDark ? '#2b313b' : '#9aa2ac';
+                    const oilFill = isDark ? '#f59e0b' : '#fbbf24';
+                    const oilGlow = isDark ? 'rgba(245, 158, 11, 0.55)' : 'rgba(245, 158, 11, 0.35)';
+                    const labelColor = isDark ? '#e5e7eb' : '#111827';
+                    const outlineColor = isDark ? '#111827' : '#374151';
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
                     ctx.scale(scaleX, scaleY);
 
-                    roundedRect(60, 70, 620, 220, 28);
+                    roundedRect(40, 60, 680, 240, 30);
                     ctx.fillStyle = housingFill;
                     ctx.fill();
-                    ctx.strokeStyle = housingStroke;
+                    ctx.strokeStyle = outlineColor;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+
+                    roundedRect(70, 90, 610, 180, 20);
+                    ctx.fillStyle = cutawayFill;
+                    ctx.fill();
+                    ctx.strokeStyle = outlineColor;
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
+                    const inletChannel = { x: 430, y: 190, w: 160, h: 56 };
+                    const outletChannel = { x: 430, y: 110, w: 160, h: 50 };
+                    ctx.fillStyle = oilFill;
+                    ctx.strokeStyle = outlineColor;
+                    ctx.lineWidth = 2;
+                    roundedRect(inletChannel.x, inletChannel.y, inletChannel.w, inletChannel.h, 16);
+                    ctx.fill();
+                    ctx.stroke();
+                    roundedRect(outletChannel.x, outletChannel.y, outletChannel.w, outletChannel.h, 16);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.strokeStyle = oilGlow;
+                    ctx.lineWidth = 6;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(430, 218);
+                    ctx.lineTo(590, 218);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(430, 134);
+                    ctx.lineTo(590, 134);
+                    ctx.stroke();
+
+                    const blockR = 90;
+                    const pistonCount = 10;
+                    const pistonCircleR = 58;
+                    const blockSpin = prefersReducedMotion.matches ? 0 : t * 0.45;
+
                     const swash = {
-                        x: 420,
-                        y: 100,
-                        w: 240,
-                        h: 150,
-                        angle: -18 * Math.PI / 180
+                        x: 310,
+                        y: 90,
+                        w: 120,
+                        h: 180,
+                        angle: -20 * Math.PI / 180
                     };
                     ctx.save();
                     ctx.translate(swash.x + swash.w / 2, swash.y + swash.h / 2);
                     ctx.rotate(swash.angle);
                     ctx.fillStyle = swashFill;
-                    ctx.strokeStyle = housingStroke;
+                    ctx.strokeStyle = outlineColor;
                     ctx.lineWidth = 2;
                     ctx.beginPath();
                     ctx.rect(-swash.w / 2, -swash.h / 2, swash.w, swash.h);
                     ctx.fill();
                     ctx.stroke();
                     ctx.restore();
-
-                    const inletArrow = { x: 470, y: 245 };
-                    const outletArrow = { x: 470, y: 115 };
-                    ctx.strokeStyle = oilColor;
-                    ctx.lineWidth = 4;
-                    ctx.lineCap = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(inletArrow.x, inletArrow.y);
-                    ctx.quadraticCurveTo(540, 275, 600, 250);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.moveTo(outletArrow.x, outletArrow.y);
-                    ctx.quadraticCurveTo(540, 85, 600, 110);
-                    ctx.stroke();
-
-                    const blockR = 82;
-                    const pistonCount = 10;
-                    const pistonCircleR = 46;
-                    const blockSpin = prefersReducedMotion.matches ? 0 : t * 0.6;
 
                     ctx.save();
                     ctx.translate(center.x, center.y);
@@ -376,23 +396,16 @@
                     ctx.stroke();
                     ctx.restore();
 
-                    const swashLine = {
-                        x1: swash.x + 10,
-                        y1: swash.y + swash.h * 0.2,
-                        x2: swash.x + swash.w - 10,
-                        y2: swash.y + swash.h * 0.8
-                    };
-
                     for (let i = 0; i < pistonCount; i += 1) {
                         const angle = (Math.PI * 2 * i) / pistonCount + blockSpin;
                         const baseX = center.x + Math.cos(angle) * pistonCircleR;
                         const baseY = center.y + Math.sin(angle) * pistonCircleR;
-                        const tLine = (baseY - swashLine.y1) / (swashLine.y2 - swashLine.y1);
-                        const tipX = Math.max(baseX + 20, swashLine.x1 + tLine * (swashLine.x2 - swashLine.x1));
+                        const stroke = Math.cos(angle + Math.PI / 2) * 26;
+                        const tipX = baseX + 70 + stroke;
                         const tipY = baseY;
 
-                        ctx.strokeStyle = blockStroke;
-                        ctx.lineWidth = 8;
+                        ctx.strokeStyle = outlineColor;
+                        ctx.lineWidth = 10;
                         ctx.lineCap = 'round';
                         ctx.beginPath();
                         ctx.moveTo(baseX, baseY);
@@ -400,32 +413,32 @@
                         ctx.stroke();
 
                         ctx.fillStyle = pistonFill;
-                        ctx.strokeStyle = blockStroke;
+                        ctx.strokeStyle = outlineColor;
                         ctx.lineWidth = 2;
                         ctx.beginPath();
-                        ctx.arc(baseX, baseY, 7.5, 0, Math.PI * 2);
+                        ctx.arc(baseX, baseY, 8, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.stroke();
 
-                        ctx.fillStyle = '#f59e0b';
+                        ctx.fillStyle = oilFill;
                         ctx.beginPath();
-                        ctx.arc(tipX, tipY, 6, 0, Math.PI * 2);
+                        ctx.arc(tipX, tipY, 7, 0, Math.PI * 2);
                         ctx.fill();
                     }
 
-                    ctx.fillStyle = '#6b7280';
-                    ctx.strokeStyle = '#374151';
+                    ctx.fillStyle = '#374151';
+                    ctx.strokeStyle = outlineColor;
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.arc(center.x, center.y, 16, 0, Math.PI * 2);
+                    ctx.arc(center.x, center.y, 18, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
 
                     ctx.fillStyle = labelColor;
                     ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText('INLET', 620, 260);
-                    ctx.fillText('OUTLET', 610, 100);
+                    ctx.fillText('LOW PRESSURE INLET', 430, 100);
+                    ctx.fillText('HIGH PRESSURE OUTLET', 430, 270);
 
                     ctx.restore();
                 }
