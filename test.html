@@ -132,7 +132,7 @@
                 ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
             }
 
-            function drawGreaseIllustration() {
+            function drawGreaseIllustration(phase) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.save();
                 const isDark = document.body.classList.contains('brightness-bold');
@@ -160,97 +160,240 @@
                     ctx.closePath();
                 }
 
-                const center = { x: 380, y: 210 };
-                const armGrad = ctx.createLinearGradient(220, 20, 560, 320);
+                const center = { x: 370, y: 125 };
+                const armGrad = ctx.createLinearGradient(220, 40, 560, 320);
                 armGrad.addColorStop(0, orangeTop);
                 armGrad.addColorStop(0.55, orangeMid);
                 armGrad.addColorStop(1, orangeDeep);
 
+                // Arm housing (orange).
                 ctx.fillStyle = armGrad;
-                roundRect(210, 20, 340, 150, 28);
+                roundRect(255, -7.75, 225, 78.75, 16.5);
                 ctx.fill();
-                roundRect(230, 150, 300, 90, 34);
+                roundRect(262.5, 67.25, 210, 48, 18);
                 ctx.fill();
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 138, 0, Math.PI * 2);
+                ctx.arc(center.x, center.y, 96, 0, Math.PI * 2);
                 ctx.fill();
 
-                ctx.strokeStyle = outline;
-                ctx.lineWidth = 4;
-                roundRect(210, 20, 340, 150, 28);
-                ctx.stroke();
-                roundRect(230, 150, 300, 90, 34);
+                // Arm panel detail.
+                ctx.strokeStyle = 'rgba(0,0,0,0.18)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(268, 6);
+                ctx.lineTo(455, 6);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 138, 0, Math.PI * 2);
+                ctx.moveTo(268, 34);
+                ctx.lineTo(455, 34);
                 ctx.stroke();
-
-                ctx.strokeStyle = 'rgba(0,0,0,0.25)';
-                ctx.lineWidth = 6;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 132, Math.PI * 0.05, Math.PI * 0.65);
+                ctx.moveTo(276, 10);
+                ctx.lineTo(276, 32);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(447, 10);
+                ctx.lineTo(447, 32);
                 ctx.stroke();
 
-                const boreGrad = ctx.createRadialGradient(center.x - 26, center.y - 30, 24, center.x, center.y, 118);
+                ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                ctx.moveTo(270, 12);
+                ctx.lineTo(452, 12);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+                ctx.lineWidth = 3.75;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 90, Math.PI * 0.05, Math.PI * 0.65);
+                ctx.stroke();
+
+                // Flange ring (outer metal).
+                const boreGrad = ctx.createRadialGradient(center.x - 21, center.y - 21, 18, center.x, center.y, 86);
                 boreGrad.addColorStop(0, metalLight);
                 boreGrad.addColorStop(0.55, metalMid);
                 boreGrad.addColorStop(1, metalDark);
                 ctx.fillStyle = boreGrad;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 118, 0, Math.PI * 2);
+                ctx.arc(center.x, center.y, 86, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.fillStyle = metalInner;
                 ctx.globalAlpha = 0.55;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 108, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-
-                ctx.fillStyle = '#374151';
-                ctx.beginPath();
-                ctx.arc(center.x, center.y, 90, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff7a1a';
-                ctx.beginPath();
                 ctx.arc(center.x, center.y, 74, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 80, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 70, 0, Math.PI * 2);
+                ctx.stroke();
 
-                ctx.fillStyle = '#9aa5b1';
+                // Bushing ring (dark gray).
+                const bushingGrad = ctx.createRadialGradient(center.x - 10, center.y - 10, 12, center.x, center.y, 58);
+                bushingGrad.addColorStop(0, '#6b7280');
+                bushingGrad.addColorStop(0.55, '#4b5563');
+                bushingGrad.addColorStop(1, '#2f3743');
+                ctx.fillStyle = bushingGrad;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 56, 0, Math.PI * 2);
+                ctx.arc(center.x, center.y, 58, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.fillStyle = '#e5e7eb';
+
+                // Solid pin.
+                const pinGrad = ctx.createRadialGradient(center.x - 8, center.y - 8, 6, center.x, center.y, 40.5);
+                pinGrad.addColorStop(0, '#f8fafc');
+                pinGrad.addColorStop(0.45, '#cdd4dd');
+                pinGrad.addColorStop(1, '#8a93a0');
+                ctx.fillStyle = pinGrad;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 32, 0, Math.PI * 2);
+                ctx.arc(center.x, center.y, 40.5, 0, Math.PI * 2);
                 ctx.fill();
+
+                // Grease film ring.
+                ctx.strokeStyle = '#f5c85a';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 41, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Animated grease flow along the film.
+                const greasePhase = typeof phase === 'number' ? phase : 0;
+                ctx.strokeStyle = 'rgba(245, 177, 76, 0.9)';
+                ctx.lineWidth = 4;
+                ctx.setLineDash([12, 10]);
+                ctx.lineDashOffset = -greasePhase * 20;
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, 41, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.lineDashOffset = 0;
+
+                // Grease entry path into the film (fresh grease).
+                ctx.strokeStyle = 'rgba(245, 177, 76, 0.9)';
+                ctx.lineWidth = 4;
+                ctx.setLineDash([10, 8]);
+                ctx.lineDashOffset = -greasePhase * 16;
+                ctx.beginPath();
+                ctx.moveTo(150, center.y - 8);
+                ctx.quadraticCurveTo(center.x - 40, center.y - 6, center.x - 41, center.y - 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.lineDashOffset = 0;
+
+                // Grease exit trails around the film (used grease).
+                ctx.strokeStyle = 'rgba(180, 109, 35, 0.85)';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([8, 10]);
+                const exitAngles = [-2.7, -2.3, -1.9, -1.5, -1.1, -0.7, -0.3, 0.1, 0.5, 0.9, 1.3, 1.7, 2.1, 2.5];
+                exitAngles.forEach((angle, idx) => {
+                    const pulse = greasePhase * 0.8 + idx * 0.6;
+                    ctx.lineDashOffset = -pulse * 8;
+                    const startX = center.x + Math.cos(angle) * 41;
+                    const startY = center.y + Math.sin(angle) * 41;
+                    const endX = center.x + Math.cos(angle) * 74;
+                    const endY = center.y + Math.sin(angle) * 74;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+                ctx.lineDashOffset = 0;
 
                 ctx.strokeStyle = 'rgba(255,255,255,0.22)';
-                ctx.lineWidth = 4;
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.arc(center.x, center.y, 130, Math.PI * 1.1, Math.PI * 1.85);
+                ctx.arc(center.x, center.y, 90, Math.PI * 1.1, Math.PI * 1.85);
                 ctx.stroke();
 
-                ctx.fillStyle = '#9aa5b1';
-                ctx.strokeStyle = '#374151';
-                ctx.lineWidth = 2;
-                roundRect(580, 186, 26, 24, 6);
-                ctx.fill();
-                ctx.stroke();
+                // Callouts.
+                ctx.font = '600 14px "Segoe UI", Arial, sans-serif';
+                ctx.textBaseline = 'middle';
+                const bubbleBg = isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.95)';
+                const bubbleStroke = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(2, 6, 23, 0.15)';
+                const bubbleText = isDark ? 'rgba(248, 250, 252, 0.95)' : 'rgba(15, 23, 42, 0.95)';
+
+                function drawLabel(text, x, y) {
+                    const paddingX = 10;
+                    const paddingY = 6;
+                    const radius = 10;
+                    const metrics = ctx.measureText(text);
+                    const textWidth = metrics.width;
+                    const textHeight = 14;
+                    const bubbleWidth = textWidth + paddingX * 2;
+                    const bubbleHeight = textHeight + paddingY * 2;
+                    const left = x;
+                    const top = y - bubbleHeight / 2;
+
+                    ctx.beginPath();
+                    ctx.moveTo(left + radius, top);
+                    ctx.lineTo(left + bubbleWidth - radius, top);
+                    ctx.quadraticCurveTo(left + bubbleWidth, top, left + bubbleWidth, top + radius);
+                    ctx.lineTo(left + bubbleWidth, top + bubbleHeight - radius);
+                    ctx.quadraticCurveTo(left + bubbleWidth, top + bubbleHeight, left + bubbleWidth - radius, top + bubbleHeight);
+                    ctx.lineTo(left + radius, top + bubbleHeight);
+                    ctx.quadraticCurveTo(left, top + bubbleHeight, left, top + bubbleHeight - radius);
+                    ctx.lineTo(left, top + radius);
+                    ctx.quadraticCurveTo(left, top, left + radius, top);
+                    ctx.closePath();
+                    ctx.fillStyle = bubbleBg;
+                    ctx.strokeStyle = bubbleStroke;
+                    ctx.lineWidth = 1;
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = bubbleText;
+                    ctx.textAlign = 'left';
+                    ctx.fillText(text, left + paddingX, y);
+                    ctx.textAlign = 'start';
+                }
+
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(15, 23, 42, 0.6)';
+                ctx.lineWidth = 1.8;
                 ctx.beginPath();
-                ctx.arc(612, 196, 8, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.moveTo(140, center.y + 70);
+                ctx.lineTo(center.x - 55, center.y + 20);
                 ctx.stroke();
+                drawLabel('Bushing', 60, center.y + 70);
+
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(15, 23, 42, 0.6)';
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                ctx.moveTo(140, center.y + 8);
+                ctx.lineTo(center.x - 34, center.y + 2);
+                ctx.stroke();
+                drawLabel('Pin', 60, center.y + 8);
+
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(15, 23, 42, 0.6)';
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                ctx.moveTo(140, center.y - 44);
+                ctx.lineTo(center.x - 41, center.y - 2);
+                ctx.stroke();
+                drawLabel('Grease Film', 60, center.y - 44);
 
                 ctx.restore();
             }
 
             resizeCanvas();
-            drawGreaseIllustration();
+            let lastTime = 0;
+            function animateGrease(timestamp) {
+                if (!lastTime) lastTime = timestamp;
+                const phase = (timestamp - lastTime) / 1000;
+                drawGreaseIllustration(phase + timestamp / 1000);
+                requestAnimationFrame(animateGrease);
+            }
+            requestAnimationFrame(animateGrease);
             window.addEventListener('resize', function () {
                 resizeCanvas();
-                drawGreaseIllustration();
+                drawGreaseIllustration(0);
             });
         })();
     </script>
