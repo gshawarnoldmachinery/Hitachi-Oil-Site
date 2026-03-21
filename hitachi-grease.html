@@ -607,7 +607,8 @@
                     ctx.save();
                     const isDark = document.body.classList.contains('brightness-bold');
                     const needsScale = canvas.clientWidth < 680;
-                    const scale = needsScale ? Math.min(canvas.clientWidth / base.w, canvas.clientHeight / base.h) : 1;
+                    const scaleFit = Math.min(canvas.clientWidth / base.w, canvas.clientHeight / base.h);
+                    const scale = needsScale ? scaleFit : Math.max(1, Math.min(scaleFit, 1.15));
                     const offsetX = (canvas.clientWidth / scale - base.w) / 2;
                     const offsetY = (canvas.clientHeight / scale - base.h) / 2 + (needsScale ? 12 : 0);
                     ctx.scale(scale, scale);
