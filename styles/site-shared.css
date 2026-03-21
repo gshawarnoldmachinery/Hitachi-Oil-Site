@@ -3600,6 +3600,10 @@ body.custom-theme.brightness-medium {
     }
 }
 
+.custom-theme .toolbar-links {
+    display: none !important;
+}
+
 /* Global contrast guardrails for readable text in Light and Dark modes */
 .custom-theme.brightness-subtle,
 .custom-theme.brightness-medium {
