@@ -538,6 +538,21 @@
                     ctx.stroke();
                     ctx.restore();
 
+                    ctx.save();
+                    ctx.fillStyle = labelColor;
+                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
+                    ctx.textBaseline = 'middle';
+                    const ringLabelX = 140;
+                    const ringLabelY = 82;
+                    ctx.fillText('RING GEAR', ringLabelX, ringLabelY);
+                    ctx.strokeStyle = lineColor;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(ringLabelX + 90, ringLabelY);
+                    ctx.lineTo(center.x - ringOuterR + 6, center.y - ringOuterR * 0.35);
+                    ctx.stroke();
+                    ctx.restore();
+
 
                     ctx.restore();
                 }
