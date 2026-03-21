@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illustration Sandbox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./styles/site-shared.css">
+</head>
+<body class="custom-theme min-h-screen brightness-subtle">
+    <div class="container">
+        <div class="page-toolbar">
+            <div class="toolbar-links" role="navigation" aria-label="Page navigation">
+                <a class="toolbar-link" href="./hitachi-grease.html">Grease</a>
+                <a class="toolbar-link" href="./hitachi-engine-oil.html">Engine Oil</a>
+                <a class="toolbar-link" href="./hitachi-coolant.html">Coolant</a>
+                <a class="toolbar-link" href="./hitachi-hydraulic-oil.html">Hydraulic Oil</a>
+                <a class="toolbar-link" href="./hitachi-transmission-fluid.html">Transmission Oil</a>
+                <a class="toolbar-link" href="./hitachi-gear-oil.html">Gear Oil</a>
+                <a class="toolbar-link" href="./hitachi-axle-oil.html">Axle Oil</a>
+                <a class="toolbar-link active" href="./test.html">Test</a>
+            </div>
+            <div class="toolbar-theme">
+                <div class="brightness-toggle" role="group" aria-label="Theme selector">
+                    <span class="brightness-label">Theme</span>
+                    <button type="button" class="brightness-btn active" data-brightness="subtle">Light</button>
+                    <button type="button" class="brightness-btn" data-brightness="bold">Dark</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="brand-header">
+            <div class="brand-wrap">
+                <div class="brand-left">
+                    <h1 class="brand-hitachi">HITACHI</h1>
+                    <div class="brand-reliable">Reliable Solutions</div>
+                </div>
+                <div class="brand-divider"></div>
+                <div>
+                    <h2 class="brand-landcros">LANDCROS</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="title-wrap">
+                <div class="title-pill">
+                    <h1 class="title-main">Illustration Sandbox</h1>
+                </div>
+                <div class="title-sub">Use this page to prototype illustrations before moving them to a product page.</div>
+            </div>
+
+            <div class="panel">
+                <h2 class="section-title-zero">Canvas Test Area</h2>
+                <div class="gear-demo-grid">
+                    <div class="gear-demo-figure">
+                        <canvas id="testCanvas" class="gear-demo-canvas" width="760" height="360" role="img" aria-label="Illustration sandbox canvas">
+                            Illustration sandbox.
+                        </canvas>
+                        <div class="gear-caption">Use this canvas to build and refine new illustrations.</div>
+                    </div>
+                    <div class="gear-demo-side">
+                        <div class="gear-demo-note">
+                            <div class="gear-demo-note-title">Purpose</div>
+                            <p>We can experiment here and then copy the final drawing into the target page.</p>
+                        </div>
+                        <div class="gear-demo-note">
+                            <div class="gear-demo-note-title">Scope</div>
+                            <p>This page is safe for iteration without affecting the product pages.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-title">Illustration Sandbox</div>
+                <div class="footer-meta">Hitachi Construction Machinery colors (#FF6600 / Black)</div>
+                <div id="versionLine" class="footer-meta footer-meta-small">Version 0.1.0 • Last updated: --</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const brightnessButtons = Array.from(document.querySelectorAll('.brightness-btn'));
+            const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
+
+            function applyBrightness(level) {
+                const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
+                document.body.classList.remove('brightness-subtle', 'brightness-medium', 'brightness-bold');
+                document.body.classList.add('brightness-' + valid);
+                brightnessButtons.forEach((btn) => {
+                    btn.classList.toggle('active', btn.dataset.brightness === valid);
+                });
+            }
+
+            const storedBrightness = localStorage.getItem(BRIGHTNESS_KEY) || 'subtle';
+            applyBrightness(storedBrightness);
+            brightnessButtons.forEach((btn) => {
+                btn.addEventListener('click', function () {
+                    const level = btn.dataset.brightness || 'subtle';
+                    applyBrightness(level);
+                    localStorage.setItem(BRIGHTNESS_KEY, level);
+                });
+            });
+
+            const versionLine = document.getElementById('versionLine');
+            const PAGE_VERSION = '0.1.0';
+            if (versionLine) {
+                const updated = document.lastModified ? new Date(document.lastModified) : new Date();
+                const lastUpdated = isNaN(updated.getTime()) ? 'Unknown' : updated.toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit'
+                });
+                versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
+            }
+
+            const canvas = document.getElementById('testCanvas');
+            if (!canvas || !canvas.getContext) return;
+            const ctx = canvas.getContext('2d');
+            const base = { w: 760, h: 360 };
+
+            function resizeCanvas() {
+                const ratio = window.devicePixelRatio || 1;
+                const rect = canvas.getBoundingClientRect();
+                const cssW = rect.width || base.w;
+                const cssH = cssW * (base.h / base.w);
+                canvas.style.height = cssH + 'px';
+                canvas.width = Math.round(cssW * ratio);
+                canvas.height = Math.round(cssH * ratio);
+                ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            }
+
+            function drawPlaceholder() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.fillStyle = 'rgba(255, 122, 26, 0.08)';
+                ctx.fillRect(60, 60, 640, 240);
+                ctx.strokeStyle = 'rgba(255, 122, 26, 0.45)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(60, 60, 640, 240);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '700 18px "Segoe UI", Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Illustration Sandbox', 380, 180);
+                ctx.restore();
+            }
+
+            resizeCanvas();
+            drawPlaceholder();
+            window.addEventListener('resize', function () {
+                resizeCanvas();
+                drawPlaceholder();
+            });
+        })();
+    </script>
+</body>
+</html>
