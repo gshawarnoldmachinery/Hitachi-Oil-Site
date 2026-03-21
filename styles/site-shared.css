@@ -1435,6 +1435,13 @@
             display: block;
         }
 
+        .grease-demo-canvas {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 760 / 330;
+            display: block;
+        }
+
         .grease-demo-side {
             display: grid;
             gap: 0.7rem;
