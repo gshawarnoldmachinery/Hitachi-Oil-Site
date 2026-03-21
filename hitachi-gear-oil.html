@@ -562,8 +562,9 @@
                     const planetLabelY = 200;
                     ctx.fillText('PLANET GEARS', planetLabelX, planetLabelY);
                     ctx.beginPath();
+                    const planetAnchorAngle = Math.PI * 0.7;
                     ctx.moveTo(planetLabelX + 105, planetLabelY);
-                    ctx.lineTo(center.x - planetCalloutR * 0.35, center.y + planetCalloutR * 0.85);
+                    ctx.lineTo(center.x + Math.cos(planetAnchorAngle) * planetCalloutR, center.y + Math.sin(planetAnchorAngle) * planetCalloutR);
                     ctx.stroke();
                     ctx.restore();
 
