@@ -1037,7 +1037,7 @@
         }
 
         .toolbar-links {
-            display: inline-flex;
+            display: none;
             gap: 0.4rem;
         }
 
