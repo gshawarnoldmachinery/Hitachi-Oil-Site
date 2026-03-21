@@ -630,7 +630,7 @@
                     ctx.save();
                     ctx.scale(scaleX, scaleY);
 
-                    const armPath = new Path2D('M176 18 L584 18 L584 118 Q584 146 568 164 L520 216 Q500 238 492 270 Q486 300 470 320 Q448 350 380 356 Q312 350 290 320 Q274 300 268 270 Q260 238 240 216 L192 164 Q176 146 176 118 Z');
+                    const armPath = new Path2D('M176 18 L584 18 L584 118 Q584 146 568 164 L520 216 Q500 238 492 270 Q486 300 470 320 Q448 350 380 356 Q312 350 290 320 Q274 300 268 270 Q260 238 240 216 L192 164 Q176 146 176 118 Q176 80 176 50 Q176 26 206 22 L584 22 Z');
                     const armGrad = ctx.createLinearGradient(176, 18, 584, 356);
                     armGrad.addColorStop(0, '#ff7a1a');
                     armGrad.addColorStop(0.55, '#e35f0b');
@@ -756,9 +756,9 @@
                     ctx.strokeStyle = armOutline;
                     ctx.lineWidth = 4;
                     ctx.beginPath();
-                    ctx.moveTo(194, 56);
-                    ctx.lineTo(122, 136);
-                    ctx.lineTo(82, 176);
+                    ctx.moveTo(200, 56);
+                    ctx.lineTo(182, 126);
+                    ctx.lineTo(162, 176);
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.moveTo(378, 52);
