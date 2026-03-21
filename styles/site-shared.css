@@ -646,7 +646,7 @@
         .family-tooltip.code-box:hover,
         .family-tooltip.code-box:focus-within {
             transform: none !important;
-            box-shadow: 0 0 18px rgba(255, 122, 26, 0.22);
+            box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.45), 0 8px 18px rgba(0, 0, 0, 0.16);
         }
 
         .family-tooltip.is-open {
