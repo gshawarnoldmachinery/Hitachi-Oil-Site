@@ -2100,7 +2100,11 @@
             background-attachment: fixed;
         }
 
-        .container { max-width: 1024px; margin: 0 auto; }
+        .container {
+            width: 100%;
+            max-width: 1024px !important;
+            margin: 0 auto;
+        }
         .brand-header {
             background: #e6e6e6;
             border-bottom: 4px solid var(--orange);
