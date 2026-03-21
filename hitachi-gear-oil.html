@@ -366,28 +366,32 @@
                     const ringOuterR = 150;
                     const ringMidR = 135;
                     const ringInnerR = 120;
-                    const sunTeethR = 30;
-                    const sunBodyR = 26;
-                    const sunCoreR = 10;
+                    const moduleSize = 3.5;
                     const sunToothCount = 16;
-                    const planetTeethR = 45;
-                    const planetBodyR = 41;
-                    const planetCoreR = 14;
                     const planetToothCount = 24;
+                    const sunTeethR = (moduleSize * sunToothCount) / 2;
+                    const planetTeethR = (moduleSize * planetToothCount) / 2;
+                    const sunBodyR = sunTeethR - 5;
+                    const planetBodyR = planetTeethR - 6;
+                    const sunCoreR = Math.max(9, sunBodyR * 0.38);
+                    const planetCoreR = Math.max(12, planetBodyR * 0.33);
                     const planetOffset = sunTeethR + planetTeethR;
                     const planetAngles = [-90, 30, 150].map((deg) => deg * Math.PI / 180);
                     const carrierSpin = prefersReducedMotion.matches ? 0 : t * 0.12;
-                    const planets = planetAngles.map((angle) => ({
-                        x: center.x + planetOffset * Math.cos(angle + carrierSpin),
-                        y: center.y + planetOffset * Math.sin(angle + carrierSpin)
-                    }));
+                    const planets = planetAngles.map((angle) => {
+                        const spinAngle = angle + carrierSpin;
+                        return {
+                            angle: spinAngle,
+                            x: center.x + planetOffset * Math.cos(spinAngle),
+                            y: center.y + planetOffset * Math.sin(spinAngle)
+                        };
+                    });
                     const baseSpin = prefersReducedMotion.matches ? 0 : t * 0.32;
                     const meshRatio = planetToothCount / sunToothCount;
                     const planetSpin = -baseSpin;
                     const sunSpin = baseSpin * meshRatio;
                     const sunPhase = 0;
                     const planetPhase = Math.PI / planetToothCount;
-                    const planetPhaseOffsets = [0, Math.PI * 2 / 3, Math.PI * 4 / 3];
                     const hubRingR = sunBodyR + 14;
 
                     ctx.fillStyle = '#b9bec7';
@@ -572,9 +576,9 @@
                     ctx.stroke();
                     ctx.restore();
 
-                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount, planetPhase + planetPhaseOffsets[0]);
-                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, planetToothCount, planetPhase + planetPhaseOffsets[1]);
-                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, planetToothCount, planetPhase + planetPhaseOffsets[2]);
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount, planetPhase + planets[0].angle + Math.PI);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount, planetPhase + planets[1].angle + Math.PI);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount, planetPhase + planets[2].angle + Math.PI);
                     drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, sunToothCount, sunPhase);
 
 
