@@ -20,6 +20,19 @@
                 <a class="toolbar-link" href="./hitachi-axle-oil.html">Axle Oil</a>
                 <a class="toolbar-link active" href="./test.html">Test</a>
             </div>
+            <div class="toolbar-dropdown">
+                <label class="toolbar-dropdown-label" for="pageSelect">Page</label>
+                <select id="pageSelect" class="toolbar-select" aria-label="Page navigation">
+                    <option value="./hitachi-grease.html">Grease</option>
+                    <option value="./hitachi-engine-oil.html">Engine Oil</option>
+                    <option value="./hitachi-coolant.html">Coolant</option>
+                    <option value="./hitachi-hydraulic-oil.html">Hydraulic Oil</option>
+                    <option value="./hitachi-transmission-fluid.html">Transmission Oil</option>
+                    <option value="./hitachi-gear-oil.html">Gear Oil</option>
+                    <option value="./hitachi-axle-oil.html">Axle Oil</option>
+                    <option value="./test.html" selected>Test</option>
+                </select>
+            </div>
             <div class="toolbar-theme">
                 <div class="brightness-toggle" role="group" aria-label="Theme selector">
                     <span class="brightness-label">Theme</span>
@@ -103,6 +116,14 @@
                     localStorage.setItem(BRIGHTNESS_KEY, level);
                 });
             });
+
+            const pageSelect = document.getElementById('pageSelect');
+            if (pageSelect) {
+                pageSelect.addEventListener('change', function () {
+                    const target = pageSelect.value;
+                    if (target) window.location.href = target;
+                });
+            }
 
             const versionLine = document.getElementById('versionLine');
             const PAGE_VERSION = '0.1.0';

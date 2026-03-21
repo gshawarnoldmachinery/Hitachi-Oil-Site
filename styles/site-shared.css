@@ -1041,6 +1041,35 @@
             gap: 0.4rem;
         }
 
+        .toolbar-dropdown {
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .toolbar-dropdown-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #f3f4f6;
+        }
+
+        .toolbar-select {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+            color: #f3f4f6;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.45rem 2.2rem 0.45rem 0.9rem;
+            line-height: 1.1;
+            min-width: 12rem;
+            background-image: linear-gradient(45deg, transparent 50%, #f3f4f6 50%), linear-gradient(135deg, #f3f4f6 50%, transparent 50%);
+            background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+        }
+
         .toolbar-theme {
             margin-left: auto;
         }
@@ -1077,7 +1106,7 @@
             background: linear-gradient(180deg, var(--ts-bg-1) 0%, var(--ts-bg-2) 100%) !important;
         }
 
-        body.custom-theme.brightness-medium {
+body.custom-theme.brightness-medium {
             --ts-bg-1: #dfe3e8;
             --ts-bg-2: #d3d8df;
             --ts-surface: #f4f6f8;
@@ -1586,6 +1615,28 @@
 
 .custom-theme.brightness-bold .grease-label {
     fill: #1f2937;
+}
+
+.custom-theme .toolbar-dropdown-label {
+    color: var(--ts-muted);
+}
+
+.custom-theme .toolbar-select {
+    background: var(--ts-surface-2);
+    color: var(--ts-text);
+    border-color: var(--ts-border);
+    background-image: linear-gradient(45deg, transparent 50%, var(--ts-text) 50%), linear-gradient(135deg, var(--ts-text) 50%, transparent 50%);
+}
+
+.custom-theme.brightness-bold .toolbar-dropdown-label {
+    color: #e5e7eb;
+}
+
+.custom-theme.brightness-bold .toolbar-select {
+    background: rgba(17, 24, 39, 0.85);
+    color: #f9fafb;
+    border-color: rgba(255, 255, 255, 0.18);
+    background-image: linear-gradient(45deg, transparent 50%, #f9fafb 50%), linear-gradient(135deg, #f9fafb 50%, transparent 50%);
 }
 
 .custom-theme .grease-label-copy {
@@ -3380,10 +3431,16 @@
     }
 
     .toolbar-links {
+        display: none;
+    }
+
+    .toolbar-dropdown {
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 0.45rem;
+    }
+
+    .toolbar-select {
+        width: min(100%, 20rem);
     }
 
     .toolbar-link {
