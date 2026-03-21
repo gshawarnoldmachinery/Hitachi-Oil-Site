@@ -99,6 +99,32 @@
                 </div>
             </div>
 
+            <div class="panel">
+                <h2 class="section-title-zero">Axial Piston Pump (How Pressure Is Built)</h2>
+                <div class="gear-demo-grid">
+                    <div class="gear-demo-figure">
+                        <canvas id="axialPumpCanvas" class="gear-demo-canvas" width="760" height="360" role="img" aria-label="Axial piston pump with rotating cylinder block, pistons, and swash plate">
+                            Axial piston pump diagram showing cylinder block rotation, piston stroke, and swash plate.
+                        </canvas>
+                        <div class="gear-caption">As the cylinder block rotates, pistons follow the angled swash plate. Pistons retract on the inlet side and extend on the outlet side, creating flow and pressure.</div>
+                    </div>
+                    <div class="gear-demo-side">
+                        <div class="gear-demo-note">
+                            <div class="gear-demo-note-title">1. Cylinder Block Rotates</div>
+                            <p>The drive shaft turns the cylinder block, carrying the pistons around the pump body.</p>
+                        </div>
+                        <div class="gear-demo-note">
+                            <div class="gear-demo-note-title">2. Swash Plate Sets Stroke</div>
+                            <p>The angled swash plate forces pistons to move in and out, controlling displacement and flow.</p>
+                        </div>
+                        <div class="gear-demo-note">
+                            <div class="gear-demo-note-title">3. Flow Builds Pressure</div>
+                            <p>Pistons draw oil in on the low-pressure side and push oil out on the high-pressure side.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel spec-card">
                 <h2 class="section-title-zero">Exceeds Specifications</h2>
                 <div class="spec-grid">
@@ -236,6 +262,209 @@
                 });
                 versionLine.textContent = 'Version ' + PAGE_VERSION + ' • Last updated: ' + lastUpdated;
             }
+
+            function initAxialPumpCanvas() {
+                const canvas = document.getElementById('axialPumpCanvas');
+                if (!canvas || !canvas.getContext) return;
+
+                const ctx = canvas.getContext('2d');
+                const base = { w: 760, h: 360 };
+                const center = { x: 260, y: 180 };
+                const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+                let cssSize = { w: base.w, h: base.h };
+                let rafId = null;
+
+                function resizeCanvas() {
+                    const ratio = window.devicePixelRatio || 1;
+                    const rect = canvas.getBoundingClientRect();
+                    const cssW = rect.width || base.w;
+                    const cssH = cssW * (base.h / base.w);
+                    canvas.style.height = cssH + 'px';
+                    canvas.width = Math.round(cssW * ratio);
+                    canvas.height = Math.round(cssH * ratio);
+                    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+                    cssSize = { w: cssW, h: cssH };
+                }
+
+                function roundedRect(x, y, w, h, r) {
+                    const radius = Math.min(r, w / 2, h / 2);
+                    ctx.beginPath();
+                    ctx.moveTo(x + radius, y);
+                    ctx.lineTo(x + w - radius, y);
+                    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+                    ctx.lineTo(x + w, y + h - radius);
+                    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+                    ctx.lineTo(x + radius, y + h);
+                    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+                    ctx.lineTo(x, y + radius);
+                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                    ctx.closePath();
+                }
+
+                function drawScene(time) {
+                    const t = time || 0;
+                    const scaleX = cssSize.w / base.w;
+                    const scaleY = cssSize.h / base.h;
+                    const isDark = document.body.classList.contains('brightness-bold');
+                    const housingFill = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.92)';
+                    const housingStroke = isDark ? '#374151' : '#9aa4b2';
+                    const blockFill = isDark ? '#1f2937' : '#e5e7eb';
+                    const blockStroke = isDark ? '#9ca3af' : '#6b7280';
+                    const pistonFill = isDark ? '#d1d5db' : '#f8fafc';
+                    const swashFill = isDark ? '#111827' : '#e2e8f0';
+                    const oilColor = isDark ? 'rgba(245, 158, 11, 0.55)' : 'rgba(245, 158, 11, 0.35)';
+                    const labelColor = isDark ? '#e5e7eb' : '#374151';
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.save();
+                    ctx.scale(scaleX, scaleY);
+
+                    roundedRect(60, 70, 620, 220, 28);
+                    ctx.fillStyle = housingFill;
+                    ctx.fill();
+                    ctx.strokeStyle = housingStroke;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    const swash = {
+                        x: 420,
+                        y: 100,
+                        w: 240,
+                        h: 150,
+                        angle: -18 * Math.PI / 180
+                    };
+                    ctx.save();
+                    ctx.translate(swash.x + swash.w / 2, swash.y + swash.h / 2);
+                    ctx.rotate(swash.angle);
+                    ctx.fillStyle = swashFill;
+                    ctx.strokeStyle = housingStroke;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.rect(-swash.w / 2, -swash.h / 2, swash.w, swash.h);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                    const inletArrow = { x: 470, y: 245 };
+                    const outletArrow = { x: 470, y: 115 };
+                    ctx.strokeStyle = oilColor;
+                    ctx.lineWidth = 4;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(inletArrow.x, inletArrow.y);
+                    ctx.quadraticCurveTo(540, 275, 600, 250);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(outletArrow.x, outletArrow.y);
+                    ctx.quadraticCurveTo(540, 85, 600, 110);
+                    ctx.stroke();
+
+                    const blockR = 82;
+                    const pistonCount = 7;
+                    const pistonCircleR = 46;
+                    const blockSpin = prefersReducedMotion.matches ? 0 : t * 0.6;
+
+                    ctx.save();
+                    ctx.translate(center.x, center.y);
+                    ctx.rotate(blockSpin);
+                    ctx.fillStyle = blockFill;
+                    ctx.strokeStyle = blockStroke;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, blockR, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+
+                    const swashLine = {
+                        x1: swash.x + 10,
+                        y1: swash.y + swash.h * 0.2,
+                        x2: swash.x + swash.w - 10,
+                        y2: swash.y + swash.h * 0.8
+                    };
+
+                    for (let i = 0; i < pistonCount; i += 1) {
+                        const angle = (Math.PI * 2 * i) / pistonCount + blockSpin;
+                        const baseX = center.x + Math.cos(angle) * pistonCircleR;
+                        const baseY = center.y + Math.sin(angle) * pistonCircleR;
+                        const tLine = (baseY - swashLine.y1) / (swashLine.y2 - swashLine.y1);
+                        const tipX = Math.max(baseX + 20, swashLine.x1 + tLine * (swashLine.x2 - swashLine.x1));
+                        const tipY = baseY;
+
+                        ctx.strokeStyle = blockStroke;
+                        ctx.lineWidth = 8;
+                        ctx.lineCap = 'round';
+                        ctx.beginPath();
+                        ctx.moveTo(baseX, baseY);
+                        ctx.lineTo(tipX, tipY);
+                        ctx.stroke();
+
+                        ctx.fillStyle = pistonFill;
+                        ctx.strokeStyle = blockStroke;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.arc(baseX, baseY, 7.5, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#f59e0b';
+                        ctx.beginPath();
+                        ctx.arc(tipX, tipY, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    ctx.fillStyle = '#6b7280';
+                    ctx.strokeStyle = '#374151';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(center.x, center.y, 16, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = labelColor;
+                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('INLET', 620, 260);
+                    ctx.fillText('OUTLET', 610, 100);
+
+                    ctx.restore();
+                }
+
+                function renderFrame(ts) {
+                    const time = prefersReducedMotion.matches ? 0 : (ts || 0) / 1000;
+                    drawScene(time);
+                    if (!prefersReducedMotion.matches) {
+                        rafId = requestAnimationFrame(renderFrame);
+                    }
+                }
+
+                resizeCanvas();
+                drawScene(0);
+                if (!prefersReducedMotion.matches) {
+                    rafId = requestAnimationFrame(renderFrame);
+                }
+
+                window.addEventListener('resize', function () {
+                    resizeCanvas();
+                    drawScene(0);
+                });
+
+                prefersReducedMotion.addEventListener('change', function () {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    drawScene(0);
+                    if (!prefersReducedMotion.matches) {
+                        rafId = requestAnimationFrame(renderFrame);
+                    }
+                });
+
+                brightnessButtons.forEach((btn) => {
+                    btn.addEventListener('click', function () {
+                        drawScene(0);
+                    });
+                });
+            }
+
+            initAxialPumpCanvas();
         })();
     </script>
 </body>
