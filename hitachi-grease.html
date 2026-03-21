@@ -20,16 +20,20 @@
                 <a class="toolbar-link" href="./hitachi-axle-oil.html">Axle Oil</a>
             </div>
             <div class="toolbar-dropdown">
-                <label class="toolbar-dropdown-label" for="pageSelect">Page</label>
-                <select id="pageSelect" class="toolbar-select" aria-label="Page navigation">
-                    <option value="./hitachi-grease.html" selected>Grease</option>
-                    <option value="./hitachi-engine-oil.html">Engine Oil</option>
-                    <option value="./hitachi-coolant.html">Coolant</option>
-                    <option value="./hitachi-hydraulic-oil.html">Hydraulic Oil</option>
-                    <option value="./hitachi-transmission-fluid.html">Transmission Oil</option>
-                    <option value="./hitachi-gear-oil.html">Gear Oil</option>
-                    <option value="./hitachi-axle-oil.html">Axle Oil</option>
-                </select>
+                <button type="button" class="toolbar-menu-btn" aria-expanded="false" aria-controls="toolbarMenu">
+                    <span class="toolbar-menu-icon" aria-hidden="true"></span>
+                    <span class="toolbar-menu-text">Menu</span>
+                </button>
+                <div id="toolbarMenu" class="toolbar-menu" role="menu">
+                    <a role="menuitem" href="./hitachi-grease.html" class="is-active">Grease</a>
+                    <a role="menuitem" href="./hitachi-engine-oil.html">Engine Oil</a>
+                    <a role="menuitem" href="./hitachi-coolant.html">Coolant</a>
+                    <a role="menuitem" href="./hitachi-hydraulic-oil.html">Hydraulic Oil</a>
+                    <a role="menuitem" href="./hitachi-transmission-fluid.html">Transmission Oil</a>
+                    <a role="menuitem" href="./hitachi-gear-oil.html">Gear Oil</a>
+                    <a role="menuitem" href="./hitachi-axle-oil.html">Axle Oil</a>
+                    <a role="menuitem" href="./test.html">Test</a>
+                </div>
             </div>
             <div class="toolbar-theme">
                 <div class="brightness-toggle" role="group" aria-label="Theme selector">
@@ -470,11 +474,25 @@
                 });
             });
 
-            const pageSelect = document.getElementById('pageSelect');
-            if (pageSelect) {
-                pageSelect.addEventListener('change', function () {
-                    const target = pageSelect.value;
-                    if (target) window.location.href = target;
+            const menuButton = document.querySelector('.toolbar-menu-btn');
+            const menu = document.getElementById('toolbarMenu');
+            if (menuButton && menu) {
+                const closeMenu = () => {
+                    menu.classList.remove('is-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                };
+                menuButton.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    const open = menu.classList.toggle('is-open');
+                    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+                });
+                document.addEventListener('click', function (event) {
+                    if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+                        closeMenu();
+                    }
+                });
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape') closeMenu();
                 });
             }
 
