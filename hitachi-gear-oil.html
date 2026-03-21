@@ -310,6 +310,10 @@
                     ctx.save();
                     ctx.translate(cx, cy);
                     ctx.rotate(spin);
+                    ctx.fillStyle = '#6b7280';
+                    ctx.beginPath();
+                    ctx.arc(0, -bodyR * 0.45, Math.max(2.2, bodyR * 0.08), 0, Math.PI * 2);
+                    ctx.fill();
                     const count = toothCount || Math.max(14, Math.round(teethR * 0.55));
                     const pitch = (Math.PI * 2 * teethR) / count;
                     const toothWidth = pitch * 0.42;
