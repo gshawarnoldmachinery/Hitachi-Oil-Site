@@ -361,18 +361,22 @@
                     const sunTeethR = 30;
                     const sunBodyR = 26;
                     const sunCoreR = 10;
+                    const sunToothCount = 16;
                     const planetTeethR = 45;
                     const planetBodyR = 41;
                     const planetCoreR = 14;
+                    const planetToothCount = 24;
                     const planetOffset = sunTeethR + planetTeethR;
                     const planetAngles = [-90, 30, 150].map((deg) => deg * Math.PI / 180);
-                    const carrierSpin = prefersReducedMotion.matches ? 0 : t * 0.15;
+                    const carrierSpin = prefersReducedMotion.matches ? 0 : t * 0.12;
                     const planets = planetAngles.map((angle) => ({
                         x: center.x + planetOffset * Math.cos(angle + carrierSpin),
                         y: center.y + planetOffset * Math.sin(angle + carrierSpin)
                     }));
-                    const sunSpin = prefersReducedMotion.matches ? 0 : t * 0.25;
-                    const planetSpin = prefersReducedMotion.matches ? 0 : -t * 0.45;
+                    const baseSpin = prefersReducedMotion.matches ? 0 : t * 0.32;
+                    const meshRatio = planetToothCount / sunToothCount;
+                    const planetSpin = -baseSpin;
+                    const sunSpin = baseSpin * meshRatio;
                     const hubRingR = sunBodyR + 14;
 
                     ctx.fillStyle = '#b9bec7';
@@ -497,10 +501,10 @@
                         ctx.stroke();
                     });
 
-                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, 24);
-                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, 24);
-                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, 24);
-                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, 16);
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, planetToothCount);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, planetToothCount);
+                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, sunToothCount);
 
                     ctx.save();
                     ctx.strokeStyle = 'rgba(245, 158, 11, 0.72)';
