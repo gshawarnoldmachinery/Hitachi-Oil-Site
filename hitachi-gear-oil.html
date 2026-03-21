@@ -508,11 +508,6 @@
                         ctx.stroke();
                     });
 
-                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount);
-                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, planetToothCount);
-                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, planetToothCount);
-                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, sunToothCount);
-
                     ctx.save();
                     ctx.strokeStyle = 'rgba(245, 158, 11, 0.72)';
                     ctx.lineWidth = 5;
@@ -571,6 +566,11 @@
                     ctx.lineTo(center.x - planetCalloutR, center.y);
                     ctx.stroke();
                     ctx.restore();
+
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin, planetToothCount);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8, planetToothCount);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6, planetToothCount);
+                    drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin, sunToothCount);
 
 
                     ctx.restore();
