@@ -388,27 +388,11 @@
                     const scaleX = cssSize.w / base.w;
                     const scaleY = cssSize.h / base.h;
                     const isDark = document.body.classList.contains('brightness-bold');
-                    const labelColor = isDark ? '#e5e7eb' : '#374151';
-                    const lineColor = isDark ? '#e5e7eb' : '#4b5563';
                     const arrowColor = isDark ? '#f3f4f6' : '#111827';
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
                     ctx.scale(scaleX, scaleY);
-
-                    ctx.fillStyle = labelColor;
-                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText('INTERNAL RING GEAR', 28, 78);
-                    drawLeader([[236, 78], [306, 78], [374, 142]], lineColor, 2.2, 2.4);
-                    ctx.fillText('SUN GEAR', 152, 124);
-                    drawLeader([[252, 124], [332, 124], [487, 184]], lineColor, 2.2, 2.4);
-                    ctx.fillText('PLANET GEAR', 98, 214);
-                    drawLeader([[228, 214], [310, 214], [404, 226]], lineColor, 2.2, 2.4);
-                    ctx.fillText('CARRIER', 304, 26);
-                    drawLeader([[388, 30], [424, 30], [470, 130]], lineColor, 2.2, 2.4);
-                    ctx.fillText('OIL BATH', 120, 304);
-                    drawLeader([[214, 304], [292, 304], [438, 274]], lineColor, 2.2, 2.4);
 
                     ctx.fillStyle = '#b9bec7';
                     ctx.strokeStyle = '#6b7280';
@@ -513,13 +497,6 @@
                     });
                     ctx.globalAlpha = 1;
                     ctx.restore();
-
-                    ctx.strokeStyle = '#7c8592';
-                    ctx.lineWidth = 5;
-                    ctx.lineCap = 'round';
-                    drawLine(center.x, center.y, 510, 104, '#7c8592', 5);
-                    drawLine(center.x, center.y, 440, 226, '#7c8592', 5);
-                    drawLine(center.x, center.y, 580, 226, '#7c8592', 5);
 
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
                     ctx.strokeStyle = '#7c8592';
