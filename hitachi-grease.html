@@ -611,7 +611,7 @@
                     const scaleY = cssSize.h / base.h;
                     const isDark = document.body.classList.contains('brightness-bold');
 
-                    const armOutline = isDark ? '#374151' : '#374151';
+                    const armOutline = isDark ? '#c24b00' : '#c24b00';
                     const weldStroke = '#8f3d07';
                     const bushingFill = isDark ? '#475569' : '#374151';
                     const pinFill = isDark ? '#9aa5b1' : '#9ca3af';
@@ -753,21 +753,22 @@
                     ctx.globalAlpha = 1;
 
                     ctx.setLineDash([]);
-                    ctx.strokeStyle = armOutline;
-                    ctx.lineWidth = 4;
+                    const calloutColor = '#60a5fa';
+                    ctx.strokeStyle = calloutColor;
+                    ctx.lineWidth = 3;
                     ctx.beginPath();
-                    ctx.moveTo(194, 56);
-                    ctx.lineTo(122, 136);
-                    ctx.lineTo(82, 176);
+                    ctx.moveTo(196, 56);
+                    ctx.lineTo(150, 116);
+                    ctx.lineTo(170, 138);
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.moveTo(378, 52);
-                    ctx.lineTo(378, 88);
+                    ctx.lineTo(378, 78);
                     ctx.stroke();
                     ctx.beginPath();
                     ctx.moveTo(566, 56);
-                    ctx.lineTo(494, 116);
-                    ctx.lineTo(412, 194);
+                    ctx.lineTo(520, 118);
+                    ctx.lineTo(560, 150);
                     ctx.stroke();
 
                     ctx.strokeStyle = greaseFlow;
