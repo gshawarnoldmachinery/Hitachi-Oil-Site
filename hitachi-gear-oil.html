@@ -310,19 +310,15 @@
                     ctx.save();
                     ctx.translate(cx, cy);
                     ctx.rotate(spin);
-                    ctx.strokeStyle = '#6b7280';
-                    ctx.lineWidth = 8;
-                    ctx.setLineDash([1.8, 6.4]);
+                    ctx.strokeStyle = '#8b949e';
+                    ctx.lineWidth = 6;
+                    ctx.lineCap = 'round';
+                    ctx.setLineDash([5, 10]);
                     ctx.beginPath();
                     ctx.arc(0, 0, teethR, 0, Math.PI * 2);
                     ctx.stroke();
                     ctx.setLineDash([]);
-                    ctx.strokeStyle = '#9ca3af';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(0, -bodyR + 6);
-                    ctx.lineTo(0, -bodyR + 16);
-                    ctx.stroke();
+                    ctx.lineCap = 'butt';
                     ctx.restore();
 
                     ctx.fillStyle = '#d1d5db';
@@ -362,12 +358,13 @@
                     const planetCoreR = 14;
                     const planetOffset = sunTeethR + planetTeethR;
                     const planetAngles = [-90, 30, 150].map((deg) => deg * Math.PI / 180);
+                    const carrierSpin = prefersReducedMotion.matches ? 0 : t * 0.15;
                     const planets = planetAngles.map((angle) => ({
-                        x: center.x + planetOffset * Math.cos(angle),
-                        y: center.y + planetOffset * Math.sin(angle)
+                        x: center.x + planetOffset * Math.cos(angle + carrierSpin),
+                        y: center.y + planetOffset * Math.sin(angle + carrierSpin)
                     }));
-                    const sunSpin = prefersReducedMotion.matches ? 0 : t * 0.35;
-                    const planetSpin = prefersReducedMotion.matches ? 0 : -t * 0.55;
+                    const sunSpin = prefersReducedMotion.matches ? 0 : -t * 0.25;
+                    const planetSpin = prefersReducedMotion.matches ? 0 : -t * 0.45;
                     const hubRingR = sunBodyR + 14;
 
                     ctx.fillStyle = '#b9bec7';
@@ -492,9 +489,9 @@
                         ctx.stroke();
                     });
 
-                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin);
-                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + 0.8);
-                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + 1.6);
+                    drawGear(planets[0].x, planets[0].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin);
+                    drawGear(planets[1].x, planets[1].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 0.8);
+                    drawGear(planets[2].x, planets[2].y, planetBodyR, planetTeethR, planetCoreR, metalGradient, planetSpin + carrierSpin + 1.6);
                     drawGear(center.x, center.y, sunBodyR, sunTeethR, sunCoreR, metalGradient, sunSpin);
 
                     ctx.save();
