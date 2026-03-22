@@ -363,6 +363,8 @@
                     const isDark = document.body.classList.contains('brightness-bold');
                     const labelColor = isDark ? '#e5e7eb' : '#374151';
                     const lineColor = isDark ? '#e5e7eb' : '#4b5563';
+                    const calloutColor = lineColor;
+                    const calloutWidth = 2;
                     const bubbleBg = isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.95)';
                     const bubbleStroke = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(2, 6, 23, 0.15)';
                     const bubbleText = isDark ? 'rgba(248, 250, 252, 0.95)' : 'rgba(15, 23, 42, 0.95)';
@@ -570,27 +572,31 @@
                     ctx.textBaseline = 'middle';
 
                     const sunLabel = drawBubbleLabel('Sun Gear', 130, 150);
-                    ctx.strokeStyle = lineColor;
-                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = calloutColor;
+                    ctx.lineWidth = calloutWidth;
                     ctx.beginPath();
                     ctx.moveTo(sunLabel.right + 8, sunLabel.midY);
                     ctx.lineTo(center.x - sunBodyR, center.y);
                     ctx.stroke();
 
                     const ringLabel = drawBubbleLabel('Ring Gear', 120, 82);
+                    ctx.strokeStyle = calloutColor;
+                    ctx.lineWidth = calloutWidth;
                     ctx.beginPath();
                     ctx.moveTo(ringLabel.right + 8, ringLabel.midY);
                     ctx.lineTo(center.x - ringOuterR + 6, center.y - ringOuterR * 0.35);
                     ctx.stroke();
 
                     const planetCalloutR = planetOffset;
-                    ctx.strokeStyle = lineColor;
-                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = calloutColor;
+                    ctx.lineWidth = calloutWidth;
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, planetCalloutR, 0, Math.PI * 2);
                     ctx.stroke();
                     const planetLabel = drawBubbleLabel('Planet Gears', 120, 200);
                     const planetAnchorAngle = Math.PI * 0.7;
+                    ctx.strokeStyle = calloutColor;
+                    ctx.lineWidth = calloutWidth;
                     ctx.beginPath();
                     ctx.moveTo(planetLabel.right + 8, planetLabel.midY);
                     ctx.lineTo(center.x + Math.cos(planetAnchorAngle) * planetCalloutR, center.y + Math.sin(planetAnchorAngle) * planetCalloutR);
