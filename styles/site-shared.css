@@ -1882,6 +1882,29 @@ body.custom-theme.brightness-medium {
             color: var(--ts-text);
         }
 
+        .product-summary-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.35rem 0 0;
+            display: grid;
+            gap: 0.35rem;
+            color: var(--ts-text);
+            font-weight: 600;
+        }
+
+        .product-summary-list li {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .product-summary-list .pn {
+            font-weight: 800;
+            color: var(--orange);
+        }
+
         @media (max-width: 768px) {
             .brand-divider {
                 width: 140px;
