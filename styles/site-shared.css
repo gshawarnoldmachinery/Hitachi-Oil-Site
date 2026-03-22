@@ -1,10 +1,10 @@
 ﻿/* Shared UI layer for all LANDCROS pages */
 
 .custom-theme .page-toolbar {
-    background-color: var(--toolbar-bg) !important;
-    background-image: var(--toolbar-pattern) !important;
-    background-size: 48px 42px !important;
-    background-position: center !important;
+    background-color: var(--ts-surface) !important;
+    background-image: url("../assets/toolbar-tile.png") !important;
+    background-size: 24px 24px !important;
+    background-repeat: repeat !important;
     border-bottom: 1px solid var(--ts-border) !important;
 }
 
@@ -1230,7 +1230,7 @@ body.custom-theme.brightness-medium {
             position: sticky;
             top: 0;
             z-index: 9000;
-            background: var(--ts-surface);
+            background-color: var(--ts-surface);
             border-bottom: 1px solid var(--ts-border);
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
         }
@@ -2628,7 +2628,7 @@ body.custom-theme.brightness-medium {
             position: sticky;
             top: 0;
             z-index: 9000;
-            background: var(--ts-surface);
+            background-color: var(--ts-surface);
             border-bottom: 1px solid var(--ts-border);
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
         }
