@@ -10,6 +10,16 @@
     // Theme persistence key.
     const BRIGHTNESS_KEY = 'hitachiThemeBrightness';
 
+    const SEARCH_DATA = [
+        { title: 'Grease', url: '../Grease/', keywords: 'nlgi ep grease pins bushings lubrication' },
+        { title: 'Engine Oil', url: '../Engine-Oil/', keywords: 'engine oil diesel dh-2 10w-40' },
+        { title: 'Coolant', url: '../Coolant/', keywords: 'coolant antifreeze 50/50 extended life' },
+        { title: 'Hydraulic Oil', url: '../Hydraulic-Oil/', keywords: 'hydraulic oil super 46hn hydraulic system' },
+        { title: 'Transmission Oil', url: '../Transmission-Oil/', keywords: 'transmission oil 10w powershift' },
+        { title: 'Gear Oil', url: '../Gear-Oil/', keywords: 'gear oil gl-4 planetary swing gears' },
+        { title: 'Axle Oil', url: '../Axle-Oil/', keywords: 'axle oil extreme pressure wheel loader' }
+    ];
+
     function applyBrightness(level, buttons) {
         const valid = ['subtle', 'bold'].includes(level) ? level : 'subtle';
         document.body.classList.remove('brightness-subtle', 'brightness-medium', 'brightness-bold');
@@ -109,6 +119,87 @@
         state.printInitialized = true;
     }
 
+    // Simple site search (page name + keywords).
+    function initSiteSearch() {
+        const inputs = Array.from(document.querySelectorAll('.toolbar-search-input'));
+        if (!inputs.length) return;
+
+        const normalized = SEARCH_DATA.map((item) => {
+            return {
+                title: item.title,
+                url: item.url,
+                haystack: (item.title + ' ' + (item.keywords || '')).toLowerCase()
+            };
+        });
+
+        function resolveHref(url) {
+            if (window.location && window.location.protocol === 'file:' && url.endsWith('/')) {
+                return url + 'index.html';
+            }
+            return url;
+        }
+
+        function renderResults(container, results, query) {
+            if (!container) return;
+            container.innerHTML = '';
+            if (!query) {
+                container.classList.remove('is-open');
+                return;
+            }
+            if (!results.length) {
+                const empty = document.createElement('div');
+                empty.className = 'toolbar-search-empty';
+                empty.textContent = 'No matches for "' + query + '"';
+                container.appendChild(empty);
+                container.classList.add('is-open');
+                return;
+            }
+            results.forEach((item) => {
+                const link = document.createElement('a');
+                link.href = resolveHref(item.url);
+                link.textContent = item.title;
+                container.appendChild(link);
+            });
+            container.classList.add('is-open');
+        }
+
+        inputs.forEach((input) => {
+            const wrap = input.closest('.toolbar-search-wrap');
+            const resultsEl = wrap ? wrap.querySelector('.toolbar-search-results') : null;
+            let latestResults = [];
+
+            function closeResults() {
+                if (resultsEl) resultsEl.classList.remove('is-open');
+            }
+
+            input.addEventListener('input', function () {
+                const query = input.value.trim().toLowerCase();
+                if (query.length < 2) {
+                    renderResults(resultsEl, [], '');
+                    return;
+                }
+                latestResults = normalized.filter((item) => item.haystack.includes(query)).slice(0, 6);
+                renderResults(resultsEl, latestResults, input.value.trim());
+            });
+
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeResults();
+                    input.blur();
+                }
+                if (event.key === 'Enter' && latestResults.length) {
+                    window.location.href = resolveHref(latestResults[0].url);
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!wrap || !resultsEl) return;
+                if (wrap.contains(event.target)) return;
+                closeResults();
+            });
+        });
+    }
+
     // Footer version line updater.
     function initVersionLine(pageVersion) {
         const versionLine = document.getElementById('versionLine');
@@ -158,6 +249,7 @@
         initToolbarMenu,
         initPrintButton,
         initVersionLine,
-        initSimpleTooltips
+        initSimpleTooltips,
+        initSiteSearch
     };
 })();

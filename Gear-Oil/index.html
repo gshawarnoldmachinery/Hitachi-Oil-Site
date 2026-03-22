@@ -43,6 +43,13 @@
                     <a role="menuitem" href="../Test/">Test</a>
                 </div>
             </div>
+            <div class="toolbar-search">
+                <div class="toolbar-search-wrap">
+                    <i class="fa-solid fa-magnifying-glass toolbar-search-icon" aria-hidden="true"></i>
+                    <input type="search" class="toolbar-search-input" placeholder="Search pages" aria-label="Search pages">
+                    <div class="toolbar-search-results" role="listbox" aria-label="Search results"></div>
+                </div>
+            </div>
             <div class="toolbar-theme">
                 <div class="brightness-toggle" role="group" aria-label="Theme selector">
                     <span class="brightness-label">Theme</span>
@@ -259,6 +266,7 @@
             if (window.SiteShared) {
                 SiteShared.initThemeToggle();
                 SiteShared.initToolbarMenu();
+                SiteShared.initSiteSearch();
                 SiteShared.initPrintButton();
                 SiteShared.initVersionLine(PAGE_VERSION);
                 SiteShared.initSimpleTooltips();
