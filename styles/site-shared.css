@@ -1471,6 +1471,7 @@ body.custom-theme.brightness-medium {
             backdrop-filter: blur(1px);
             position: relative;
             overflow: visible;
+            margin: 0;
         }
 
         .connect-panel:hover,
@@ -2602,7 +2603,17 @@ body.custom-theme.brightness-medium {
             border-color: #4a5568;
         }
 
-        .content { padding: 1.5rem 1rem 2.5rem; }
+        .content {
+            padding: 1.5rem 1rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .content > * {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
         .title-pill {
             margin: 0 auto;
             display: inline-flex;
@@ -2614,7 +2625,7 @@ body.custom-theme.brightness-medium {
             padding: 0.7rem 1.2rem;
             box-shadow: 0 0 25px rgba(255,122,26,0.22);
         }
-        .title-wrap { text-align: center; margin-bottom: 1rem; }
+        .title-wrap { text-align: center; margin-bottom: 0; }
         .title-main {
             margin: 0;
             font-size: clamp(1.6rem, 4vw, 3.4rem);
@@ -2678,7 +2689,7 @@ body.custom-theme.brightness-medium {
         }
 
         .panel {
-            margin-top: 1.5rem;
+            margin-top: 0;
             background: linear-gradient(145deg, rgba(29, 32, 40, var(--panel-a-1)), rgba(18, 22, 29, var(--panel-a-2)));
             border: 1px solid rgba(255, 122, 26, var(--panel-border));
             box-shadow: 0 16px 46px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 122, 26, var(--panel-glow)), inset 0 0 0 1px rgba(255, 122, 26, var(--panel-inset));
@@ -2713,7 +2724,7 @@ body.custom-theme.brightness-medium {
             color: var(--ts-text);
         }
 
-        .oil-card { margin-top: 1rem; }
+        .oil-card { margin-top: 0; }
         .oil-card h2 { margin: 0 0 0.65rem; }
         .oil-grid {
             display: flex;

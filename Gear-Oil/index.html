@@ -287,10 +287,11 @@
                     const rect = canvas.getBoundingClientRect();
                     const cssW = rect.width || base.w;
                     const cssH = cssW * (base.h / base.w);
+                    const scale = cssW < base.w ? (cssW / base.w) : 1;
                     canvas.style.height = cssH + 'px';
                     canvas.width = Math.round(cssW * ratio);
                     canvas.height = Math.round(cssH * ratio);
-                    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+                    ctx.setTransform(ratio * scale, 0, 0, ratio * scale, 0, 0);
                     cssSize = { w: cssW, h: cssH };
                 }
 
