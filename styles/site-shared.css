@@ -1535,7 +1535,7 @@ body.custom-theme.brightness-medium {
             }
             .grease-demo-canvas,
             .grease-demo-svg {
-                transform: scale(1.32);
+                transform: scale(1.2);
                 transform-origin: center;
             }
         }
@@ -3265,7 +3265,7 @@ body.custom-theme.brightness-medium {
     }
     .gear-demo-canvas,
     .gear-demo-svg {
-        transform: scale(1.32);
+        transform: scale(1.2);
         transform-origin: center;
     }
 }
