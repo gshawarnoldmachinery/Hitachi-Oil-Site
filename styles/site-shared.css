@@ -1905,6 +1905,30 @@ body.custom-theme.brightness-medium {
             color: var(--orange);
         }
 
+        .print-hint {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--ts-text);
+            opacity: 0.75;
+            text-align: center;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.6rem;
+            font-weight: 700;
+            color: var(--orange);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .back-to-top:hover,
+        .back-to-top:focus {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .brand-divider {
                 width: 140px;
@@ -1913,6 +1937,12 @@ body.custom-theme.brightness-medium {
 
             .brand-left {
                 text-align: center;
+            }
+
+            .page-toolbar {
+                position: sticky;
+                top: 0;
+                z-index: 200;
             }
 
             .code-box:hover {
