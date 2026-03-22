@@ -3041,7 +3041,7 @@ body.custom-theme.brightness-medium {
             background-image:
                 linear-gradient(180deg, rgba(26, 29, 34, 0.55) 0%, rgba(26, 29, 34, 0.35) 100%),
                 url("../assets/footer-tile.png");
-            background-size: 100% 100%, 120px 120px;
+            background-size: 100% 100%, 160px 240px;
             background-repeat: no-repeat, repeat;
             background-position: center, center;
         }
