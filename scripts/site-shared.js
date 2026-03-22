@@ -57,6 +57,16 @@
             return;
         }
 
+        // When viewing locally via file://, ensure directory links open index.html.
+        if (window.location && window.location.protocol === 'file:') {
+            const links = Array.from(document.querySelectorAll('a[href$="/"]'));
+            links.forEach((link) => {
+                const href = link.getAttribute('href') || '';
+                if (href.includes('://')) return;
+                link.setAttribute('href', href + 'index.html');
+            });
+        }
+
         const closeMenu = () => {
             menu.classList.remove('is-open');
             menuButton.setAttribute('aria-expanded', 'false');
