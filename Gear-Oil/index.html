@@ -581,6 +581,7 @@
                     const ringLabel = drawBubbleLabel('Ring Gear', 120, 82);
                     ctx.beginPath();
                     ctx.moveTo(ringLabel.right + 8, ringLabel.midY);
+                    ctx.lineTo(center.x - ringOuterR + 6, ringLabel.midY);
                     ctx.lineTo(center.x - ringOuterR + 6, center.y - ringOuterR * 0.35);
                     ctx.stroke();
 
@@ -594,6 +595,7 @@
                     const planetAnchorAngle = Math.PI * 0.7;
                     ctx.beginPath();
                     ctx.moveTo(planetLabel.right + 8, planetLabel.midY);
+                    ctx.lineTo(center.x - 10, planetLabel.midY);
                     ctx.lineTo(center.x + Math.cos(planetAnchorAngle) * planetCalloutR, center.y + Math.sin(planetAnchorAngle) * planetCalloutR);
                     ctx.stroke();
                     ctx.restore();
