@@ -2,8 +2,8 @@
 
 .custom-theme .page-toolbar {
     background-color: var(--ts-surface) !important;
-    background-image: url("../assets/toolbar-tile.png") !important;
-    background-size: 24px 24px !important;
+    background-image: url("../assets/footer-tile.jpg") !important;
+    background-size: 26px 48px !important;
     background-repeat: repeat !important;
     border-bottom: 1px solid var(--ts-border) !important;
 }
@@ -3033,19 +3033,22 @@ body.custom-theme.brightness-medium {
         .footer {
             margin-top: 1.25rem;
             text-align: center;
-            color: #a1a1aa;
+            color: #e5e7eb;
             font-size: .78rem;
             border-top: 1px solid #292929;
             padding: 1rem;
             background-color: #0f1114;
-            background-image: url("../assets/footer-tile.jpg");
+            background-image:
+                linear-gradient(180deg, rgba(10, 12, 16, 0.35), rgba(10, 12, 16, 0.35)),
+                url("../assets/footer-tile.jpg");
             background-size: 26px 48px;
             background-repeat: repeat;
             background-position: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
         }
 
         .footer-title {
-            color: var(--ts-text);
+            color: #f8fafc;
             font-size: 0.95rem;
             font-weight: 800;
             letter-spacing: 0.02em;
@@ -3054,7 +3057,7 @@ body.custom-theme.brightness-medium {
 
         .footer-meta {
             margin-top: 0.35rem;
-            color: var(--ts-muted);
+            color: #cbd5f5;
             line-height: 1.45;
         }
 
