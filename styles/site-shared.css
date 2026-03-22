@@ -1531,6 +1531,12 @@ body.custom-theme.brightness-medium {
             }
             .grease-demo-figure {
                 padding: 0.6rem;
+                overflow: hidden;
+            }
+            .grease-demo-canvas,
+            .grease-demo-svg {
+                transform: scale(1.25);
+                transform-origin: center;
             }
         }
 
@@ -2498,6 +2504,38 @@ body.custom-theme.brightness-medium {
             color: rgba(226, 232, 240, 0.85);
             font-size: 0.8rem;
         }
+
+        .custom-theme .toolbar-search-icon {
+            color: rgba(55, 65, 81, 0.7);
+        }
+
+        .custom-theme .toolbar-search-input {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(15, 23, 42, 0.18);
+            color: #111827;
+        }
+
+        .custom-theme .toolbar-search-input::placeholder {
+            color: #6b7280;
+        }
+
+        .custom-theme .toolbar-search-results {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+        }
+
+        .custom-theme .toolbar-search-results a {
+            color: #111827;
+        }
+
+        .custom-theme .toolbar-search-results a:hover {
+            background: rgba(255, 122, 26, 0.18);
+        }
+
+        .custom-theme .toolbar-search-empty {
+            color: #6b7280;
+        }
         .toolbar-link {
             text-decoration: none;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -3221,6 +3259,11 @@ body.custom-theme.brightness-medium {
     .gear-demo-figure {
         padding: 0.6rem;
         overflow: hidden;
+    }
+    .gear-demo-canvas,
+    .gear-demo-svg {
+        transform: scale(1.25);
+        transform-origin: center;
     }
 }
 
