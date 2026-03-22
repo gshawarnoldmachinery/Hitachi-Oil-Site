@@ -3037,13 +3037,11 @@ body.custom-theme.brightness-medium {
             font-size: .78rem;
             border-top: 1px solid #292929;
             padding: 1rem;
-            background-color: #1a1d22;
-            background-image:
-                linear-gradient(180deg, rgba(26, 29, 34, 0.55) 0%, rgba(26, 29, 34, 0.35) 100%),
-                url("../assets/footer-tile.png");
-            background-size: 100% 100%, 120px 120px;
-            background-repeat: no-repeat, repeat;
-            background-position: center, center;
+            background-color: #0f1114;
+            background-image: url("../assets/footer-tile.png");
+            background-size: 18px 29px;
+            background-repeat: repeat;
+            background-position: center;
         }
 
         .footer-title {
