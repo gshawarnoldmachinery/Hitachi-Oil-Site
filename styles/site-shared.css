@@ -1530,12 +1530,12 @@ body.custom-theme.brightness-medium {
                 gap: 1.15rem;
             }
             .grease-demo-figure {
-                padding: 0.6rem;
+                padding: 0.45rem;
                 overflow: hidden;
             }
             .grease-demo-canvas,
             .grease-demo-svg {
-                transform: scale(1.25);
+                transform: scale(1.4);
                 transform-origin: center;
             }
         }
@@ -2422,8 +2422,11 @@ body.custom-theme.brightness-medium {
         }
 
         .page-toolbar {
-            display: flex;
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
             align-items: center;
+            column-gap: 0.9rem;
+            row-gap: 0.6rem;
             padding: 0.5rem 1rem;
             background: #5a5d62;
             border-bottom: 2px solid #3f4247;
@@ -3257,12 +3260,12 @@ body.custom-theme.brightness-medium {
         gap: 1.15rem;
     }
     .gear-demo-figure {
-        padding: 0.6rem;
+        padding: 0.45rem;
         overflow: hidden;
     }
     .gear-demo-canvas,
     .gear-demo-svg {
-        transform: scale(1.25);
+        transform: scale(1.4);
         transform-origin: center;
     }
 }
