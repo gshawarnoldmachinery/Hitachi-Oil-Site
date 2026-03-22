@@ -1844,6 +1844,44 @@ body.custom-theme.brightness-medium {
             z-index: 1 !important;
         }
 
+        .product-summary {
+            display: grid;
+            justify-items: center;
+            gap: 1rem;
+            text-align: center;
+            border: 2px solid var(--orange);
+        }
+
+        .product-summary-icon {
+            font-size: 3.5rem;
+            color: var(--orange);
+        }
+
+        .product-summary-title {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--ts-text);
+        }
+
+        .product-summary-media {
+            width: min(360px, 90%);
+        }
+
+        .product-summary-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.35));
+        }
+
+        .product-summary-part {
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--ts-text);
+        }
+
         @media (max-width: 768px) {
             .brand-divider {
                 width: 140px;
