@@ -3039,7 +3039,7 @@ body.custom-theme.brightness-medium {
             padding: 1rem;
             background-color: #0f1114;
             background-image: url("../assets/footer-tile.jpg");
-            background-size: 35px 64px;
+            background-size: 26px 48px;
             background-repeat: repeat;
             background-position: center;
         }
@@ -3725,15 +3725,15 @@ body.custom-theme.brightness-medium {
 /* Toolbar default styling (no hex pattern). */
 .page-toolbar {
     background-color: #5a5d62 !important;
-    background-image: url("../assets/toolbar-tile.png");
-    background-size: 24px 24px;
+    background-image: url("../assets/footer-tile.jpg");
+    background-size: 26px 48px;
     background-repeat: repeat;
 }
 
 .custom-theme .page-toolbar {
     background-color: var(--ts-surface) !important;
-    background-image: url("../assets/toolbar-tile.png");
-    background-size: 24px 24px;
+    background-image: url("../assets/footer-tile.jpg");
+    background-size: 26px 48px;
     background-repeat: repeat;
     border-bottom: 1px solid var(--ts-border) !important;
 }
