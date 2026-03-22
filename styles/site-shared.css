@@ -1,7 +1,10 @@
 ﻿/* Shared UI layer for all LANDCROS pages */
 
 .custom-theme .page-toolbar {
-    background: var(--ts-surface) !important;
+    background-color: var(--toolbar-bg) !important;
+    background-image: var(--toolbar-pattern) !important;
+    background-size: 48px 42px !important;
+    background-position: center !important;
     border-bottom: 1px solid var(--ts-border) !important;
 }
 
