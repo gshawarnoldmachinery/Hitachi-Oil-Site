@@ -638,18 +638,19 @@
                     const metalDark = '#9aa2ac';
                     const metalInner = '#6b7280';
 
-                    const center = { x: 370, y: 125 };
+                    const shiftX = 35;
+                    const center = { x: 370 + shiftX, y: 125 };
 
-                    const armGrad = ctx.createLinearGradient(220, 40, 560, 320);
+                    const armGrad = ctx.createLinearGradient(220 + shiftX, 40, 560 + shiftX, 320);
                     armGrad.addColorStop(0, orangeTop);
                     armGrad.addColorStop(0.55, orangeMid);
                     armGrad.addColorStop(1, orangeDeep);
 
                     // Arm housing (orange).
                     ctx.fillStyle = armGrad;
-                    roundRect(255, -7.75, 225, 78.75, 16.5);
+                    roundRect(255 + shiftX, -7.75, 225, 78.75, 16.5);
                     ctx.fill();
-                    roundRect(262.5, 67.25, 210, 48, 18);
+                    roundRect(262.5 + shiftX, 67.25, 210, 48, 18);
                     ctx.fill();
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, 96, 0, Math.PI * 2);
@@ -659,27 +660,27 @@
                     ctx.strokeStyle = 'rgba(0,0,0,0.18)';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.moveTo(268, 6);
-                    ctx.lineTo(455, 6);
+                    ctx.moveTo(268 + shiftX, 6);
+                    ctx.lineTo(455 + shiftX, 6);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(268, 34);
-                    ctx.lineTo(455, 34);
+                    ctx.moveTo(268 + shiftX, 34);
+                    ctx.lineTo(455 + shiftX, 34);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(276, 10);
-                    ctx.lineTo(276, 32);
+                    ctx.moveTo(276 + shiftX, 10);
+                    ctx.lineTo(276 + shiftX, 32);
                     ctx.stroke();
                     ctx.beginPath();
-                    ctx.moveTo(447, 10);
-                    ctx.lineTo(447, 32);
+                    ctx.moveTo(447 + shiftX, 10);
+                    ctx.lineTo(447 + shiftX, 32);
                     ctx.stroke();
 
                     ctx.strokeStyle = 'rgba(255,255,255,0.18)';
                     ctx.lineWidth = 1.6;
                     ctx.beginPath();
-                    ctx.moveTo(270, 12);
-                    ctx.lineTo(452, 12);
+                    ctx.moveTo(270 + shiftX, 12);
+                    ctx.lineTo(452 + shiftX, 12);
                     ctx.stroke();
 
                     ctx.strokeStyle = 'rgba(0,0,0,0.2)';

@@ -364,6 +364,9 @@
                     const isDark = document.body.classList.contains('brightness-bold');
                     const labelColor = isDark ? '#e5e7eb' : '#374151';
                     const lineColor = isDark ? '#e5e7eb' : '#4b5563';
+                    const bubbleBg = isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.95)';
+                    const bubbleStroke = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(2, 6, 23, 0.15)';
+                    const bubbleText = isDark ? 'rgba(248, 250, 252, 0.95)' : 'rgba(15, 23, 42, 0.95)';
 
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
@@ -528,52 +531,69 @@
                     ctx.stroke();
                     ctx.restore();
 
+                    function drawBubbleLabel(text, x, y) {
+                        const paddingX = 10;
+                        const paddingY = 6;
+                        const radius = 10;
+                        const textWidth = ctx.measureText(text).width;
+                        const bubbleWidth = textWidth + paddingX * 2;
+                        const bubbleHeight = 14 + paddingY * 2;
+                        const left = x;
+                        const top = y - bubbleHeight / 2;
+
+                        ctx.beginPath();
+                        ctx.moveTo(left + radius, top);
+                        ctx.lineTo(left + bubbleWidth - radius, top);
+                        ctx.quadraticCurveTo(left + bubbleWidth, top, left + bubbleWidth, top + radius);
+                        ctx.lineTo(left + bubbleWidth, top + bubbleHeight - radius);
+                        ctx.quadraticCurveTo(left + bubbleWidth, top + bubbleHeight, left + bubbleWidth - radius, top + bubbleHeight);
+                        ctx.lineTo(left + radius, top + bubbleHeight);
+                        ctx.quadraticCurveTo(left, top + bubbleHeight, left, top + bubbleHeight - radius);
+                        ctx.lineTo(left, top + radius);
+                        ctx.quadraticCurveTo(left, top, left + radius, top);
+                        ctx.closePath();
+                        ctx.fillStyle = bubbleBg;
+                        ctx.strokeStyle = bubbleStroke;
+                        ctx.lineWidth = 1;
+                        ctx.fill();
+                        ctx.stroke();
+
+                        ctx.fillStyle = bubbleText;
+                        ctx.textAlign = 'left';
+                        ctx.fillText(text, left + paddingX, y);
+                        ctx.textAlign = 'start';
+
+                        return { right: left + bubbleWidth, midY: y };
+                    }
+
                     ctx.save();
-                    ctx.fillStyle = labelColor;
-                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
+                    ctx.font = '600 14px "Segoe UI", Arial, sans-serif';
                     ctx.textBaseline = 'middle';
-                    const labelX = 150;
-                    const labelY = 150;
-                    ctx.fillText('SUN GEAR', labelX, labelY);
+
+                    const sunLabel = drawBubbleLabel('Sun Gear', 130, 150);
                     ctx.strokeStyle = lineColor;
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.moveTo(labelX + 80, labelY);
+                    ctx.moveTo(sunLabel.right + 8, sunLabel.midY);
                     ctx.lineTo(center.x - sunBodyR, center.y);
                     ctx.stroke();
-                    ctx.restore();
 
-                    ctx.save();
-                    ctx.fillStyle = labelColor;
-                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
-                    ctx.textBaseline = 'middle';
-                    const ringLabelX = 140;
-                    const ringLabelY = 82;
-                    ctx.fillText('RING GEAR', ringLabelX, ringLabelY);
-                    ctx.strokeStyle = lineColor;
-                    ctx.lineWidth = 2;
+                    const ringLabel = drawBubbleLabel('Ring Gear', 120, 82);
                     ctx.beginPath();
-                    ctx.moveTo(ringLabelX + 90, ringLabelY);
+                    ctx.moveTo(ringLabel.right + 8, ringLabel.midY);
                     ctx.lineTo(center.x - ringOuterR + 6, center.y - ringOuterR * 0.35);
                     ctx.stroke();
-                    ctx.restore();
 
-                    ctx.save();
+                    const planetCalloutR = planetOffset;
                     ctx.strokeStyle = lineColor;
                     ctx.lineWidth = 2;
-                    const planetCalloutR = planetOffset;
                     ctx.beginPath();
                     ctx.arc(center.x, center.y, planetCalloutR, 0, Math.PI * 2);
                     ctx.stroke();
-                    ctx.fillStyle = labelColor;
-                    ctx.font = '700 14px "Segoe UI", Arial, sans-serif';
-                    ctx.textBaseline = 'middle';
-                    const planetLabelX = 150;
-                    const planetLabelY = 200;
-                    ctx.fillText('PLANET GEARS', planetLabelX, planetLabelY);
-                    ctx.beginPath();
+                    const planetLabel = drawBubbleLabel('Planet Gears', 120, 200);
                     const planetAnchorAngle = Math.PI * 0.7;
-                    ctx.moveTo(planetLabelX + 105, planetLabelY);
+                    ctx.beginPath();
+                    ctx.moveTo(planetLabel.right + 8, planetLabel.midY);
                     ctx.lineTo(center.x + Math.cos(planetAnchorAngle) * planetCalloutR, center.y + Math.sin(planetAnchorAngle) * planetCalloutR);
                     ctx.stroke();
                     ctx.restore();
