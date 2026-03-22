@@ -2399,7 +2399,7 @@ body.custom-theme.brightness-medium {
 
         .container {
             width: 100%;
-            max-width: 1024px !important;
+            max-width: clamp(980px, 92vw, 1280px) !important;
             margin: 0 auto;
         }
         .brand-header {
