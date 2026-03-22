@@ -3714,6 +3714,23 @@ body.custom-theme.brightness-medium {
     50% { transform: translateY(-8px); opacity: 0.95; }
 }
 
+/* Toolbar hex pattern */
+.page-toolbar {
+    --toolbar-bg: #5a5d62;
+    --toolbar-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='42' viewBox='0 0 48 42' fill='none'%3E%3Cpath d='M12 1 L36 1 L47 21 L36 41 L12 41 L1 21 Z' stroke='%23ff6600' stroke-width='1.6' stroke-opacity='0.3'/%3E%3C/svg%3E");
+    background-color: var(--toolbar-bg) !important;
+    background-image: var(--toolbar-pattern);
+    background-size: 48px 42px;
+    background-position: center;
+}
+
+.custom-theme .page-toolbar {
+    --toolbar-bg: #f4f5f7;
+    --toolbar-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='42' viewBox='0 0 48 42' fill='none'%3E%3Cpath d='M12 1 L36 1 L47 21 L36 41 L12 41 L1 21 Z' stroke='%23ff6600' stroke-width='1.6' stroke-opacity='0.2'/%3E%3C/svg%3E");
+    background-color: var(--toolbar-bg) !important;
+    border-bottom: 1px solid var(--ts-border) !important;
+}
+
 @media (max-width: 900px) {
     .gear-demo-grid {
         grid-template-columns: 1fr;
