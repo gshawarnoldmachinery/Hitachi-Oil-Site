@@ -3719,19 +3719,22 @@ body.custom-theme.brightness-medium {
 
 /* Toolbar hex pattern */
 .page-toolbar {
-    --toolbar-bg: #5a5d62;
-    --toolbar-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='42' viewBox='0 0 48 42' fill='none'%3E%3Cpath d='M12 1 L36 1 L47 21 L36 41 L12 41 L1 21 Z' stroke='%23ff6600' stroke-width='1.6' stroke-opacity='0.3'/%3E%3C/svg%3E");
-    background-color: var(--toolbar-bg) !important;
-    background-image: var(--toolbar-pattern);
-    background-size: 48px 42px;
-    background-position: center;
+    --toolbar-pattern-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52' fill='none'%3E%3Cpath d='M15 1 L45 1 L59 26 L45 51 L15 51 L1 26 Z' stroke='%23222222' stroke-width='1.4'/%3E%3C/svg%3E");
+    --toolbar-pattern-orange: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104' fill='none'%3E%3Cpath d='M30 2 L90 2 L118 52 L90 102 L30 102 L2 52 Z' fill='rgba(0,0,0,0)' stroke='%23ff6600' stroke-width='3.2'/%3E%3C/svg%3E");
+    background-color: #0d0d0f !important;
+    background-image:
+        linear-gradient(120deg, rgba(255, 102, 0, 0.2) 0%, rgba(255, 102, 0, 0.05) 42%, rgba(0, 0, 0, 0) 65%),
+        linear-gradient(310deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.75) 55%, rgba(0, 0, 0, 0.92) 100%),
+        var(--toolbar-pattern-orange),
+        var(--toolbar-pattern-dark);
+    background-size: 100% 100%, 100% 100%, 120px 104px, 60px 52px;
+    background-position: center, center, 60px -18px, center;
+    background-blend-mode: screen, normal, normal, normal;
 }
 
 .custom-theme .page-toolbar {
-    --toolbar-bg: #f4f5f7;
-    --toolbar-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='42' viewBox='0 0 48 42' fill='none'%3E%3Cpath d='M12 1 L36 1 L47 21 L36 41 L12 41 L1 21 Z' stroke='%23ff6600' stroke-width='1.6' stroke-opacity='0.2'/%3E%3C/svg%3E");
-    background-color: var(--toolbar-bg) !important;
-    border-bottom: 1px solid var(--ts-border) !important;
+    background-color: #0b0b0d !important;
+    border-bottom: 1px solid rgba(255, 102, 0, 0.4) !important;
 }
 
 @media (max-width: 900px) {
