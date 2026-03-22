@@ -3719,17 +3719,37 @@ body.custom-theme.brightness-medium {
 
 /* Toolbar hex pattern */
 .page-toolbar {
-    --toolbar-pattern-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52' fill='none'%3E%3Cpath d='M15 1 L45 1 L59 26 L45 51 L15 51 L1 26 Z' stroke='%23222222' stroke-width='1.4'/%3E%3C/svg%3E");
-    --toolbar-pattern-orange: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104' fill='none'%3E%3Cpath d='M30 2 L90 2 L118 52 L90 102 L30 102 L2 52 Z' fill='rgba(0,0,0,0)' stroke='%23ff6600' stroke-width='3.2'/%3E%3C/svg%3E");
-    background-color: #0d0d0f !important;
+    --toolbar-hex-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48' fill='none'%3E%3Cpath d='M14 1 L42 1 L55 24 L42 47 L14 47 L1 24 Z' stroke='%232b2b2b' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-color: #0b0b0d !important;
     background-image:
-        linear-gradient(120deg, rgba(255, 102, 0, 0.2) 0%, rgba(255, 102, 0, 0.05) 42%, rgba(0, 0, 0, 0) 65%),
-        linear-gradient(310deg, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.75) 55%, rgba(0, 0, 0, 0.92) 100%),
-        var(--toolbar-pattern-orange),
-        var(--toolbar-pattern-dark);
-    background-size: 100% 100%, 100% 100%, 120px 104px, 60px 52px;
-    background-position: center, center, 60px -18px, center;
-    background-blend-mode: screen, normal, normal, normal;
+        linear-gradient(130deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 45%, rgba(0, 0, 0, 0.95) 75%),
+        var(--toolbar-hex-dark);
+    background-size: 100% 100%, 56px 48px;
+    background-position: center, center;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-toolbar::after {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto auto;
+    width: 75%;
+    height: 160%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='76' viewBox='0 0 88 76' fill='none'%3E%3Cpath d='M22 2 L66 2 L86 38 L66 74 L22 74 L2 38 Z' fill='%23ff6600' stroke='%23ff9b45' stroke-width='2'/%3E%3C/svg%3E");
+    background-size: 88px 76px;
+    background-position: top right;
+    opacity: 0.85;
+    transform: rotate(6deg);
+    mask-image: linear-gradient(140deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 70%);
+    -webkit-mask-image: linear-gradient(140deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-toolbar > * {
+    position: relative;
+    z-index: 1;
 }
 
 .custom-theme .page-toolbar {
