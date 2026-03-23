@@ -597,6 +597,7 @@
                 const ctx = canvas.getContext('2d');
                 const base = { w: 760, h: 360 };
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+                let cssSize = { w: base.w, h: base.h };
                 let rafId = null;
 
                 function resizeCanvas() {
@@ -604,11 +605,11 @@
                     const rect = canvas.getBoundingClientRect();
                     const cssW = rect.width || base.w;
                     const cssH = cssW * (base.h / base.w);
-                    const scale = cssW < base.w ? (cssW / base.w) : 1;
                     canvas.style.height = cssH + 'px';
                     canvas.width = Math.round(cssW * ratio);
                     canvas.height = Math.round(cssH * ratio);
-                    ctx.setTransform(ratio * scale, 0, 0, ratio * scale, 0, 0);
+                    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+                    cssSize = { w: cssW, h: cssH };
                 }
 
                 function roundRect(x, y, w, h, r) {
@@ -627,8 +628,11 @@
                 }
 
                 function drawGreaseIllustration(phase) {
+                    const scaleX = cssSize.w / base.w;
+                    const scaleY = cssSize.h / base.h;
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
+                    ctx.scale(scaleX, scaleY);
                     const isDark = document.body.classList.contains('brightness-bold');
                     const orangeTop = '#ff7a1a';
                     const orangeMid = '#e35f0b';
