@@ -212,6 +212,8 @@
                 <div class="pill money">Money: <b id="moneyText">$0</b></div>
                 <div class="pill">Fuel: <b id="fuelText">0 / 0</b></div>
                 <div class="pill depth">Depth: <b id="depthText">0m</b></div>
+                <div class="pill">Machine: <b id="machineText">ZX17</b></div>
+                <div class="pill">Depth Cap: <b id="capText">0m</b></div>
                 <div class="pill">Best Ore: <b id="bestOreText">None</b></div>
             </div>
         </header>
@@ -234,443 +236,38 @@
                     <h2>How To Play</h2>
                     <ul>
                         <li>Use arrow keys or WASD to move and dig.</li>
-                        <li>Dig deeper to find more valuable ore.</li>
-                        <li>Fuel drains while moving underground.</li>
-                        <li>Refuel at the surface or pay for rescue.</li>
+                        <li>Upgrade from ZX17 up to ZX890LCH.</li>
+                        <li>Each machine has its own depth and ore limits.</li>
+                        <li>If ore is too hard, you need a larger machine.</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h2>Upgrades</h2>
+                    <h2>Fleet</h2>
+                    <p>ZX17 -> ZX26U -> ZX85USB -> ZX135US -> ZX350LC -> ZX490LC -> ZX890LCH</p>
+                </div>
+
+                <div class="card">
+                    <h2>Operations</h2>
                     <div class="buttons">
-                        <button id="engineBtn">Engine +1 Speed ($180)</button>
-                        <button id="bucketBtn">Bucket +8% Ore Value ($220)</button>
-                        <button id="tankBtn">Fuel Tank +35 ($160)</button>
+                        <button id="excavatorBtn">Upgrade Excavator</button>
+                        <button id="serviceBtn">Service + Refuel ($60)</button>
                         <button id="rescueBtn">Rescue To Surface (-$80)</button>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>Ore Layer Hints</h2>
-                    <p>Shallow: Coal and Copper</p>
-                    <p>Mid depth: Iron and Silver</p>
-                    <p>Deep: Gold and Emerald</p>
-                    <p>Very deep: Diamond</p>
+                    <h2>Ore Access</h2>
+                    <p>Coal/Copper: mini and compact machines</p>
+                    <p>Iron/Silver: mid-size machines</p>
+                    <p>Gold/Emerald: large mining class</p>
+                    <p>Diamond: only the biggest class</p>
                 </div>
             </aside>
         </div>
     </div>
 
-    <script>
-        (function () {
-            const canvas = document.getElementById("game");
-            const ctx = canvas.getContext("2d");
-            const moneyText = document.getElementById("moneyText");
-            const fuelText = document.getElementById("fuelText");
-            const depthText = document.getElementById("depthText");
-            const bestOreText = document.getElementById("bestOreText");
-
-            const GRID_W = 30;
-            const GRID_H = 240;
-            const CELL = 32;
-            const VIEW_COLS = 15;
-            const VIEW_ROWS = 12;
-            const SURFACE_ROW = 2;
-
-            const ORES = [
-                { id: "dirt", color: "#655240", value: 0, chance: () => 1 },
-                { id: "coal", color: "#2f343d", value: 8, chance: (d) => d > 4 ? 0.2 : 0.08 },
-                { id: "copper", color: "#b56c3a", value: 16, chance: (d) => d > 8 ? 0.19 : 0.06 },
-                { id: "iron", color: "#7a8490", value: 26, chance: (d) => d > 20 ? 0.16 : 0.03 },
-                { id: "silver", color: "#c7ccd3", value: 45, chance: (d) => d > 35 ? 0.12 : 0.015 },
-                { id: "gold", color: "#f2b632", value: 72, chance: (d) => d > 48 ? 0.11 : 0.01 },
-                { id: "emerald", color: "#2fbf7f", value: 125, chance: (d) => d > 66 ? 0.08 : 0.003 },
-                { id: "diamond", color: "#59dbff", value: 220, chance: (d) => d > 86 ? 0.05 : 0.001 }
-            ];
-
-            const game = {
-                mode: "play",
-                world: [],
-                oreStats: {},
-                player: {
-                    x: Math.floor(GRID_W / 2),
-                    y: SURFACE_ROW,
-                    moveCooldown: 0,
-                    speed: 1,
-                    oreBoost: 1
-                },
-                money: 0,
-                fuel: 120,
-                fuelMax: 120,
-                bestOre: "None",
-                maxDepth: 0,
-                particles: []
-            };
-
-            const keys = new Set();
-            let rafId = 0;
-            let lastTime = performance.now();
-
-            function chooseOre(depth) {
-                const roll = Math.random();
-                let tracker = 0;
-                let total = 0;
-                for (let i = 1; i < ORES.length; i += 1) total += ORES[i].chance(depth);
-                const dirtChance = Math.max(0.02, 1 - total);
-                tracker += dirtChance;
-                if (roll < tracker) return ORES[0];
-                for (let i = 1; i < ORES.length; i += 1) {
-                    tracker += ORES[i].chance(depth);
-                    if (roll < tracker) return ORES[i];
-                }
-                return ORES[0];
-            }
-
-            function makeWorld() {
-                game.world = [];
-                for (let y = 0; y < GRID_H; y += 1) {
-                    const row = [];
-                    for (let x = 0; x < GRID_W; x += 1) {
-                        if (y < SURFACE_ROW) {
-                            row.push({ type: "air", dug: true });
-                        } else {
-                            const ore = chooseOre(y);
-                            row.push({ type: ore.id, dug: false });
-                        }
-                    }
-                    game.world.push(row);
-                }
-                game.world[SURFACE_ROW][game.player.x] = { type: "air", dug: true };
-            }
-
-            function oreById(id) {
-                return ORES.find((o) => o.id === id) || ORES[0];
-            }
-
-            function canMove(nx, ny) {
-                return nx >= 0 && ny >= 0 && nx < GRID_W && ny < GRID_H;
-            }
-
-            function mineCell(nx, ny) {
-                const cell = game.world[ny][nx];
-                if (cell.dug) return;
-                cell.dug = true;
-                const ore = oreById(cell.type);
-                const payout = Math.round(ore.value * game.player.oreBoost);
-                game.money += payout;
-                if (!game.oreStats[ore.id]) game.oreStats[ore.id] = 0;
-                game.oreStats[ore.id] += 1;
-                if (ore.value > (oreById(game.bestOre).value || 0)) {
-                    game.bestOre = ore.id;
-                }
-                for (let i = 0; i < 7; i += 1) {
-                    game.particles.push({
-                        x: nx * CELL + CELL / 2,
-                        y: ny * CELL + CELL / 2,
-                        vx: (Math.random() - 0.5) * 60,
-                        vy: -40 - Math.random() * 60,
-                        life: 0.45 + Math.random() * 0.35,
-                        color: ore.color
-                    });
-                }
-            }
-
-            function consumeFuel(amount) {
-                if (game.player.y <= SURFACE_ROW) return;
-                game.fuel = Math.max(0, game.fuel - amount);
-            }
-
-            function handleMove(dx, dy) {
-                if (game.fuel <= 0 && game.player.y > SURFACE_ROW) return;
-                const nx = game.player.x + dx;
-                const ny = game.player.y + dy;
-                if (!canMove(nx, ny)) return;
-                mineCell(nx, ny);
-                game.player.x = nx;
-                game.player.y = ny;
-                consumeFuel(1.25);
-                if (game.player.y <= SURFACE_ROW) {
-                    game.fuel = game.fuelMax;
-                }
-                game.maxDepth = Math.max(game.maxDepth, game.player.y - SURFACE_ROW);
-            }
-
-            function update(dt) {
-                const moveDelay = Math.max(0.09, 0.2 - game.player.speed * 0.018);
-                game.player.moveCooldown -= dt;
-
-                if (game.player.moveCooldown <= 0) {
-                    if (keys.has("arrowleft") || keys.has("a")) {
-                        handleMove(-1, 0);
-                        game.player.moveCooldown = moveDelay;
-                    } else if (keys.has("arrowright") || keys.has("d")) {
-                        handleMove(1, 0);
-                        game.player.moveCooldown = moveDelay;
-                    } else if (keys.has("arrowdown") || keys.has("s")) {
-                        handleMove(0, 1);
-                        game.player.moveCooldown = moveDelay;
-                    } else if (keys.has("arrowup") || keys.has("w")) {
-                        handleMove(0, -1);
-                        game.player.moveCooldown = moveDelay;
-                    }
-                }
-
-                for (let i = game.particles.length - 1; i >= 0; i -= 1) {
-                    const p = game.particles[i];
-                    p.life -= dt;
-                    p.x += p.vx * dt;
-                    p.y += p.vy * dt;
-                    p.vy += 145 * dt;
-                    if (p.life <= 0) game.particles.splice(i, 1);
-                }
-
-                moneyText.textContent = "$" + game.money.toLocaleString();
-                fuelText.textContent = Math.round(game.fuel) + " / " + game.fuelMax;
-                depthText.textContent = Math.max(0, game.player.y - SURFACE_ROW) + "m";
-                bestOreText.textContent = game.bestOre === "None" ? "None" : game.bestOre[0].toUpperCase() + game.bestOre.slice(1);
-            }
-
-            function drawSky() {
-                const g = ctx.createLinearGradient(0, 0, 0, CELL * 3);
-                g.addColorStop(0, "#a2d9ff");
-                g.addColorStop(1, "#5aa9e6");
-                ctx.fillStyle = g;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#6bbf59";
-                ctx.fillRect(0, CELL * 2.6, canvas.width, CELL * 0.4);
-            }
-
-            function hexToRgba(hex, alpha) {
-                const clean = hex.replace("#", "");
-                const bigint = parseInt(clean, 16);
-                const r = (bigint >> 16) & 255;
-                const g = (bigint >> 8) & 255;
-                const b = bigint & 255;
-                return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
-            }
-
-            function drawExcavator(px, py) {
-                ctx.save();
-                ctx.translate(px, py);
-                ctx.fillStyle = "#ff6600";
-                ctx.strokeStyle = "#a63f00";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.roundRect(-14, -12, 30, 17, 4);
-                ctx.fill();
-                ctx.stroke();
-                ctx.fillStyle = "#2a3342";
-                ctx.beginPath();
-                ctx.roundRect(-22, 7, 44, 9, 5);
-                ctx.fill();
-                ctx.fillStyle = "#d7e9ff";
-                ctx.beginPath();
-                ctx.roundRect(-5, -9, 10, 8, 2);
-                ctx.fill();
-                ctx.strokeStyle = "#ff7c22";
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.moveTo(10, -8);
-                ctx.lineTo(24, -2);
-                ctx.lineTo(18, 8);
-                ctx.stroke();
-                ctx.fillStyle = "#b34700";
-                ctx.beginPath();
-                ctx.moveTo(17, 7);
-                ctx.lineTo(27, 12);
-                ctx.lineTo(17, 14);
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
-            }
-
-            function render() {
-                const tileW = canvas.width / VIEW_COLS;
-                const tileH = canvas.height / VIEW_ROWS;
-                const camX = Math.max(0, Math.min(GRID_W - VIEW_COLS, game.player.x - Math.floor(VIEW_COLS / 2)));
-                const camY = Math.max(0, Math.min(GRID_H - VIEW_ROWS, game.player.y - Math.floor(VIEW_ROWS / 2)));
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drawSky();
-
-                for (let vy = 0; vy < VIEW_ROWS; vy += 1) {
-                    for (let vx = 0; vx < VIEW_COLS; vx += 1) {
-                        const wx = camX + vx;
-                        const wy = camY + vy;
-                        const x = vx * tileW;
-                        const y = vy * tileH;
-                        if (wy < SURFACE_ROW) continue;
-                        const cell = game.world[wy][wx];
-                        if (cell.dug) {
-                            ctx.fillStyle = "#111722";
-                            ctx.fillRect(x, y, tileW, tileH);
-                            continue;
-                        }
-                        const ore = oreById(cell.type);
-                        ctx.fillStyle = ore.color;
-                        ctx.fillRect(x, y, tileW, tileH);
-                        ctx.fillStyle = "rgba(255,255,255,0.12)";
-                        ctx.fillRect(x + tileW * 0.1, y + tileH * 0.1, tileW * 0.2, tileH * 0.2);
-                        ctx.fillStyle = "rgba(0,0,0,0.2)";
-                        ctx.fillRect(x, y + tileH * 0.8, tileW, tileH * 0.2);
-                    }
-                }
-
-                const px = (game.player.x - camX + 0.5) * tileW;
-                const py = (game.player.y - camY + 0.5) * tileH;
-                drawExcavator(px, py);
-
-                game.particles.forEach((p) => {
-                    const sx = (p.x / CELL - camX) * tileW;
-                    const sy = (p.y / CELL - camY) * tileH;
-                    const alpha = Math.max(0, p.life);
-                    ctx.fillStyle = hexToRgba(p.color, alpha.toFixed(2));
-                    ctx.beginPath();
-                    ctx.arc(sx, sy, Math.max(2, tileW * 0.05), 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                if (game.fuel <= 0 && game.player.y > SURFACE_ROW) {
-                    ctx.fillStyle = "rgba(0,0,0,0.55)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = "#fff";
-                    ctx.font = "700 28px Segoe UI";
-                    ctx.textAlign = "center";
-                    ctx.fillText("Out of fuel - Rescue or move to surface", canvas.width / 2, canvas.height / 2);
-                }
-            }
-
-            function stepFrame(now) {
-                const dt = Math.min(0.05, (now - lastTime) / 1000);
-                lastTime = now;
-                update(dt);
-                render();
-                rafId = requestAnimationFrame(stepFrame);
-            }
-
-            function advanceTime(ms) {
-                const step = 1000 / 60;
-                const loops = Math.max(1, Math.round(ms / step));
-                for (let i = 0; i < loops; i += 1) {
-                    update(1 / 60);
-                }
-                render();
-            }
-
-            function renderGameToText() {
-                const topOre = Object.entries(game.oreStats).sort((a, b) => b[1] - a[1])[0];
-                const payload = {
-                    mode: game.mode,
-                    coordinateSystem: "grid origin top-left; x right+, y down+",
-                    player: { x: game.player.x, y: game.player.y, speed: game.player.speed },
-                    fuel: { current: Math.round(game.fuel), max: game.fuelMax },
-                    economy: { money: game.money, oreBoost: Number(game.player.oreBoost.toFixed(2)) },
-                    progress: {
-                        depthMeters: Math.max(0, game.player.y - SURFACE_ROW),
-                        maxDepthMeters: game.maxDepth,
-                        bestOre: game.bestOre,
-                        mostMined: topOre ? { ore: topOre[0], count: topOre[1] } : null
-                    },
-                    visibleWindow: {
-                        cols: VIEW_COLS,
-                        rows: VIEW_ROWS
-                    }
-                };
-                return JSON.stringify(payload);
-            }
-
-            function attachInput() {
-                window.addEventListener("keydown", (event) => {
-                    keys.add(event.key.toLowerCase());
-                });
-                window.addEventListener("keyup", (event) => {
-                    keys.delete(event.key.toLowerCase());
-                });
-
-                document.querySelectorAll(".pad-btn").forEach((btn) => {
-                    const action = btn.dataset.act;
-                    const mapping = {
-                        left: "arrowleft",
-                        right: "arrowright",
-                        up: "arrowup",
-                        down: "arrowdown"
-                    };
-                    const key = mapping[action];
-                    if (!key) return;
-                    const on = () => keys.add(key);
-                    const off = () => keys.delete(key);
-                    btn.addEventListener("touchstart", (e) => { e.preventDefault(); on(); }, { passive: false });
-                    btn.addEventListener("touchend", (e) => { e.preventDefault(); off(); }, { passive: false });
-                    btn.addEventListener("mousedown", on);
-                    btn.addEventListener("mouseup", off);
-                    btn.addEventListener("mouseleave", off);
-                });
-            }
-
-            function setupButtons() {
-                document.getElementById("engineBtn").addEventListener("click", () => {
-                    const cost = 180 + (game.player.speed - 1) * 140;
-                    if (game.money < cost) return;
-                    game.money -= cost;
-                    game.player.speed += 1;
-                });
-
-                document.getElementById("bucketBtn").addEventListener("click", () => {
-                    const level = Math.round((game.player.oreBoost - 1) / 0.08);
-                    const cost = 220 + level * 180;
-                    if (game.money < cost) return;
-                    game.money -= cost;
-                    game.player.oreBoost += 0.08;
-                });
-
-                document.getElementById("tankBtn").addEventListener("click", () => {
-                    const tiers = Math.max(0, (game.fuelMax - 120) / 35);
-                    const cost = 160 + tiers * 120;
-                    if (game.money < cost) return;
-                    game.money -= cost;
-                    game.fuelMax += 35;
-                    game.fuel = game.fuelMax;
-                });
-
-                document.getElementById("rescueBtn").addEventListener("click", () => {
-                    if (game.money >= 80) {
-                        game.money -= 80;
-                    } else {
-                        game.money = 0;
-                    }
-                    game.player.x = Math.floor(GRID_W / 2);
-                    game.player.y = SURFACE_ROW;
-                    game.fuel = game.fuelMax;
-                });
-            }
-
-            function resizeCanvas() {
-                const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-                const rect = canvas.getBoundingClientRect();
-                const width = Math.max(320, rect.width);
-                const height = Math.max(180, rect.height);
-                canvas.width = Math.round(width * dpr);
-                canvas.height = Math.round(height * dpr);
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
-
-            function init() {
-                makeWorld();
-                setupButtons();
-                attachInput();
-                resizeCanvas();
-                window.addEventListener("resize", resizeCanvas);
-
-                window.render_game_to_text = renderGameToText;
-                window.advanceTime = advanceTime;
-
-                cancelAnimationFrame(rafId);
-                lastTime = performance.now();
-                rafId = requestAnimationFrame(stepFrame);
-            }
-
-            init();
-        })();
-    </script>
+    <script src="./game.js"></script>
 </body>
 </html>
+

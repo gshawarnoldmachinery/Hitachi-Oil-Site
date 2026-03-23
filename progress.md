@@ -21,3 +21,11 @@ Original prompt: sure lets make it a2D game with a little hitachi excivator digg
   - Added redirect helper page `hitachi-excavator-game.html`.
 - Testing note:
   - Playwright client script could not be run because `node` is not available in this environment.
+- Major gameplay revision requested:
+  - Added excavator progression path from `ZX17` to `ZX890LCH`.
+  - Added machine-limited depth caps and ore access locks by excavator tier.
+  - Replaced square-looking digging with irregular blob-style soil/ore rendering and radius mining.
+  - Added machine/cap HUD values and new operation buttons (`Upgrade Excavator`, `Service`, `Rescue`).
+  - Moved game logic from inline script to `Excavator-Game/game.js` for easier iteration.
+- Verification note:
+  - Headless Edge capture failed in this environment due access-denied crashpad errors.
