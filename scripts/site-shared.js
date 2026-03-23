@@ -77,15 +77,37 @@
             });
         }
 
+        if (!menu.querySelector('.toolbar-menu-heading')) {
+            const heading = document.createElement('div');
+            heading.className = 'toolbar-menu-heading';
+            heading.textContent = 'Browse Pages';
+            menu.prepend(heading);
+        }
+
+        const menuLinks = Array.from(menu.querySelectorAll('a[role="menuitem"]'));
+
         const closeMenu = () => {
             menu.classList.remove('is-open');
             menuButton.setAttribute('aria-expanded', 'false');
+            menu.setAttribute('aria-hidden', 'true');
         };
+
+        const openMenu = () => {
+            menu.classList.add('is-open');
+            menuButton.setAttribute('aria-expanded', 'true');
+            menu.setAttribute('aria-hidden', 'false');
+        };
+
+        menu.setAttribute('aria-hidden', 'true');
 
         menuButton.addEventListener('click', function (event) {
             event.stopPropagation();
-            const open = menu.classList.toggle('is-open');
-            menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+            const open = !menu.classList.contains('is-open');
+            if (open) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
         });
 
         document.addEventListener('click', function (event) {
@@ -96,6 +118,35 @@
 
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') closeMenu();
+        });
+
+        menuButton.addEventListener('keydown', function (event) {
+            if ((event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') && menuLinks.length) {
+                event.preventDefault();
+                openMenu();
+                menuLinks[0].focus();
+            }
+        });
+
+        menu.addEventListener('keydown', function (event) {
+            if (!menuLinks.length) return;
+            const currentIndex = menuLinks.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                menuLinks[(currentIndex + 1 + menuLinks.length) % menuLinks.length].focus();
+            }
+            if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                menuLinks[(currentIndex - 1 + menuLinks.length) % menuLinks.length].focus();
+            }
+            if (event.key === 'Home') {
+                event.preventDefault();
+                menuLinks[0].focus();
+            }
+            if (event.key === 'End') {
+                event.preventDefault();
+                menuLinks[menuLinks.length - 1].focus();
+            }
         });
 
         state.menuInitialized = true;
