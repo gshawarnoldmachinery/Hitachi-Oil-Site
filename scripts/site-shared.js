@@ -17,7 +17,8 @@
         { title: 'Hydraulic Oil', url: '../Hydraulic-Oil/', keywords: 'hydraulic oil super 46hn hydraulic system' },
         { title: 'Transmission Oil', url: '../Transmission-Oil/', keywords: 'transmission oil 10w powershift' },
         { title: 'Gear Oil', url: '../Gear-Oil/', keywords: 'gear oil gl-4 planetary swing gears' },
-        { title: 'Axle Oil', url: '../Axle-Oil/', keywords: 'axle oil extreme pressure wheel loader' }
+        { title: 'Axle Oil', url: '../Axle-Oil/', keywords: 'axle oil extreme pressure wheel loader' },
+        { title: 'Excavator Game', url: '../Excavator-Game/', keywords: 'game excavator ore miner digging money' }
     ];
 
     function applyBrightness(level, buttons) {
