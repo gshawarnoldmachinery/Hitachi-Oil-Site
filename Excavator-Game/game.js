@@ -8,6 +8,9 @@
     const capText = document.getElementById("capText");
     const bestOreText = document.getElementById("bestOreText");
     const healthText = document.getElementById("healthText");
+    const rampsText = document.getElementById("rampsText");
+    const placeRampBtn = document.getElementById("placeRampBtn");
+    const rampPackBtn = document.getElementById("rampPackBtn");
     const excavatorBtn = document.getElementById("excavatorBtn");
     const serviceBtn = document.getElementById("serviceBtn");
     const rescueBtn = document.getElementById("rescueBtn");
@@ -62,6 +65,7 @@
         money: 0,
         fuel: MACHINES[0].fuelMax,
         health: 100,
+        ramps: 10,
         maxDepth: 0,
         bestOreId: null,
         particles: [],
@@ -77,6 +81,7 @@
     const nextMachine = function () { return MACHINES[game.machineTier + 1] || null; };
     const oreById = function (id) { return ORES.find((ore) => ore.id === id) || ORES[0]; };
     const canMove = function (x, y) { return x >= 0 && y >= 0 && x < GRID_W && y < GRID_H; };
+    const isPassable = function (cell) { return !!cell && (cell.dug || cell.type === "ramp" || cell.type === "air"); };
     const title = function (txt) { return txt ? txt[0].toUpperCase() + txt.slice(1) : ""; };
 
     function setNotice(text, sec) {
@@ -175,6 +180,7 @@
                 if (!canMove(x, y) || y < SURFACE_ROW) continue;
                 const cell = game.world[y][x];
                 if (cell.dug) continue;
+                if (cell.type === "ramp") continue;
                 const dist = Math.hypot(x - nx, y - ny) + (cell.seed - 0.5) * 0.3;
                 if (dist > radius) continue;
 
@@ -204,6 +210,39 @@
         return { minedCells, lockedTouches };
     }
 
+    function placeRamp() {
+        if (game.ramps <= 0) {
+            setNotice("No ramps left. Buy a ramp pack.", 1.4);
+            return false;
+        }
+        if (game.player.y <= SURFACE_ROW - 1) {
+            setNotice("Already at surface.", 1.1);
+            return false;
+        }
+        const px = game.player.x;
+        const py = game.player.y;
+        const candidates = [
+            { x: px, y: py - 1 },
+            { x: px - 1, y: py - 1 },
+            { x: px + 1, y: py - 1 }
+        ];
+        for (let i = 0; i < candidates.length; i += 1) {
+            const c = candidates[i];
+            if (!canMove(c.x, c.y) || c.y < SURFACE_ROW) continue;
+            const cell = game.world[c.y][c.x];
+            if (!cell || cell.type === "lava_pocket") continue;
+            if (cell.type === "ramp") continue;
+            if (cell.dug) continue;
+            game.world[c.y][c.x] = { type: "ramp", dug: false, seed: Math.random() };
+            game.ramps -= 1;
+            spawnParticles(c.x, c.y, "#8f6f4f", 12);
+            setNotice("Ramp placed.", 1);
+            return true;
+        }
+        setNotice("No valid spot above for ramp.", 1.3);
+        return false;
+    }
+
     function tryCollapse() {
         const depth = Math.max(0, game.player.y - SURFACE_ROW);
         if (depth === 0) return;
@@ -217,6 +256,11 @@
     function applyGravity(dt) {
         game.player.fallCooldown -= dt;
         if (game.player.fallCooldown > 0) return;
+        const current = canMove(game.player.x, game.player.y) ? game.world[game.player.y][game.player.x] : null;
+        if (current && current.type === "ramp") {
+            game.player.fallDistance = 0;
+            return;
+        }
         const belowY = game.player.y + 1;
         if (!canMove(game.player.x, belowY)) {
             if (game.player.fallDistance > 2) damagePlayer((game.player.fallDistance - 2) * 6, "Fall damage");
@@ -224,7 +268,7 @@
             return;
         }
         const below = game.world[belowY][game.player.x];
-        if (below && below.dug && belowY >= SURFACE_ROW) {
+        if (below && isPassable(below) && below.type !== "ramp" && belowY >= SURFACE_ROW) {
             game.player.y = belowY;
             game.player.fallDistance += 1;
             game.player.fallCooldown = 0.085;
@@ -254,18 +298,21 @@
 
         if (ny >= SURFACE_ROW) {
             const frontCell = game.world[ny][nx];
-            if (frontCell && !frontCell.dug && !HAZARDS[frontCell.type]) {
-                const ore = oreById(frontCell.type);
-                if (!canMineOre(ore) && ore.id !== "dirt") {
-                    setNotice(ore.label + " is too hard for " + m.name + ".", 1.5);
-                    return;
+            let mined = { minedCells: 0, lockedTouches: 0 };
+            if (!isPassable(frontCell)) {
+                if (frontCell && !HAZARDS[frontCell.type]) {
+                    const ore = oreById(frontCell.type);
+                    if (!canMineOre(ore) && ore.id !== "dirt") {
+                        setNotice(ore.label + " is too hard for " + m.name + ".", 1.5);
+                        return;
+                    }
                 }
+                mined = mineAround(nx, ny);
+                if (mined.lockedTouches > 0 && mined.minedCells === 0) setNotice("Need a larger excavator for this ore.", 1.4);
+                if (!isPassable(game.world[ny][nx])) return;
+                tryCollapse();
             }
-            const mined = mineAround(nx, ny);
-            if (mined.lockedTouches > 0 && mined.minedCells === 0) setNotice("Need a larger excavator for this ore.", 1.4);
-            if (!game.world[ny][nx].dug) return;
             game.fuel = Math.max(0, game.fuel - (m.fuelBurn + mined.minedCells * 0.13));
-            tryCollapse();
         } else {
             game.fuel = m.fuelMax;
         }
@@ -280,6 +327,8 @@
     function updateButtons() {
         const m = machine();
         const next = nextMachine();
+        if (placeRampBtn) placeRampBtn.disabled = game.ramps <= 0 || game.player.y <= SURFACE_ROW - 1;
+        if (rampPackBtn) rampPackBtn.disabled = game.money < 45;
         if (next) {
             excavatorBtn.textContent = "Upgrade to " + next.name + " ($" + next.price + ")";
             excavatorBtn.disabled = game.money < next.price;
@@ -299,6 +348,7 @@
         capText.textContent = m.maxDepth + "m";
         bestOreText.textContent = game.bestOreId ? title(game.bestOreId) : "None";
         if (healthText) healthText.textContent = game.health + "%";
+        if (rampsText) rampsText.textContent = String(game.ramps);
         updateButtons();
     }
 
@@ -356,21 +406,37 @@
         ctx.fillRect(0, canvas.height * 0.2, canvas.width, canvas.height * 0.035);
     }
 
-    function drawVoxelBlock(x, y, w, h, color) {
+    function drawVoxelBlock(x, y, w, h, color, depth, seed) {
+        const depthTint = Math.max(0, Math.min(70, Math.floor(depth * 0.32)));
+        const tone = brighten(color, -depthTint + Math.floor((seed - 0.5) * 14));
         ctx.fillStyle = color;
+        ctx.fillStyle = tone;
         ctx.fillRect(x, y, w, h);
-        ctx.fillStyle = brighten(color, 24);
+        ctx.fillStyle = brighten(tone, 24);
         ctx.fillRect(x + 1, y + 1, w - 2, h * 0.22);
+        ctx.fillStyle = "rgba(255,255,255,0.06)";
+        ctx.fillRect(x + w * 0.16, y + h * 0.16, w * 0.18, h * 0.14);
         ctx.fillStyle = "rgba(0,0,0,0.22)";
         ctx.fillRect(x, y + h * 0.76, w, h * 0.24);
         ctx.strokeStyle = "rgba(0,0,0,0.18)";
         ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
     }
 
-    function drawCellContent(x, y, w, h, cell) {
+    function drawCellContent(x, y, w, h, cell, depth) {
+        if (cell.type === "ramp") {
+            drawVoxelBlock(x, y, w, h, "#7a5a3e", depth, cell.seed || 0.5);
+            ctx.fillStyle = "rgba(255,190,130,0.35)";
+            ctx.beginPath();
+            ctx.moveTo(x + w * 0.08, y + h * 0.82);
+            ctx.lineTo(x + w * 0.92, y + h * 0.82);
+            ctx.lineTo(x + w * 0.92, y + h * 0.2);
+            ctx.closePath();
+            ctx.fill();
+            return;
+        }
         const hz = HAZARDS[cell.type];
         if (hz) {
-            drawVoxelBlock(x, y, w, h, hz.color);
+            drawVoxelBlock(x, y, w, h, hz.color, depth, cell.seed || 0.5);
             ctx.strokeStyle = "rgba(18,22,28,0.85)";
             ctx.lineWidth = Math.max(1, w * 0.05);
             if (cell.type === "power_line") {
@@ -388,7 +454,7 @@
             return;
         }
         const ore = oreById(cell.type);
-        drawVoxelBlock(x, y, w, h, ore.color);
+        drawVoxelBlock(x, y, w, h, ore.color, depth, cell.seed || 0.5);
         if (!canMineOre(ore) && ore.id !== "dirt") {
             ctx.fillStyle = "rgba(9,13,20,0.55)";
             ctx.fillRect(x + w * 0.2, y + h * 0.2, w * 0.6, h * 0.6);
@@ -424,11 +490,19 @@
         ctx.roundRect(-18, -10, 36, 20, 4);
         ctx.fill();
         ctx.stroke();
+        ctx.fillStyle = "#111722";
+        ctx.fillRect(-16, -1, 32, 2.2);
+        ctx.fillStyle = "#ffcf9f";
+        ctx.fillRect(-12, -0.4, 6, 1.2);
+        ctx.fillRect(6, -0.4, 6, 1.2);
 
         ctx.fillStyle = "#e2efff";
         ctx.beginPath();
         ctx.roundRect(-4, -8, 11, 9, 2);
         ctx.fill();
+        ctx.strokeStyle = "#131a24";
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(-3.5, -7.5, 10, 8);
 
         ctx.strokeStyle = "#ff7a1f";
         ctx.lineWidth = 5;
@@ -437,12 +511,24 @@
         ctx.lineTo(30, -5 + swing * 4);
         ctx.lineTo(38, 7 + swing * 7);
         ctx.stroke();
+        ctx.strokeStyle = "#ced8e3";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(22, -4 + swing * 2);
+        ctx.lineTo(35, 1 + swing * 5);
+        ctx.stroke();
 
         ctx.strokeStyle = "#db5a00";
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(27, -2 + swing * 2);
         ctx.lineTo(43, 4 + swing * 6);
+        ctx.stroke();
+        ctx.strokeStyle = "#c7d0db";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(30, 0 + swing * 2);
+        ctx.lineTo(44, 5 + swing * 6);
         ctx.stroke();
 
         ctx.fillStyle = "#be4b00";
@@ -452,6 +538,9 @@
         ctx.lineTo(40, 16 + swing * 8);
         ctx.closePath();
         ctx.fill();
+        ctx.strokeStyle = "#2d1a10";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
 
         ctx.fillStyle = "#1a202b";
         ctx.font = "700 7px Segoe UI";
@@ -501,7 +590,7 @@
                     ctx.fillRect(x, y, tileW, tileH * 0.2);
                     continue;
                 }
-                drawCellContent(x, y, tileW, tileH, cell);
+                drawCellContent(x, y, tileW, tileH, cell, wy - SURFACE_ROW);
             }
         }
 
@@ -553,6 +642,7 @@
             machine: { name: m.name, tier: game.machineTier, maxDepth: m.maxDepth, minOreTier: m.minOreTier },
             player: { x: game.player.x, y: game.player.y, health: game.health },
             fuel: { current: Math.round(game.fuel), max: m.fuelMax },
+            ramps: { available: game.ramps },
             hazards: game.hazardHits,
             economy: { money: game.money },
             progress: {
@@ -566,12 +656,23 @@
     }
 
     function setupInput() {
-        window.addEventListener("keydown", (event) => keys.add(event.key.toLowerCase()));
+        window.addEventListener("keydown", function (event) {
+            const key = event.key.toLowerCase();
+            if (key === "r" && !event.repeat) {
+                placeRamp();
+            }
+            keys.add(key);
+        });
         window.addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()));
         document.querySelectorAll(".pad-btn").forEach((btn) => {
             const act = btn.dataset.act;
             const map = { left: "arrowleft", right: "arrowright", up: "arrowup", down: "arrowdown" };
             const key = map[act];
+            if (act === "ramp") {
+                btn.addEventListener("touchstart", function (event) { event.preventDefault(); placeRamp(); }, { passive: false });
+                btn.addEventListener("mousedown", function () { placeRamp(); });
+                return;
+            }
             if (!key) return;
             const on = function () { keys.add(key); };
             const off = function () { keys.delete(key); };
@@ -584,6 +685,24 @@
     }
 
     function setupButtons() {
+        if (placeRampBtn) {
+            placeRampBtn.addEventListener("click", function () {
+                placeRamp();
+            });
+        }
+
+        if (rampPackBtn) {
+            rampPackBtn.addEventListener("click", function () {
+                if (game.money < 45) {
+                    setNotice("Need $45 for ramp pack.", 1.2);
+                    return;
+                }
+                game.money -= 45;
+                game.ramps += 5;
+                setNotice("Ramp pack loaded (+5).", 1.2);
+            });
+        }
+
         excavatorBtn.addEventListener("click", function () {
             const next = nextMachine();
             if (!next) return;
@@ -604,6 +723,7 @@
             game.money -= 60;
             game.fuel = m.fuelMax;
             game.health = Math.min(100, game.health + 20);
+            game.ramps += 1;
             setNotice("Service complete. Fuel and health improved.", 1.4);
         });
 

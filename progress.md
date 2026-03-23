@@ -36,3 +36,9 @@ Original prompt: sure lets make it a2D game with a little hitachi excivator digg
   - Added deeper hazards (water pockets, lava pockets).
   - Added random dirt-collapse events and gravity-based fall damage.
   - Updated terrain rendering to voxel-style blocks with beveled shading.
+- Requested return-to-surface + visual detail pass:
+  - Added deployable dirt ramps (`R` key, mobile `PLACE RAMP` button, and sidebar `Place Ramp` button).
+  - Added ramp inventory HUD and purchasable ramp packs.
+  - Added ramp support behavior so ramps can act as climb anchors while exiting pits.
+  - Expanded terrain detail with depth tinting, block highlights, and richer hazard/ore block visuals.
+  - Added more excavator detail (cabin frame, accents, hydraulic-cylinder lines, bucket outline detail).

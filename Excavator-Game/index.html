@@ -212,6 +212,7 @@
                 <div class="pill money">Money: <b id="moneyText">$0</b></div>
                 <div class="pill">Fuel: <b id="fuelText">0 / 0</b></div>
                 <div class="pill">Health: <b id="healthText">100%</b></div>
+                <div class="pill">Ramps: <b id="rampsText">0</b></div>
                 <div class="pill depth">Depth: <b id="depthText">0m</b></div>
                 <div class="pill">Machine: <b id="machineText">ZX17</b></div>
                 <div class="pill">Depth Cap: <b id="capText">0m</b></div>
@@ -228,6 +229,7 @@
                         <button class="pad-btn" data-act="left"><</button>
                         <button class="pad-btn" data-act="right">></button>
                         <button class="pad-btn wide" data-act="down">DIG DOWN</button>
+                        <button class="pad-btn wide" data-act="ramp">PLACE RAMP</button>
                     </div>
                 </div>
             </section>
@@ -237,6 +239,7 @@
                     <h2>How To Play</h2>
                     <ul>
                         <li>Use arrow keys or WASD to move and dig.</li>
+                        <li>Press R to place dirt ramps back to surface.</li>
                         <li>You start above ground at surface level.</li>
                         <li>Upgrade from ZX17 up to ZX890LCH.</li>
                         <li>Each machine has its own depth and ore limits.</li>
@@ -252,6 +255,8 @@
                 <div class="card">
                     <h2>Operations</h2>
                     <div class="buttons">
+                        <button id="placeRampBtn">Place Ramp (R)</button>
+                        <button id="rampPackBtn">Buy Ramp Pack +5 ($45)</button>
                         <button id="excavatorBtn">Upgrade Excavator</button>
                         <button id="serviceBtn">Service + Refuel ($60)</button>
                         <button id="rescueBtn">Rescue To Surface (-$80)</button>
