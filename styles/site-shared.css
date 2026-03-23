@@ -1315,16 +1315,6 @@ body.custom-theme.brightness-medium {
             color: var(--ts-text);
         }
 
-        .custom-theme .print-btn {
-            background: #111;
-            border-color: #111;
-            color: #fff;
-        }
-
-        .custom-theme .print-btn:hover {
-            background: #222;
-        }
-
         .custom-theme .title-pill {
             background: var(--ts-surface);
             color: var(--ts-text);
@@ -2136,23 +2126,6 @@ body.custom-theme.brightness-medium {
             flex-wrap: wrap;
         }
 
-        .print-btn {
-            border: 1px solid rgba(255, 122, 26, 0.75);
-            background: rgba(255, 122, 26, 0.18);
-            color: #fff;
-            font-weight: 700;
-            border-radius: 999px;
-            padding: 0.45rem 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            cursor: pointer;
-        }
-
-        .print-btn:hover {
-            background: rgba(255, 122, 26, 0.28);
-        }
-
         .page-link-btn {
             text-decoration: none;
         }
@@ -2249,10 +2222,6 @@ body.custom-theme.brightness-medium {
                 grid-template-columns: 1fr;
             }
 
-            .print-btn {
-                width: 100%;
-                justify-content: center;
-            }
         }
 
         @media print {

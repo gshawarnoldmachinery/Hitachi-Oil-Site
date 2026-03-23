@@ -210,7 +210,7 @@
             month: 'short',
             day: '2-digit'
         });
-        versionLine.textContent = 'Version ' + pageVersion + ' • Last updated: ' + lastUpdated;
+        versionLine.textContent = 'Version ' + pageVersion + ' - Last updated: ' + lastUpdated;
     }
 
     // Mobile tooltip toggles for simple tooltip cards.
