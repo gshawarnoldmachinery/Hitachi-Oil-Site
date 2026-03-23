@@ -29,3 +29,10 @@ Original prompt: sure lets make it a2D game with a little hitachi excivator digg
   - Moved game logic from inline script to `Excavator-Game/game.js` for easier iteration.
 - Verification note:
   - Headless Edge capture failed in this environment due access-denied crashpad errors.
+- Requested risk/terrain pass:
+  - Player now starts above ground (`SURFACE_ROW - 1`).
+  - Added health system with recovery/service and failure reset.
+  - Added shallow utility hazards (power lines, water lines).
+  - Added deeper hazards (water pockets, lava pockets).
+  - Added random dirt-collapse events and gravity-based fall damage.
+  - Updated terrain rendering to voxel-style blocks with beveled shading.
